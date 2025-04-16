@@ -1,0 +1,75 @@
+<section id="veg-category" class="book-a-table section">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>{{ id ? 'Edit' : 'Add' }} Vegetarian Menu</h2>
+    <p>
+      <span>Your Veg Item</span>
+      <span class="description-title">Stay Healthy, Stay Green</span>
+    </p>
+  </div>
+
+  <div class="container">
+    <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
+        <form [formGroup]="vegForm" (ngSubmit)="onSubmit()" class="php-email-form w-100">
+          <div class="row gy-4">
+            <!-- Title -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Title <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="title"
+                placeholder="Title (e.g. Snaks)"
+                minlength="3"
+                maxlength="100"
+              />
+              <div *ngIf="form['title'].invalid && (form['title'].dirty || form['title'].touched)" class="text-danger mt-1">
+                <small *ngIf="form['title'].errors?.['required']">Title is required.</small>
+                <small *ngIf="form['title'].errors?.['minlength']">Minimum 3 characters required.</small>
+                <small *ngIf="form['title'].errors?.['maxlength']">Maximum 100 characters allowed.</small>
+              </div>
+            </div>
+
+            <!-- Code -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Code <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="code"
+                placeholder="Code (e.g. 001)"
+                minlength="1"
+                maxlength="10"
+              />
+              <div *ngIf="form['code'].invalid && (form['code'].dirty || form['code'].touched)" class="text-danger mt-1">
+                <small *ngIf="form['code'].errors?.['required']">Code is required.</small>
+                <small *ngIf="form['code'].errors?.['minlength']">Minimum 1 character required.</small>
+                <small *ngIf="form['code'].errors?.['maxlength']">Maximum 10 characters allowed.</small>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="col-lg-12">
+              <label class="form-label mt-3">Description <span class="text-danger">*</span></label>
+              <textarea
+                class="form-control"
+                formControlName="description"
+                placeholder="Write something..."
+                rows="4"
+              ></textarea>
+              <div *ngIf="form['description'].invalid && (form['description'].dirty || form['description'].touched)" class="text-danger mt-1">
+                <small *ngIf="form['description'].errors?.['required']">Description is required.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="vegForm.invalid">
+              {{ id ? 'Update Category' : 'Add Category' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
