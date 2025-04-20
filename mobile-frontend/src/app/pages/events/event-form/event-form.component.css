@@ -1,0 +1,18 @@
+.error-message {
+  color: red;
+}
+
+.image {
+  height: 91px;
+  width: 100%;
+  border-radius: 10px 10px 10px 10px;
+  background-size: cover;
+}
+
+.event-image-preview {
+  width: 200px;
+  height: auto;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

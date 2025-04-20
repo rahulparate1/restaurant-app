@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <app-page-title title="Department Form" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body border-bottom">
+                <div>
+                  <h6 class="card-title">Department Details</h6>
+                  <p class="card-title-desc mb-0">
+                    Enter the details for the department.
+                  </p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6 mt-3">
+                    <label for="shiftNameInput" class="col-form-label">Department Name<span
+                        class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Eg. Information Technology"
+                        formControlName="departmentName" minlength="10" maxlength="50">
+                      <div
+                        *ngIf="departmentForm.get('departmentName').invalid && (departmentForm.get('departmentName').dirty || departmentForm.get('departmentName').touched)"
+                        class="text-danger">
+                        <div *ngIf="departmentForm.get('departmentName').errors.required">
+                          Department Name is required.
+                        </div>
+                        <div *ngIf="departmentForm.get('departmentName').errors.minlength">
+                          Department Name must be at least 10 characters.
+                        </div>
+                        <div *ngIf="departmentForm.get('departmentName').errors.maxlength">
+                          Department Name must be less than 50 characters.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 mt-3">
+                    <label for="fromTimeInput" class="col-form-label">Department Code<span
+                        class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" formControlName="departmentCode" placeholder="Eg. 001">
+                      <div
+                        *ngIf="departmentForm.get('departmentCode').invalid && (departmentForm.get('departmentCode').dirty || departmentForm.get('departmentCode').touched)"
+                        class="text-danger">
+                        <div *ngIf="departmentForm.get('departmentCode').errors.required">
+                          Department Code is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mt-3">
+                    <label for="toTimeInput" class="col-form-label">Description<span class="asterisk">*</span></label>
+                    <div>
+                      <textarea type="time" class="form-control" formControlName="description"
+                        placeholder="Eg. Information Technology"></textarea>
+                      <div
+                        *ngIf="departmentForm.get('description').invalid && (departmentForm.get('description').dirty || departmentForm.get('description').touched)"
+                        class="text-danger">
+                        <div *ngIf="departmentForm.get('description').errors.required">
+                          Description is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Submit and Cancel Buttons -->
+                  <div class="col-12 d-flex justify-content-start align-items-center gap-2" style="margin-top: 15px;">
+                    <button type="submit" class="btn btn-primary btn-md" [disabled]="!departmentForm.valid">
+                      <i class="bx bx-check-double font-size-16 align-middle me-2"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-dark btn-md" (click)="navigateToList()">
+                      <i class="bx bx-x-circle font-size-16 align-middle me-2"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<form [formGroup]="timesheetForm">
+  <div class="row">
+    <!-- ✅ Task Inputs (Now Above Date & Description) -->
+    <div class="col-md-6 mb-3" *ngFor="let task of taskList">
+      <label class="form-label">{{ task.label }}</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="{{ task.controlName }}"
+        (input)="calculateTotal()"
+        min="0"
+        max="12"
+        step="0.25"
+      />
+      <div *ngIf="timesheetForm.get(task.controlName)?.hasError('maxTotalExceeded')" class="text-danger">
+        Total hours cannot exceed 12!
+      </div>
+    </div>
+
+    <!-- ✅ Total Hours (Now in Full Width Below Task Inputs) -->
+    <div class="col-md-12 mt-3">
+      <label class="form-label fw-bold">Total Hours</label>
+      <input type="text" class="form-control fw-bold" formControlName="totalHours" readonly />
+      <div *ngIf="timesheetForm.get('totalHours')?.hasError('maxTotalExceeded')" class="text-danger">
+        Total hours cannot exceed 12!
+      </div>
+    </div>
+    <!-- ✅ Date (Now Below Total Hours) -->
+    <div class="col-md-12 mt-3">
+      <label for="date" class="form-label">
+        Date<span class="asterisk">*</span>
+      </label>
+      <input
+        type="text"
+        id="date"
+        formControlName="date"
+        class="form-control"
+        readonly
+      />
+    </div>
+
+    <!-- ✅ Task Description (Now Below Date) -->
+    <div class="col-md-12 mt-3">
+      <label for="taskDescription" class="form-label fw-bold">Task Description</label>
+      <textarea
+        id="taskDescription"
+        class="form-control"
+        formControlName="taskDescription"
+        placeholder="Eg. Enter description"
+        rows="5"
+      ></textarea>
+    </div>
+
+    <!-- ✅ Buttons (Aligned with form fields) -->
+    <div class="col-12 mt-4 d-flex justify-content-end">
+      <!-- <button
+        type="button"
+        class="btn btn-secondary me-3"
+        (click)="postCancel()"
+      >
+        Cancel
+      </button> -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        (click)="submitTimesheet()"
+        [disabled]="timesheetForm.invalid"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</form>

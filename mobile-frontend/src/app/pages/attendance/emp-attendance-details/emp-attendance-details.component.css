@@ -1,0 +1,33 @@
+.holiday-row {
+    background-color: #f8d7da; /* Example: Light red background for holidays */
+  }
+  
+  /* For Present status */
+.bg-present {
+  background-color: green !important;
+  color: white;
+}
+
+/* For Absent status */
+.bg-absent {
+  background-color: red !important;
+  color: white;
+}
+
+/* For Half Day status */
+.bg-halfday {
+  background-color: orange !important;
+  color: black;
+}
+
+/* For Weekend status */
+.bg-weekend {
+  background-color: lightgray !important;
+  color: black;
+}
+
+/* For Holiday status */
+.bg-holiday {
+  background-color: blue !important;
+  color: white;
+}

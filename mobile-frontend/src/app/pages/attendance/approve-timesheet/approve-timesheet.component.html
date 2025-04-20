@@ -1,0 +1,52 @@
+<div class="container">
+  <h2 class="text-center mb-4">Approve Timesheet</h2>
+
+  <div *ngIf="timesheetDetails">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Timesheet Details</h5>
+        <p><strong>Employee Name:</strong> {{ timesheetDetails?.employee?.name }}</p>
+        <!-- <p><strong>Leave Type:</strong> {{ leaveDetails.typeLabel }}</p> -->
+        <p><strong>Date:</strong> {{ timesheetDetails?.date | date }}</p>
+        <!-- <p><strong>End Date:</strong> {{ leaveDetails.endDate | date }}</p> -->
+        <p><strong>Total Hours Invested:</strong> {{timesheetDetails?.totalHours}} </p>
+      </div>
+    </div>
+
+    <form [formGroup]="approvedForm" (ngSubmit)="updateStatus(id)" class="mt-4">
+      <div class="mb-3">
+        <label for="effectiveHours" class="form-label">Effective Hours<span
+          class="asterisk">*</span></label>
+        <input
+          type="number"
+          id="effectiveHours"
+          class="form-control"
+          formControlName="effectiveHours"
+          placeholder="Enter effective hours"
+          min="0"
+        />
+        <div *ngIf="approvedForm.get('effectiveHours').invalid && approvedForm.get('effectiveHours').touched" class="text-danger">
+          Effective hours are required.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <textarea
+          id="comment"
+          class="form-control"
+          rows="3"
+          formControlName="comment"
+          placeholder="Add a comment..."
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="approvedForm.invalid">Approve Leave</button>
+      <button type="button" class="btn btn-danger ms-2" (click)="router.navigate(['/attendance/timesheet-list'])">Cancel</button>
+    </form>
+  </div>
+
+  <!-- Loader or error message if leave details are not available -->
+  <div *ngIf="!timesheetDetails" class="alert alert-warning mt-4">
+    <strong>Warning!</strong> Timesheet details not found.
+  </div>
+</div>

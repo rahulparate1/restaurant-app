@@ -1,0 +1,54 @@
+.blog-card {
+  .nav {
+    align-items: end;
+    justify-content: flex-end;
+  }
+  h5 {
+    /* position: absolute; */
+    top: 10px;
+  }
+  .card-body {
+    padding: 1.25rem 0 0;
+  }
+}
+.event-list {
+  height: 500px; /* Adjust height as needed */
+  overflow-y: auto;
+}
+
+.event-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.loading {
+  text-align: center;
+  padding: 10px;
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}
+
+.heart-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Hollow heart (default state when not liked) */
+.heart-hollow {
+  color: #ccc; /* Light gray color for hollow heart */
+}
+
+/* Filled heart (default state when liked) */
+.heart-filled {
+  color: #ff3d3d; /* Red color for filled heart */
+}
+
+/* Hover effect for hollow heart */
+.heart-hollow:hover {
+  color: #ff6b6b; /* Light red color on hover for hollow heart */
+}

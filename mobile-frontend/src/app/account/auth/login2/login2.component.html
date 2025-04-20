@@ -1,0 +1,170 @@
+<!-- <div class="container-fluid p-0">
+    <div class="row g-0">
+        <div class="col-xl-9">
+            <div class="auth-full-bg pt-lg-5 p-4">
+                <div class="w-100">
+                    <div class="bg-overlay"></div>
+                    <div class="d-flex h-100 flex-column">
+                        <div class="p-4 mt-auto">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="text-center">
+                                        <div dir="ltr">
+                                            <div class="card blur">
+                                                <carousel id="carouselExampleCaption" [noWrap]="false"
+                                                class="carousel slide">
+                                                <div class="carousel-inner" role="listbox">
+                                                    <slide class="carousel-item">
+                                                        <div class="card-body">
+                                                            <div class="mb-4">
+                                                                <img alt="" class="rounded-circle avatar-md border"
+                                                                    src="assets/images/users/avatar-2.jpg">
+                                                            </div>
+                                                            <h5 class="mb-1">Jason Shahaji</h5>
+                                                            <p><small>
+                                                                    Founder and CEO, PaisaPaisa
+                                                                </small></p>
+                                                            <p>You've probably heard that opposites attract. The
+                                                                same is true for fonts. Don't be
+                                                                afraid to combine font styles that are different but
+                                                                complementary.</p>
+                                                        </div>
+                                                    </slide>
+                                                    <slide class="carousel-item">
+                                                        <div class="card-body">
+                                                            <div class="mb-4">
+                                                                <img alt="" class="rounded-circle avatar-md border"
+                                                                    src="assets/images/users/avatar-2.jpg">
+                                                            </div>
+                                                            <h5 class="mb-1">Rajan Damodran</h5>
+                                                            <p><small>
+                                                                    Founder and CEO, MorePaisa
+                                                                </small></p>
+                                                            <p>You've probably heard that opposites attract. The
+                                                                same is true for fonts. Don't be
+                                                                afraid to combine font styles that are different but
+                                                                complementary.</p>
+                                                        </div>
+                                                    </slide>
+                                                </div>
+                                            </carousel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3">
+            <div class="auth-full-page-content p-md-5 p-4">
+                <div class="w-100">
+                    <div *ngIf="isLoading" class="spinner-container">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column h-100" *ngIf="!isLoading">
+                        <div class="mb-4 mb-md-5">
+                            <a routerLink="/" class="d-block auth-logo">
+                                <img src="./../../../../assets/images/payopslogo/symbol/Frame 127.png" alt="" height="48" class="auth-logo-dark" style="
+                                filter: drop-shadow(1px 1px 0px #085946);
+                            ">
+                            </a>
+                        </div>
+                        <div class="my-auto">
+                            <div class="text-center">
+                                <h5 class="text-primary">Welcome to PayOps</h5>
+                                <p class="text-muted">Spend less time on payroll and more time on glowing business.</p>
+                            </div>
+
+                            <div class="mt-4">
+                                <form class="login-form m-t-30" [formGroup]="loginform" (ngSubmit)="onSubmit()">
+                                    <label class="label f-s-14 f-w-600 m-b-12 d-block">
+                                        Email address<span class="asterisk">*</span>
+                                    </label>
+                                    <div class="input-container">
+                                        <input type="text" formControlName="username" class="form-control"
+                                            placeholder="Eg. jason.bradman@xiamin.com"
+                                            [ngClass]="{ 'is-invalid': (f.username.dirty || f.username.touched) && f.username.errors }" />
+                                        <div *ngIf="(f.username.dirty || f.username.touched) && f.username.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.username.errors.required">
+                                                Please enter email address.
+                                            </div>
+                                            <div *ngIf="f.username.errors.email">
+                                                Email address must be a valid.
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <label class="label f-s-14 f-w-600 m-b-12 d-block mt-3">
+                                            Password<span class="asterisk">*</span>
+                                        </label>
+                                        <div class="options-container mt-3 m-b-12 mb-2">
+                                            <a [routerLink]="['/auth/reset-password']" class="forgot-password-link f-s-14">Forgot Password?</a>
+                                        </div>
+                                    </div>
+                                    <div class="input-container">
+                                        <input type="password" formControlName="password" class="form-control"
+                                            placeholder="Eg. Pass@12345"
+                                            [ngClass]="{ 'is-invalid': (f.password.dirty || f.password.touched) && f.password.errors }" />
+                                        <div *ngIf="(f.password.dirty || f.password.touched) && f.password.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.password.errors.required">
+                                                Please enter Password.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="invalidCreds" class="invalidCreds">
+                                        <label class="form-check-label">
+                                            Invalid Credentials!
+                                        </label>
+                                    </div>
+
+
+
+                                    <div class="form-check mt-3">
+                                        <input type="checkbox" id="remember-check" class="form-check-input">
+                                        <label for="remember-check" class="form-check-label fw-regular">
+                                            <small>
+                                                I agree to the privacy policy and terms of use.
+                                            </small>
+                                        </label>
+                                    </div>
+                                    <div class="form-check mt-1">
+                                        <input type="checkbox" id="remember-check" class="form-check-input" checked>
+                                        <label for="remember-check" class="form-check-label">
+                                            <small>
+                                                Connect with me on WhatsApp or phone for onboarding.
+                                            </small>
+                                        </label>
+                                    </div>
+
+                                    <div class="mt-3 d-grid">
+                                        <button class="btn btn-primary" [disabled]="!loginform.valid" type="submit">Sign In</button>
+                                    </div>
+                                </form>
+                                <div class="mt-4 text-center">
+                                    <p>
+                                        <small>
+                                            This site is protected by MFA and the Google Privacy Policy and Terms of Service apply.
+                                        </small>
+                                    </p>
+                                    <p class="mt-4">Not a customer yet? <a routerLink="/auth/signup-2" class="fw-medium text-primary"> Register</a> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

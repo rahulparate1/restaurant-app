@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <app-page-title title="Pay Schedule Details" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-6">
+      <form [formGroup]="payScheduleForm" (ngSubmit)="onSubmit()">
+        <div class="card">
+          <div class="card-body border-bottom">
+            <h6 class="card-title">Pay Schedule Details</h6>
+            <p class="card-title-desc mb-0">
+              Enter the details for your organisation.
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 mt-3">
+                <h6 class="card-title">Select your work week*</h6>
+                <p class="card-title-desc mb-0">
+                  The days worked in a calendar week
+                </p>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                  <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    <div *ngFor="let day of weekdays">
+                      <input type="checkbox" class="btn-check" [id]="day" [checked]="selectedWeekdays.includes(day)"
+                        (change)="onWeekdayChange(day, $event)">
+                      <label class="btn btn-outline-primary" [for]="day">{{ day }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 mt-3">
+                <h6 class="card-title">Calculate monthly salary based on*</h6>
+                <div class="mb-3">
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" formControlName="daysInMonth" id="daysInMonth1"
+                      value="actualDayInMonth" (change)="onDaysInMonthChange()" [checked]="payScheduleForm.value.daysInMonth === 'actualDayInMonth'">
+                    <label class="form-check-label" for="daysInMonth1">
+                      Actual days in a month
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" formControlName="daysInMonth" id="daysInMonth2"
+                      value="organisationWorkingDays" (change)="onDaysInMonthChange()" [checked]="payScheduleForm.value.daysInMonth === 'organisationWorkingDays'">
+                    <label class="form-check-label" for="daysInMonth2">
+                      Organisation working days
+                    </label>
+                  </div>
+                </div>
+
+                <div *ngIf="showOrganisationDaysDropdown" class="col-12 mt-3">
+                  <label for="organisationDay" class="col-form-label">Select Day*</label>
+                  <select formControlName="organisationWorkingDay" class="form-control">
+                    <option value="" disabled>Select Day</option>
+                    <option *ngFor="let day of daysInMonthOptions" [value]="day">{{ day }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12 mt-3">
+                <h6 class="card-title">Pay on*</h6>
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="radio" formControlName="payEmployeesOn" id="payOn1"
+                    value="lastWorkingDay" (change)="onPayOnChange()" [checked]="payScheduleForm.value.payEmployeesOn === 'lastWorkingDay'">
+                  <label class="form-check-label" for="payOn1">
+                    the last working day of every month
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="payEmployeesOn" id="payOn2" value="sameDayOfEveryMonth"
+                    (change)="onPayOnChange()" [checked]="payScheduleForm.value.payEmployeesOn === 'sameDayOfEveryMonth'">
+                  <label class="form-check-label" for="payOn2">
+                    same day of every month
+                  </label>
+                </div>
+              </div>
+
+              <div *ngIf="showPayOnDayDropdown" class="col-12 mt-3">
+                <label for="payEmployeesOn" class="col-form-label">Pay Employees On Day*</label>
+                <select formControlName="payEmployeesOnDay" class="form-control">
+                  <option value="" disabled>Select Day</option>
+                  <option *ngFor="let day of payOnOptions" [value]="day">{{ day }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-12 mt-3">
+              <button type="submit" class="btn btn-primary" [disabled]="payScheduleForm.invalid">Submit</button>
+              <button type="button" class="btn btn-secondary" (click)="goBack()"
+                style="margin-left: 15px;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

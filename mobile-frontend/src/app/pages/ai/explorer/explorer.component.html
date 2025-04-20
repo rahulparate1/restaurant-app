@@ -1,0 +1,55 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-12">
+
+      <div class="card">
+        <div class="card-body border-bottom d-flex justify-content-between align-items-center">
+          <div style="display: flex;" >
+
+
+            <ng-select [items]="repositories" bindLabel="label" [(ngModel)]="repositoryIdentifier" [clearable]="false">
+                <ng-template ng-label-tmp let-item="item">
+                  {{ item || 'Select Area..' }}
+                </ng-template>
+              </ng-select>
+
+            <input class="form-control" placeholder="Ask Me...." [(ngModel)]="filterBy" />
+          </div>
+          <div class="">
+            <button class="btn btn-primary" color="primary" (click)="search()">
+                Search
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="card">
+        <div class="card-body border-bottom d-flex justify-content-between align-items-center">
+            <!-- <div *ngIf="loading">
+                <mat-spinner></mat-spinner>
+            </div> -->
+            <div *ngIf="responseType == 'array'" >
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let key of firstObjectKeys">{{ key?.toUpperCase() }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of aiResponse">
+                            <td *ngFor="let key of firstObjectKeys">{{ item[key] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="responseType != 'array'" >
+                {{aiResponse || ''}}
+            </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+
+</div>

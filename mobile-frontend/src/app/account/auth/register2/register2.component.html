@@ -1,0 +1,265 @@
+<div class="container-fluid p-0">
+    <div class="row g-0">
+        <div class="col-xl-9">
+            <div class="auth-full-bg pt-lg-5 p-4">
+                <div class="w-100">
+                    <div class="bg-overlay"></div>
+                    <div class="d-flex h-100 flex-column">
+                        <div class="p-4 mt-auto">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="text-center">
+                                        <div dir="ltr">
+                                            <div class="card blur">
+                                                <carousel id="carouselExampleCaption" [noWrap]="false"
+                                                    class="carousel slide">
+                                                    <div class="carousel-inner" role="listbox">
+                                                        <slide class="carousel-item">
+                                                            <div class="card-body">
+                                                                <div class="mb-4">
+                                                                    <img alt="" class="rounded-circle avatar-md border"
+                                                                        src="assets/images/users/avatar-2.jpg">
+                                                                </div>
+                                                                <h5 class="mb-1">Jason Shahaji</h5>
+                                                                <p><small>
+                                                                        Founder and CEO, PaisaPaisa
+                                                                    </small></p>
+                                                                <p>You've probably heard that opposites attract. The
+                                                                    same is true for fonts. Don't be
+                                                                    afraid to combine font styles that are different but
+                                                                    complementary.</p>
+                                                            </div>
+                                                        </slide>
+                                                        <slide class="carousel-item">
+                                                            <div class="card-body">
+                                                                <div class="mb-4">
+                                                                    <img alt="" class="rounded-circle avatar-md border"
+                                                                        src="assets/images/users/avatar-2.jpg">
+                                                                </div>
+                                                                <h5 class="mb-1">Rajan Damodran</h5>
+                                                                <p><small>
+                                                                        Founder and CEO, MorePaisa
+                                                                    </small></p>
+                                                                <p>You've probably heard that opposites attract. The
+                                                                    same is true for fonts. Don't be
+                                                                    afraid to combine font styles that are different but
+                                                                    complementary.</p>
+                                                            </div>
+                                                        </slide>
+                                                    </div>
+                                                </carousel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="auth-full-page-content p-md-5 p-4">
+                <div class="w-100">
+                    <div *ngIf="isLoading" class="spinner-container">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column h-100" *ngIf="!isLoading">
+                        <div class="mb-4 mb-md-5">
+                            <a routerLink="/" class="d-block auth-logo">
+                                <img src="assets/images/logo-dark.png" alt="" height="18" class="auth-logo-dark">
+                                <img src="assets/images/logo-light.png" alt="" height="18" class="auth-logo-light">
+                            </a>
+                        </div>
+                        <div class="my-auto" *ngIf="formSection">
+                            <div>
+                                <h5 class="text-primary text-center">Set up your account
+
+                                </h5>
+                                <p class="text-muted text-center">Quick & Easy Registration – Just 2 Simple Steps to Get Started!</p>
+                            </div>
+                            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="mt-5">
+                                <!-- Company Name -->
+                                <div class="mb-3">
+                                    <label for="companyName">Company Name<span class="asterisk">*</span></label>
+                                    <input type="text" formControlName="companyName" class="form-control"
+                                        id="companyName" (blur)="checkCompanyName(companyInput.value)" #companyInput
+                                        placeholder="Eg. Xiamin Techex Private Limited"
+                                        [ngClass]="{ 'is-invalid': companyNameError || (f.companyName.dirty || f.companyName.touched) && f.companyName.errors }">
+                                    <div *ngIf="(f.companyName.dirty || f.companyName.touched) && f.companyName.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.companyName.errors.required">Please enter company name.</div>
+                                    </div>
+                                    <div *ngIf="companyNameError" class="invalid-feedback">
+                                        <div>Company already exists!</div>
+                                    </div>
+                                </div>
+
+                                <!-- Full Name -->
+                                <div class="mb-3">
+                                    <label for="firstName">Full Name<span class="asterisk">*</span></label>
+                                    <input type="text" formControlName="firstName" class="form-control" id="firstName"
+                                        placeholder="Eg. Jason Bradman"
+                                        [ngClass]="{ 'is-invalid': (f.firstName.dirty || f.firstName.touched) && f.firstName.errors }">
+                                    <div *ngIf="(f.firstName.dirty || f.firstName.touched) && f.firstName.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.firstName.errors.required"> Please enter first name.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Email Address -->
+                                <div class="mb-3">
+                                    <label for="useremail">Email Address<span class="asterisk">*</span></label>
+                                    <input type="email" formControlName="email" class="form-control" id="useremail"
+                                        (blur)="checkEmail($event.target.value)" #emailInput
+                                        placeholder="Eg. jason.bradman@xiamin.com"
+                                        [ngClass]="{ 'is-invalid':emailError || (f.email.dirty || f.email.touched) && f.email.errors }">
+                                    <div *ngIf="(f.email.dirty || f.email.touched) && f.email.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required"> Please enter email address.</div>
+                                        <div *ngIf="f.email.errors.email">Invalid email address</div>
+                                    </div>
+                                    <div *ngIf="emailError" class="invalid-feedback">
+                                        Email Id already exists! Please try another.
+                                    </div>
+                                </div>
+
+                                <!-- Mobile Number -->
+                                <div class="mb-3" style="position: relative;">
+                                    <label for="mobileNo">Mobile Number<span class="asterisk">*</span></label>
+                                    <input type="text" formControlName="mobileNo" class="form-control" maxlength="10"
+                                        id="mobileNo" (keypress)="OnlyNumbersAllowed($event)"
+                                        (blur)="checkMobileNumber($event.target.value)"
+                                        [ngClass]="{ 'is-invalid': mobileError || (f.mobileNo.touched && f.mobileNo.invalid) }"
+                                        placeholder="Eg. 8756945639" />
+                                    <!-- <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/24px-Flag_of_India.svg.png"
+                                        alt="India"
+                                        style="width: 20px; height: 15px; position: absolute; top: 71%; left: 10px; transform: translateY(-50%);"> -->
+                                    <div *ngIf="(f.mobileNo.dirty || f.mobileNo.touched) && f.mobileNo.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.mobileNo.errors.required">Please enter mobile number.</div>
+                                        <div *ngIf="f.mobileNo.errors.pattern">Invalid mobile number</div>
+                                    </div>
+                                    <div *ngIf="mobileError" class="invalid-feedback">
+                                        Mobile number already exists! Please try another.
+                                    </div>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="mb-3">
+                                    <label for="userpassword">Password<span class="asterisk">*</span></label>
+                                    <input type="password" formControlName="password" class="form-control"
+                                        id="userpassword" placeholder="Eg. Pass@12345"
+                                        [ngClass]="{ 'is-invalid': (f.password.dirty || f.password.touched) && f.password.errors }">
+                                    <div *ngIf="(f.password.dirty || f.password.touched) && f.password.errors"
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.password.errors.required">Please enter password.</div>
+                                        <div *ngIf="f.password.errors.pattern">Password must contain at least one
+                                            uppercase letter, one lowercase
+                                            letter, one number, and one special character</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check mt-3">
+                                    <input type="checkbox" id="remember-check" class="form-check-input">
+                                    <label for="remember-check" class="form-check-label fw-regular">
+                                        <small>
+                                            I agree to the privacy policy and terms of use.
+                                        </small>
+                                    </label>
+                                </div>
+                                <div class="form-check mt-1">
+                                    <input type="checkbox" id="remember-check" class="form-check-input" checked>
+                                    <label for="remember-check" class="form-check-label">
+                                        <small>
+                                            Connect with me on WhatsApp or phone for onboarding.
+                                        </small>
+                                    </label>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="mt-4 d-grid">
+                                    <button class="btn btn-primary btn-block" type="submit"
+                                        [disabled]="!signupForm.valid">Register</button>
+                                </div>
+
+
+                                <!-- Social Media Links -->
+                                <div class="mt-2 text-center">
+                                    
+                                    <div class="mt-4">
+                                        <p>
+                                            <small>
+                                                This site is protected by MFA and the Google Privacy Policy and Terms of Service apply.
+                                            </small>
+                                        </p>
+                                        <p class="mt-4">Already have an account? <a routerLink="/auth/login-2"
+                                                class="fw-medium text-primary">Login</a></p>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- *ngIf="otpSection" -->
+                        <div class="my-auto" *ngIf="otpSection">
+                            <div>
+                                <h5 class="text-primary text-center">Verfiy Email</h5>
+                                <p class="text-muted text-center">We sent a verification code to your email address
+                                    <span style="margin-top: 10px" class="fw-semibold">*******11gmail.com</span>
+                                </p>
+                            </div>
+                            <div class="text-center">
+                                <div class="p-2 mt-4">
+                                    <div>
+                                        <label class="f-s-14 f-w-600 m-b-12 d-block">Enter your 6-digit security
+                                            code</label>
+                                        <div class="d-flex align-items-center"></div>
+                                        <div class="row custom-row">
+                                            <div class="col-12">
+                                                <!-- OTP Input -->
+                                                <div class="otp-input">
+                                                    <ng-otp-input (onInputChange)="onOtpChange($event)"
+                                                        [config]="config"></ng-otp-input>
+                                                </div>
+                                                <!-- OTP Error Message -->
+                                                <div *ngIf="otpError" class="text-danger otp1 mt-2">
+                                                    Incorrect OTP, please try again.
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Sign Up Button -->
+                                        <button class="btn btn-primary w-100 mt-16 mt-4" (click)="verifyOtp()"
+                                            [disabled]="!isOtpComplete()">
+                                            Verify OTP
+                                        </button>
+
+                                        <!-- Resend Section with Timer -->
+                                        <div class="mt-3">
+                                            Didn't get the code?
+                                            <ng-container *ngIf="!loginOtpTimeStatus; else timer">
+                                                <a href="javascript:void(0)"
+                                                    class="text-decoration-none text-primary f-w-500"
+                                                    (click)="resendOtp()" [class.disabled]="disableResendButton">
+                                                    Resend
+                                                </a>
+                                            </ng-container>
+                                            <ng-template #timer>
+                                                <span class="resend-otp-timer">Resend OTP after {{ otpTime }} sec</span>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

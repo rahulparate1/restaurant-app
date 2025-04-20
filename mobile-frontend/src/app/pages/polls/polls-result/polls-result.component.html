@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <app-page-title title="Poll Result" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card">
+        <div class="card-body">
+          <div *ngFor="let poll of pollResults; let i = index" class="progress-bar-container">
+            <div class="progress-title">{{ poll?.pollsTitle }}</div>
+
+            <div *ngFor="let option of poll?.option; let j = index" class="progress-option">
+              <div class="option-title">{{ option }}</div>
+              <span class="badge badge-primary" style="color: #007bff;">
+                {{ getVoteCount(poll, option) }}
+              </span>
+              <ng-container *ngIf="designation == designationRole[1]?.value">
+                <div class="vote-details" *ngIf="getVoteCount(poll, option) > 0">
+                  <span class="user-details">
+                    Voted by:
+                    <ng-container *ngFor="let vote of poll?.result">
+                      <span *ngIf="vote?.selection === option">{{ poll?.userName }}</span>
+                    </ng-container>
+                  </span>
+                </div>
+              </ng-container>
+
+            </div>
+          </div>
+          <div class="total-votes">
+            <h3>Total Votes: {{ totalVotes }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,10 @@
+.head-color{
+  color: rgb(144, 138, 138);
+}
+.modal-backdrop {
+  display: block !important;
+}
+
+.modal {
+  visibility: visible !important;
+}

@@ -1,0 +1,302 @@
+
+<div>
+  <form [formGroup]="basicDetailsForm">
+    <div class="row">
+      <!-- First Name -->
+      <div class="col-md-4 mb-3">
+        <label class="col-form-label">First Name*</label>
+        <input type="text" name="firstName" placeholder="Eg. John" formControlName="firstName" class="form-control"
+          [ngClass]="{
+          'is-invalid':
+            (form.firstName.dirty || form.firstName.touched) &&
+            form.firstName.errors
+        }" />
+        <div *ngIf="(form.firstName.dirty || form.firstName.touched) && form.firstName.errors" class="invalid-feedback">
+          <span class="error-message" *ngIf="form.firstName.errors?.required">First Name is required</span>
+        </div>
+      </div>
+
+      <!-- Middle Name -->
+      <div class="col-md-4 mb-3">
+        <label class="col-form-label">Middle Name*</label>
+        <input type="text" name="middleName" placeholder="Eg. William" formControlName="middleName" class="form-control"
+          [ngClass]="{
+          'is-invalid':
+            (form.middleName.dirty || form.middleName.touched) &&
+            form.middleName.errors
+        }" />
+        <div *ngIf="(form.middleName.dirty || form.middleName.touched) && form.middleName.errors"
+          class="invalid-feedback">
+          <span class="error-message" *ngIf="form.middleName.errors?.required">Middle Name is required</span>
+        </div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="col-md-4 mb-3">
+        <label class="col-form-label">Last Name*</label>
+        <input type="text" name="lastName" placeholder="Eg. Anderson" formControlName="lastName" class="form-control"
+          [ngClass]="{
+          'is-invalid':
+            (form.lastName.dirty || form.lastName.touched) &&
+            form.lastName.errors
+        }" />
+        <div *ngIf="(form.lastName.dirty || form.lastName.touched) && form.lastName.errors" class="invalid-feedback">
+          <span class="error-message" *ngIf="form.lastName.errors?.required">Last Name is required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6 mb-3">
+        <label class="col-form-label">Employee ID*</label>
+        <input
+          type="text"
+          name="employeeCode"
+          placeholder="Eg. E001"
+          formControlName="employeeCode"
+          class="form-control"
+          id="employeeCode"
+          (blur)="checkEmployeeCode($event.target.value)"
+          [ngClass]="{
+            'is-invalid': (form.employeeCode.dirty || form.employeeCode.touched) && form.employeeCode.errors
+          }"
+        />
+        <!-- Existing form validation error messages -->
+        <div *ngIf="(form.employeeCode.dirty || form.employeeCode.touched) && form.employeeCode.errors" class="invalid-feedback">
+          <span class="error-message" *ngIf="form.employeeCode.errors?.required">Employee ID is required</span>
+          <span class="error-message" *ngIf="form.employeeCode.errors?.pattern">Employee ID must be exactly 3 digits</span>
+          <span class="error-message" *ngIf="employeeCodeError">Employee Code already exists! Please try another.</span>
+        </div>
+      </div>
+
+      <!-- Date of Joining -->
+      <div class="col-md-6 mb-3">
+        <label class="col-form-label">Date Of Joining*</label>
+        <input type="date" name="dateOfJoining" placeholder="Eg. 03/10/2024" formControlName="dateOfJoining"
+          class="form-control" [ngClass]="{
+            'is-invalid':
+              (form.dateOfJoining.dirty || form.dateOfJoining.touched) &&
+              form.dateOfJoining.errors
+          }" />
+        <div *ngIf="(form.dateOfJoining.dirty || form.dateOfJoining.touched) && form.dateOfJoining.errors"
+          class="invalid-feedback">
+          <span class="error-message" *ngIf="form.dateOfJoining.errors?.required">Date Of Joining is required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Work Email -->
+      <div class="col-md-6 mb-3">
+        <label class="col-form-label">Work Email*</label>
+        <input type="email" name="email" placeholder="Eg. john@gmail.com" formControlName="email" class="form-control"
+          [ngClass]="{
+            'is-invalid':
+              (form.email.dirty || form.email.touched) &&
+              form.email.errors
+          }" />
+        <div *ngIf="(form.email.dirty || form.email.touched) && form.email.errors" class="invalid-feedback">
+          <span class="error-message" *ngIf="form.email.errors?.required">Email is required</span>
+          <span class="error-message" *ngIf="form.email.errors?.email">Invalid email format</span>
+        </div>
+      </div>
+
+      <!-- Mobile Number -->
+      <div class="col-md-6 mb-3">
+        <label class="col-form-label">Mobile Number*</label>
+        <input type="text" name="mobileNo" placeholder="Eg. 9049508902" formControlName="mobileNo" class="form-control"
+          [ngClass]="{
+          'is-invalid':
+            (form.mobileNo.dirty || form.mobileNo.touched) &&
+            form.mobileNo.errors
+        }" />
+        <div *ngIf="(form.mobileNo.dirty || form.mobileNo.touched) && form.mobileNo.errors" class="invalid-feedback">
+          <span class="error-message" *ngIf="form.mobileNo.errors?.required">Mobile number is required</span>
+          <span class="error-message" *ngIf="form.mobileNo.errors?.pattern">Invalid mobile number. It must be 10
+            digits</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Director Checkbox -->
+      <div class="col-md-6 mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" formControlName="isDirector" id="gridCheck">
+          <label class="form-check-label" for="gridCheck">
+            Employee is a Director / Person with substantial interest in the company
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Gender Dropdown -->
+      <div class="col-lg-6 mb-3">
+        <label class="form-label">Gender*</label>
+        <ng-select name="gender" formControlName="gender" [items]="['Male', 'Female', 'Other']"
+          placeholder="Select Gender"
+          [ngClass]="{'is-invalid': form.gender.dirty || form.gender.touched && form.gender.errors}">
+        </ng-select>
+        <div *ngIf="(form.gender.dirty || form.gender.touched) && form.gender.errors" class="invalid-feedback">
+          <span class="error-message" *ngIf="form.gender.errors?.required">Gender is required</span>
+        </div>
+      </div>
+
+      <!-- Employee Type Dropdown -->
+      <div class="col-lg-6 mb-3">
+        <label class="form-label">Employee Type*</label>
+        <ng-select name="employeeType" formControlName="employeeType" [items]="['On Roll', 'Contractor']"
+          placeholder="Select Employee Type"
+          [ngClass]="{'is-invalid': form.employeeType.dirty || form.employeeType.touched && form.employeeType.errors}">
+        </ng-select>
+        <div *ngIf="(form.employeeType.dirty || form.employeeType.touched) && form.employeeType.errors"
+          class="invalid-feedback">
+          <span class="error-message" *ngIf="form.employeeType.errors?.required">Employee Type is required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Designation Dropdown -->
+      <div class="col-lg-6">
+        <div class="mb-3">
+          <label class="form-label">Designation*</label>
+          <ng-select name="designation" formControlName="designation" [items]="designationList" bindLabel="title"
+            placeholder="Select Designation"
+            [ngClass]="{'is-invalid': form.designation.dirty || form.designation.touched && form.designation.errors}">
+          </ng-select>
+          <div *ngIf="(form.designation.dirty || form.designation.touched) && form.designation.errors"
+            class="invalid-feedback">
+            <span class="error-message" *ngIf="form.designation.errors?.required">Designation is required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Department Dropdown -->
+      <div class="col-lg-6">
+        <div class="mb-3">
+          <label class="form-label">Department*</label>
+          <ng-select name="department" formControlName="department" [items]="departmentList" bindLabel="departmentName"
+            placeholder="Select Department"
+            [ngClass]="{'is-invalid': form.department.dirty || form.department.touched && form.department.errors}">
+          </ng-select>
+          <div *ngIf="(form.department.dirty || form.department.touched) && form.department.errors"
+            class="invalid-feedback">
+            <span class="error-message" *ngIf="form.department.errors?.required">Department is required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manager Dropdown -->
+      <div class="col-lg-6">
+        <div class="mb-3">
+          <label class="form-label">Manager*</label>
+          <ng-select name="managerAssign" formControlName="managerAssign" [items]="employeeListData"
+            bindLabel="basicDetails.firstName" bindValue="id" placeholder="Select Manager"
+            [ngClass]="{'is-invalid': form.managerAssign.dirty || form.managerAssign.touched && form.managerAssign.errors}">
+          </ng-select>
+          <div
+            *ngIf="basicDetailsForm.get('managerAssign')?.invalid && (basicDetailsForm.get('managerAssign')?.dirty || basicDetailsForm.get('managerAssign')?.touched)"
+            class="invalid-feedback">
+            <span *ngIf="basicDetailsForm.get('managerAssign')?.errors?.required">Manager is required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shift Dropdown -->
+      <div class="col-lg-6">
+        <div class="mb-3">
+          <label class="form-label">Shift*</label>
+          <ng-select name="shift" formControlName="shift" [items]="shiftList" bindLabel="shiftName" bindValue="id"
+            placeholder="Select Shift"
+            [ngClass]="{'is-invalid': form.shift.dirty || form.shift.touched && form.shift.errors}">
+          </ng-select>
+          <div *ngIf="(form.shift.dirty || form.shift.touched) && form.shift.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.shift.errors?.required">Shift is required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Work Location Dropdown -->
+      <div class="col-lg-6">
+        <div class="mb-3">
+          <label class="form-label">Work Location*</label>
+          <ng-select name="workLocation" formControlName="workLocation" [items]="workLocationListData"
+            bindLabel="workLocationName" placeholder="Select Work Location"
+            [ngClass]="{'is-invalid': form.workLocation.dirty || form.workLocation.touched && form.workLocation.errors}">
+          </ng-select>
+          <div *ngIf="(form.workLocation.dirty || form.workLocation.touched) && form.workLocation.errors"
+            class="invalid-feedback">
+            <span class="error-message" *ngIf="form.workLocation.errors?.required">Work Location is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 mt-3">
+      <label for="image" class="col-form-label">Upload Image</label>
+      <div>
+        <input type="file" class="form-control" (change)="uploadLogo($event)" id="fileInput">
+        <div *ngIf="fileError" class="text-danger">
+          {{ fileError }}
+        </div>
+        <div *ngIf="image" class="mt-2">
+          <img [src]="image" alt="Preview" class="img-fluid" style="max-width: 200px;">
+          <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeImage()">Remove
+            Image</button>
+        </div>
+      </div>
+    </div>
+
+    <ul class="list-inline wizard d-flex justify-content-end mb-0">
+      <li class="next list-inline-item" aria-disabled="false">
+        <button type="submit" class="btn btn-primary" cdkStepperNext [disabled]="!basicDetailsForm.valid"
+          (click)="onSubmit()">Submit</button>
+      </li>
+    </ul>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

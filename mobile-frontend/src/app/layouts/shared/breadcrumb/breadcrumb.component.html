@@ -1,0 +1,76 @@
+<div class="bg-light-primary rounded p-y-30 p-x-24 m-b-30 overflow-hidden" *ngIf="  pageInfo?.['title'] != 'Analytical' && pageInfo?.['title'] != 'eCommerce'">
+  <div class="row">
+    <div class="col-sm-8">
+      <h4 class="page-title m-0 f-s-20 f-w-600 m-b-12">
+        {{ pageInfo?.['title'] }}
+      </h4>
+      <!-- <p class="page-title m-0 f-s-13">
+        {{ pageInfo?.['subTitle'] }}
+      </p>
+      <p class="page-title m-0 f-s-13">
+        {{ pageInfo?.['subTitle1'] }}
+      </p> -->
+      <!-- <div class="d-flex align-items-center">
+        <p class="page-title m-0 f-s-13">
+          {{ pageInfo?.['subTitle'] }}
+        </p>
+        <span *ngIf="pageInfo?.subTitle1" style="margin-left:2px; margin-right:2px; font-size: 25px;" class="bullet">•</span>
+        <p class="page-title m-0 f-s-13">
+          {{ pageInfo?.['subTitle1'] }}
+        </p>
+      </div> -->
+     <!-- SubTitle, SubTitle1, and SubTitle2 logic -->
+     <div class="d-flex align-items-center">
+
+      <!-- SubTitle clickable if SubTitle1 exists -->
+      <p *ngIf="pageInfo?.subTitle1" class="page-title m-0 f-s-13" [routerLink]="pageInfo?.urls[0]?.url" style="cursor: pointer;">
+        {{ pageInfo?.subTitle }}
+      </p>
+      <p *ngIf="!pageInfo?.subTitle1" class="page-title m-0 f-s-13">
+        {{ pageInfo?.subTitle }}
+      </p>
+
+      <!-- Bullet separator if SubTitle1 exists -->
+      <span *ngIf="pageInfo?.subTitle1" style="margin-left: 2px; margin-right: 2px;" class="bullet">•</span>
+
+      <!-- SubTitle1 clickable if SubTitle2 exists -->
+      <p *ngIf="pageInfo?.subTitle2" class="page-title m-0 f-s-13" [routerLink]="pageInfo?.urls[1]?.url" style="cursor: pointer;">
+        {{ pageInfo?.subTitle1 }}
+      </p>
+      <p *ngIf="!pageInfo?.subTitle2 && pageInfo?.subTitle1" class="page-title m-0 f-s-13">
+        {{ pageInfo?.subTitle1 }}
+      </p>
+
+      <!-- Bullet separator if SubTitle2 exists -->
+      <span *ngIf="pageInfo?.subTitle2" style="margin-left: 2px; margin-right: 2px;" class="bullet">•</span>
+
+      <!-- SubTitle2 not clickable as it is the last -->
+      <p *ngIf="pageInfo?.subTitle2" class="page-title m-0 f-s-13">
+        {{ pageInfo?.subTitle2 }}
+      </p>
+    </div>
+      <!-- <div class="d-flex align-items-center overflow-hidden">
+        <ng-template
+          ngFor
+          let-url
+          let-last="last"
+        >
+          <li class="breadcrumb-item" *ngIf="!last" [routerLink]="url.url">
+            <a [routerLink]="url.url">{{ url.title }}</a>
+          </li>
+          <li class="breadcrumb-item active" *ngIf="last">{{ url.title }}</li>
+        </ng-template>
+      </div> -->
+    </div>
+    </div>
+    <div class="col-sm-4 text-right position-relative">
+      <div class="breadcrumb-icon">
+        <img
+          src="/assets/images/breadcrumb/ChatBc.png"
+          alt="breadcrumb"
+          width="165"
+        />
+      </div>
+    </div>
+  </div>
+

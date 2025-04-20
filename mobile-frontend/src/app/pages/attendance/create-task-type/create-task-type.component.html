@@ -1,0 +1,94 @@
+
+<div class="container-fluid">
+  <app-page-title title="Timesheet Task Type Form" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="timesheetTaskTypeForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body border-bottom">
+                <div>
+                  <h6 class="card-title">Timesheet Task Type Details</h6>
+                  <p class="card-title-desc mb-0">
+                    Enter the details for the Timesheet Task Type.
+                  </p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <label for="taskTypeId" class="col-form-label">Task Type ID<span
+                        class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Eg. Scrum"
+                        formControlName="taskTypeId" minlength="3" maxlength="50">
+                      <div
+                        *ngIf="timesheetTaskTypeForm.get('taskTypeId').invalid && (timesheetTaskTypeForm.get('taskTypeId').dirty || timesheetTaskTypeForm.get('taskTypeId').touched)"
+                        class="text-danger">
+                        <div *ngIf="timesheetTaskTypeForm.get('taskTypeId').errors.required">
+                          Task Type ID is required.
+                        </div>
+                        <div *ngIf="timesheetTaskTypeForm.get('taskTypeId').errors.minlength">
+                          Task Type ID must be at least 3 characters.
+                        </div>
+                        <div *ngIf="timesheetTaskTypeForm.get('taskTypeId').errors.maxlength">
+                          Task Type ID must be less than 50 characters.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-3">
+                    <label for="taskTypeTitle" class="col-form-label">Task Type Name<span
+                        class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Eg. Scrum"
+                        formControlName="taskTypeTitle" minlength="3" maxlength="50">
+                      <div
+                        *ngIf="timesheetTaskTypeForm.get('taskTypeTitle').invalid && (timesheetTaskTypeForm.get('taskTypeTitle').dirty || timesheetTaskTypeForm.get('taskTypeTitle').touched)"
+                        class="text-danger">
+                        <div *ngIf="timesheetTaskTypeForm.get('taskTypeTitle').errors.required">
+                          Task Type Name is required.
+                        </div>
+                        <div *ngIf="timesheetTaskTypeForm.get('taskTypeTitle').errors.minlength">
+                          Task Type Name must be at least 3 characters.
+                        </div>
+                        <div *ngIf="timesheetTaskTypeForm.get('taskTypeTitle').errors.maxlength">
+                          Task Type Name must be less than 50 characters.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 mt-3">
+                    <label for="description" class="col-form-label">Description<span class="asterisk">*</span></label>
+                    <div>
+                      <textarea class="form-control" formControlName="description"
+                        placeholder="Eg. Scrum Discussion"></textarea>
+                      <div
+                        *ngIf="timesheetTaskTypeForm.get('description').invalid && (timesheetTaskTypeForm.get('description').dirty || timesheetTaskTypeForm.get('description').touched)"
+                        class="text-danger">
+                        <div *ngIf="timesheetTaskTypeForm.get('description').errors.required">
+                          Description is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Submit and Cancel Buttons -->
+                  <div class="col-12 d-flex justify-content-start align-items-center gap-2" style="margin-top: 15px;">
+                    <button type="submit" class="btn btn-primary btn-md" [disabled]="!timesheetTaskTypeForm.valid">
+                      <i class="bx bx-check-double font-size-16 align-middle me-2"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-dark btn-md" (click)="navigateToList()">
+                      <i class="bx bx-x-circle font-size-16 align-middle me-2"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

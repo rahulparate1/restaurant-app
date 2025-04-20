@@ -1,0 +1,382 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title
+    title="Support Ticket Details"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <!-- end page title -->
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="flex-shrink-0 me-4">
+              <img alt="" class="avatar-sm" [src]="supportDetailsData?.image" />
+            </div>
+
+            <div class="flex-grow-1 overflow-hidden">
+              <h5 class="text-truncate font-size-15">
+                {{ supportDetailsData?.type }}
+              </h5>
+              <p class="text-muted">{{ supportDetailsData?.title }}</p>
+            </div>
+          </div>
+
+          <!-- Status Section -->
+          <div class="mt-4">
+            <h5 class="font-size-14">
+              <i class="bx bx-info-circle me-1 text-primary"></i> Status
+            </h5>
+            <p class="text-muted mb-0">
+              {{ getStatusLabel(supportDetailsData?.status) }}
+            </p>
+          </div>
+
+          <h5 class="font-size-15 mt-4">Support Ticket Details :</h5>
+          <p class="text-muted">{{ supportDetailsData?.description }}</p>
+
+          <div class="row task-dates">
+            <div class="col-sm-4 col-6">
+              <div class="mt-4">
+                <h5 class="font-size-14">
+                  <i class="bx bx-calendar me-1 text-primary"></i> Support
+                  Ticket Date
+                </h5>
+                <p class="text-muted mb-0">
+                  {{ supportDetailsData?.date || "--" }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end col -->
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Activity</h4>
+              <ul
+                ngbNav
+                #customNav="ngbNav"
+                [activeId]="1"
+                class="nav-tabs nav-tabs-custom"
+              >
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"
+                      ><i class="fas fa-ticket-alt"></i
+                    ></span>
+                    <span class="d-none d-sm-block">Assign Ticket</span>
+                  </a>
+                  <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+                    <div class="card-body">
+                      <h6>Assign Ticket</h6>
+                      <form [formGroup]="assignTicketForm">
+                        <div class="mb-3">
+                          <label for="assignee" class="form-label"
+                            >Assign To:</label
+                          >
+                          <ng-select
+                            [items]="adminUsersList"
+                            formControlName="assignee"
+                            bindLabel="fullName"
+                            placeholder="Select an assignee"
+                            id="assignee"
+                            required
+                          >
+                          </ng-select>
+                          <div
+                            *ngIf="
+                              assignTicketForm.get('assignee')?.invalid &&
+                              assignTicketForm.get('assignee')?.touched
+                            "
+                            class="text-danger"
+                          >
+                            Assignee is required.
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            (click)="cancelAssignTicket()"
+                          >
+                            <i class="bx bx-reset"></i>
+                          </button>
+                          <button
+                            type="submit"
+                            class="btn btn-primary"
+                            (click)="assignTicket()"
+                            [disabled]="!assignTicketForm.valid"
+                          >
+                            Assign
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"
+                      ><i class="fas fa-home"></i
+                    ></span>
+                    <span class="d-none d-sm-block">Comments</span>
+                  </a>
+                  <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabContent"> </ng-template>
+                    <div class="card-body">
+                      <div class="comment-form mt-4">
+                        <h6>
+                          {{
+                            isEditingComment ? "Edit Comment" : "Post a Comment"
+                          }}
+                        </h6>
+                        <form [formGroup]="commentForm">
+                          <div class="mb-3">
+                            <textarea
+                              id="comment"
+                              rows="3"
+                              class="form-control"
+                              formControlName="commentText"
+                              placeholder="Add a comment"
+                              minlength="10"
+                              maxlength="201"
+                            ></textarea>
+                            <div
+                              *ngIf="
+                                commentForm.get('commentText').invalid &&
+                                (commentForm.get('commentText').dirty ||
+                                  commentForm.get('commentText').touched)
+                              "
+                              class="text-danger"
+                            >
+                              <div
+                                *ngIf="
+                                  commentForm.get('commentText').errors.required
+                                "
+                              >
+                                Comment is required.
+                              </div>
+                              <div
+                                *ngIf="
+                                  commentForm.get('commentText').errors
+                                    ?.minlength
+                                "
+                              >
+                                Comment must be at least 10 characters long
+                              </div>
+                              <div
+                                *ngIf="
+                                  commentForm.get('commentText').errors
+                                    ?.maxlength
+                                "
+                              >
+                                Comment cannot exceed 200 characters
+                              </div>
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-end gap-2">
+                            <button
+                              class="btn btn-light ms-3"
+                              (click)="cancelEdit()"
+                            >
+                              <i class="bx bx-reset"></i>
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              (click)="postComment()"
+                              [disabled]="!commentForm.valid"
+                            >
+                              {{ isEditingComment ? "Save" : "Post Comment" }}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+
+                      <!-- Comments Section -->
+                      <div class="comments-section mt-4">
+                        <h6 *ngIf="supportDetailsData?.comments?.length > 0">
+                          Comments
+                        </h6>
+                        <div
+                          *ngFor="
+                            let comment of supportDetailsData?.comments;
+                            let i = index
+                          "
+                          class="comment-item py-3"
+                        >
+                          <div class="d-flex align-items-start">
+                            <div class="me-3">
+                              <div class="avatar-xs">
+                                <div
+                                  class="avatar-title rounded-circle bg-light text-primary"
+                                >
+                                  <i class="bx bxs-user"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flex-grow-1">
+                              <div class="d-flex justify-content-between">
+                                <h6 class="font-size-14 mb-1">
+                                  {{ comment.commentedBy }}
+                                </h6>
+                                <small class="text-muted">{{
+                                  comment.commentDate | date : "short"
+                                }}</small>
+                              </div>
+                              <p class="text-muted mb-1 word-wrap">
+                                {{ comment.commentText }}
+                              </p>
+                              <p class="font-size-12 text-muted">
+                                {{ comment.designation }}
+                              </p>
+                              <div>
+                                <div
+                                  *ngIf="user?.user?.id === comment.userId"
+                                  style="display: flex; align-items: center"
+                                >
+                                  <!-- Edit Button -->
+                                  <a
+                                    (click)="editComment(i)"
+                                    class="m-r-10 cursor-pointer"
+                                    style="
+                                      font-size: 20px;
+                                      color: grey;
+                                      cursor: pointer;
+                                      transition: color 0.3s ease;
+                                    "
+                                  >
+                                    <i
+                                      class="bx bx-edit"
+                                      style="color: grey"
+                                    ></i>
+                                  </a>
+                                  <!-- Delete Button -->
+                                  <a
+                                    (click)="deleteComment(i)"
+                                    class="m-r-10 cursor-pointer"
+                                    style="
+                                      font-size: 20px;
+                                      color: red;
+                                      cursor: pointer;
+                                      margin-left: 10px;
+                                      transition: color 0.3s ease;
+                                    "
+                                  >
+                                    <i
+                                      class="bx bx-trash"
+                                      style="color: red"
+                                    ></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </li>
+                <li [ngbNavItem]="4">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"
+                      ><i class="far fa-envelope"></i
+                    ></span>
+                    <span class="d-none d-sm-block">History</span>
+                  </a>
+                  <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+                    <div class="card-body">
+                      <!-- Activity Section -->
+                      <div class="activity-section mt-4">
+                        <h6>Activity</h6>
+                        <!-- Loop through activityLogs -->
+                        <div
+                          *ngFor="
+                            let activity of supportDetailsData?.activityLogs
+                              ?.slice()
+                              .reverse();
+                            let i = index
+                          "
+                          class="activity-item py-3"
+                        >
+                          <div class="d-flex align-items-start">
+                            <div class="me-3">
+                              <div class="avatar-xs">
+                                <div
+                                  class="avatar-title rounded-circle bg-light text-primary"
+                                >
+                                  <i class="bx bxs-user"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flex-grow-1">
+                              <!-- Resignation creation -->
+                              <div *ngIf="activity.newStatus">
+                                <p class="text-muted mb-1">
+                                  <strong>{{ activity?.userName }}</strong> has
+                                  changed the Status from
+                                  <strong>
+                                    {{
+                                      getStatusLabel(activity?.previousStatus)
+                                    }}
+                                  </strong>
+                                  to
+                                  <strong>
+                                    {{ getStatusLabel(activity?.newStatus) }}
+                                  </strong>
+                                  {{
+                                    activity.timestamp | date : "MMMM d, yyyy"
+                                  }}
+                                  at
+                                  {{
+                                    activity.timestamp
+                                      | date
+                                        : "h:mm
+                                  a"
+                                  }}
+                                </p>
+                              </div>
+                            </div>
+                            <!-- Assignee change log -->
+                            <div *ngIf="activity?.newAssignee">
+                              <p class="text-muted mb-1">
+                                <strong>{{ activity?.userName }}</strong> has
+                                changed the Assignee from
+                                <strong>
+                                  {{
+                                    activity?.previousAssignee || "Unassigned"
+                                  }}
+                                </strong>
+                                to
+                                <strong> {{ activity?.newAssignee }} </strong>
+                                {{
+                                  activity.timestamp | date : "MMMM d, yyyy"
+                                }}
+                                at
+                                {{ activity.timestamp | date : "h:mm a" }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </li>
+              </ul>
+              <div [ngbNavOutlet]="customNav"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>

@@ -1,0 +1,12 @@
+.chart-letter{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  background-color: #89888e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 900;
+}

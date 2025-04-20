@@ -1,0 +1,25 @@
+<div>
+  <form [formGroup]="leaveDetailsForm">
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let item of leaveData">
+        <label class="col-form-label">{{ item?.name }}*</label>
+        <input type="text" [formControlName]="item.name" [(ngModel)]="employeeLeaveBalance[item.id]"
+          [placeholder]="item.name" class="form-control" />
+        <div *ngIf="leaveDetailsForm.controls[item.name]?.dirty || leaveDetailsForm.controls[item.name]?.touched" class="invalid-feedback">
+          <span class="error-message" *ngIf="leaveDetailsForm.controls[item.name]?.errors?.required">
+            Required
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <ul class="list-inline wizard d-flex justify-content-end mb-0">
+      <li class="previous list-inline-item" aria-disabled="true"><button class="btn btn-primary"
+          cdkStepperPrevious>Previous</button></li>
+      <li class="next list-inline-item" aria-disabled="false">
+        <button class="btn btn-primary" cdkStepperNext type="submit" [disabled]="!leaveDetailsForm.valid"
+          (click)="onSubmit()">Submit</button>
+      </li>
+    </ul>
+  </form>
+</div>

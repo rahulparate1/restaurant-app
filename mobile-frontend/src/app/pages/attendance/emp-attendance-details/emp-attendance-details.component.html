@@ -1,0 +1,95 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body border-bottom">
+          <div class="d-flex align-items-center">
+            <h5 class="mb-0 card-title flex-grow-1">Employee Attendance</h5>
+            <div class="col-xxl-2 col-lg-3">
+              <div class="mb-3 row">
+                <input class="form-control" type="month" [(ngModel)]="month" (change)="onMonthChange()"
+                  id="example-month-input">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="col-lg-12 align-self-center">
+            <div class="text-lg-center mt-4 mt-lg-0">
+              <div class="row">
+                <div class="col-2">
+                  <div>
+                    <p class="text-muted text-truncate mb-2">Total Day's In Month</p>
+                    <h5 class="mb-0">{{ totalDaysInMonth }}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div>
+                    <p class="text-muted text-truncate mb-2">Holiday</p>
+                    <h5 class="mb-0">{{ holidayCount }}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div>
+                    <p class="text-muted text-truncate mb-2">Total Work Day's</p>
+                    <h5 class="mb-0">{{ totalWorkDays }}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div>
+                    <p class="text-muted text-truncate mb-2">Present</p>
+                    <h5 class="mb-0">{{ presentCount }}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div>
+                    <p class="text-muted text-truncate mb-2">Absent</p>
+                    <h5 class="mb-0">{{ absentCount }}</h5>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div>
+                    <p class="text-muted text-truncate mb-2">Half Day</p>
+                    <h5 class="mb-0">{{ halfDayCount }}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle nowrap">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Day</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let attendance of attendanceList"
+                    [ngClass]="{
+                      'bg-success': attendance.status === 'Present',
+                      'bg-danger': attendance.status === 'Absent',
+                      'bg-warning': attendance.status === 'Half Day',
+                      'bg-secondary': attendance.status === 'Weekend',
+                      'bg-info': attendance.status === 'Holiday'
+                    
+                    }">
+                  <td>{{ attendance.date }}</td>
+                  <td>{{ attendance.day }}</td>
+                  <td>{{ attendance.status }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

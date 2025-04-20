@@ -1,0 +1,32 @@
+<div class="row mt-3">
+  <p> Stepper </p>
+  <div class="col-lg-12">
+    <ul class="nav-pills nav-tabs-custom nav-justified d-flex flex-column">
+      <li>
+        <a (click)="switchTab('basicDetails')">
+          <span class="me-2"><i class="bx bx-grid-alt"></i></span>
+          <span class="">Basic Details</span>
+        </a>
+      </li>
+      <li>
+        <a (click)="switchTab('leaveDetails')">
+          <span class="me-2"><i class="bx bx-image"></i></span>
+          <span>Leave Details</span>
+        </a>
+      </li>
+      <li>
+        <a (click)="switchTab('bankDetails')">
+          <span class="me-2"><i class="bx bx-money"></i></span>
+          <span>Bank Details</span>
+        </a>
+      </li>
+      <li>
+        <a (click)="switchTab('salaryDetails')">
+          <span class="me-2"><i class="bx bx-area"></i></span>
+          <span>Salary Details</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <router-outlet></router-outlet>
+</div>

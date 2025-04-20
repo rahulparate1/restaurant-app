@@ -1,0 +1,47 @@
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: #556ee6;
+  color: white;
+}
+
+.custom-day.faded {
+  background-color: #556ee6;
+}
+
+.image-container {
+  overflow: hidden;
+  border-radius: 8px; /* Optional: to make the image container rounded */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: to add a shadow */
+}
+
+.uploaded-image {
+  object-fit: cover; /* Ensures the image fills the container */
+  width: 100%;
+  height: 100%;
+}
+.image {
+  height: 91px;
+  width: 100%;
+  border-radius: 10px 10px 10px 10px;
+  background-size: cover;
+}
+
+.newsFeed-image-preview {
+  width: 200px;
+  height: auto;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

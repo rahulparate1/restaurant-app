@@ -1,0 +1,17 @@
+.me-3 {
+  margin-right: 1rem; /* Adds space between image and text */
+  margin-top: 10%;
+}
+.chart-letter {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  color: #ffff;
+  background-color: #44b7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 900;
+}

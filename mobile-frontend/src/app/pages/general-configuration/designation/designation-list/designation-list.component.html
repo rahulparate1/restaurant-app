@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <app-page-title title="Designation" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card banner-left">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Horizontal Timeline</h4>
+          <button class="btn btn-light btn-rounded btn-sm banner-close">
+            <i class="bx bx-plus font-size-16"></i>
+          </button>
+          <div class="hori-timeline">
+            <ngx-slick-carousel dir="ltr" [config]="slideConfig" class="events navs-carousel mb-3">
+              <div ngxSlickItem>
+                <div class="item event-list">
+                  <div>
+                    <div class="event-date">
+                      <h5 class="mb-2">Create Designation</h5>
+                    </div>
+                    <div class="mt-3 px-3">
+                      <p class="text-muted mb-0">The direction is great. Octavia Spencer had a show on Apple TV+,
+                        but Apple canceled it in the spring.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div ngxSlickItem>
+                <div class="item event-list">
+                  <div>
+                    <div class="event-date">
+                      <h5 class="mb-2">Create Designation</h5>
+                    </div>
+                    <div class="mt-3 px-3">
+                      <p class="text-muted mb-0">The direction is great. Octavia Spencer had a show on Apple TV+,
+                        but Apple canceled it in the spring.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ngx-slick-carousel>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body border-bottom d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-2 card-title flex-grow-1">Designation List</h5>
+        <p class="mb-0 font-size-12 text-muted">
+          The direction is great. Octavia Spencer had a show on Apple TV+, but Apple canceled it in the spring.
+        </p>
+      </div>
+      <div class="">
+        <button class="btn btn-primary" (click)="addDesignation()">Add New Designation</button>
+      </div>
+    </div>
+
+    <div class="card-body pb-0">
+      <div class="row justify-content-end">
+        <div class="col-12 col-lg-4">
+          <div class="row justify-content-between">
+            <div class="col">
+              <input type="text" class="form-control" id="searchInput" [(ngModel)]="filterBy"
+                placeholder="Eg. Software Engineer" (keyup)="filter()" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body border-bottom pb-0" *ngIf="designationData?.length > 0">
+      <div class="table-responsive">
+        <table class="table  align-middle nowrap">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Sr No.</th>
+              <th scope="col">Designation Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of designationData; index as i">
+              <td>{{ 1+i || 'N/A' }}</td>
+              <td>{{ item?.title || 'N/A' }}</td>
+              <td>{{ item?.description || 'N/A' }}</td>
+              <td>
+                <ul class="list-unstyled hstack gap-1 mb-0">
+                  <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                    <a href="javascript:void(0);" (click)="onEdit(item?.id)"
+                      class="btn btn-sm btn-dark  d-flex align-items-center p-2"><i class="bx bx-cog"></i></a>
+                  </li>
+                  <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                    <a href="javascript:void(0);" data-bs-toggle="modal" (click)="deleteDesignation(item?.id)"
+                      class="btn btn-sm btn-danger  d-flex align-items-center p-2"><i class="bx bx-trash-alt"></i></a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div *ngIf="designationData?.length == 0" class="card mt-5 py-5">
+      <div class="card-body text-center">
+        <i class="bx bx-box text-primary h2 mb-4"></i>
+        <p class="text-muted">
+          There are no designation available.
+        </p>
+        <div class="btn btn-sm btn-primary" (click)="addDesignation()">
+          Add New Designation
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

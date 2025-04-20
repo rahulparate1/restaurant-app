@@ -1,0 +1,219 @@
+<div class="container-fluid">
+  <div class="card mt-4">
+    <div class="card-header">
+      <h4>News Feed Form</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="newsFeedForm" (ngSubmit)="postNewsFeedData($event)">
+        <div class="row">
+          <!-- Type Field -->
+      <div class="form-group col-12 col-md-6 mt-3">
+            <label class="form-label">
+              Type<span class="asterisk">*</span>
+            </label>
+            <ng-select
+              [items]="newsFeedTypes"
+              bindLabel="label"
+              bindValue="value"
+              placeholder="Select Newsfeed Type"
+              [searchable]="false"
+              [clearable]="false"
+              formControlName="newsType"
+            >
+            </ng-select>
+            <div
+              *ngIf="
+                newsFeedForm.get('newsType').touched &&
+                newsFeedForm.get('newsType').hasError('required')
+              "
+              class="text-danger mt-1"
+            >
+              Newsfeed Type is required.
+            </div>
+          </div>
+
+          <!-- Title Field -->
+          <div class="form-group col-12 col-md-6 mt-3">
+            <label for="title" class="form-label"
+              >Title<span class="asterisk">*</span></label
+            >
+            <input
+              type="text"
+              id="title"
+              formControlName="title"
+              class="form-control"
+              placeholder="Eg. Birthday Celebration"
+              aria-describedby="titleHelp"
+              minlength="5"
+              maxlength="250"
+            />
+            <div
+                      *ngIf="newsFeedForm.get('title').hasError('minlength')"
+                      class="error"
+                    >
+                      Please enter a valid title (greater than or equal to 5
+                      Characters).
+                    </div>
+                    <div
+                      *ngIf="newsFeedForm.get('title').hasError('maxlength')"
+                      class="error"
+                    >
+                      Please enter a valid title (less than or equal to 250).
+                    </div>
+            <div
+              *ngIf="
+                newsFeedForm.get('title').touched &&
+                newsFeedForm.get('title').hasError('required')
+              "
+              class="text-danger mt-1"
+            >
+              Title is required.
+            </div>
+          </div>
+
+          <!-- Description Field -->
+          <div class="form-group col-12 col-md-6 mt-3">
+            <label for="description"
+              >Description<span class="asterisk">*</span></label
+            >
+            <textarea
+              formControlName="description"
+              class="form-control"
+              id="description"
+              placeholder="Eg. Today, we are celebrating Rahul's Birthday."
+            ></textarea>
+            <div
+            *ngIf="
+              newsFeedForm.get('description').touched &&
+              newsFeedForm.get('description').errors
+            "
+          >
+            <div
+              *ngIf="
+                newsFeedForm.get('description').hasError('required')
+              "
+              class="text-danger"
+            >
+              Description is required.
+            </div>
+
+            <div
+            *ngIf="
+              newsFeedForm.get('description').hasError('minlength')
+            "
+            class="error"
+          >
+            Description must be at least 5 characters long.
+          </div>
+</div>
+          </div>
+
+          <!-- Date Field -->
+          <div class="form-group col-12 col-md-6 mt-3">
+            <label for="date">Date<span class="asterisk">*</span></label>
+            <input
+              type="text"
+              id="date"
+              formControlName="date"
+              class="form-control"
+              [value]="currentDate"
+              readonly
+            />
+            <div
+              *ngIf="
+                newsFeedForm.get('date').touched &&
+                newsFeedForm.get('date').hasError('required')
+              "
+              class="text-danger"
+            >
+              Date is required.
+            </div>
+          </div>
+
+          <!-- Time Field -->
+          <div class="form-group col-12 col-md-6 mt-3">
+            <label for="time"
+              >Reading Time (In min)<span class="asterisk">*</span></label
+            >
+            <input
+              type="number"
+              id="time"
+              formControlName="time"
+              class="form-control"
+              placeholder="Eg. 5 mins read"
+              min="1"
+              max="60"
+            />
+            <div
+              *ngIf="
+                newsFeedForm.get('time').touched &&
+                newsFeedForm.get('time').hasError('required')
+              "
+              class="text-danger"
+            >
+              Time is required.
+            </div>
+            <div
+              *ngIf="
+                newsFeedForm.get('time').touched &&
+                newsFeedForm.get('time').hasError('min') &&
+                !newsFeedForm.get('time').hasError('required')
+              "
+              class="text-danger"
+            >
+              Time must be at least 1 minute.
+            </div>
+            <div
+              *ngIf="
+                newsFeedForm.get('time').touched &&
+                newsFeedForm.get('time').hasError('max') &&
+                !newsFeedForm.get('time').hasError('required')
+              "
+              class="text-danger"
+            >
+              Time cannot exceed 60 minutes.
+            </div>
+          </div>
+          <div class="form-group col-md-6 mt-3">
+            <h5 class="d-flex align-items-center f-w-600">Upload Image</h5>
+            <input
+              type="file"
+              id="fileInput"
+              (change)="uploadLogo($event)"
+              accept="image/*"
+              class="form-control-file"
+            />
+            <div *ngIf="fileError" class="error mt-2">
+              {{ fileError }}
+            </div>
+            <div *ngIf="image && !fileError" class="mt-2">
+              <img
+                [src]="image"
+                alt="Attachment Preview"
+                class="newsFeed-image-preview"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- Buttons -->
+        <div class="col-12 mt-3">
+          <button
+            type="button"
+            (click)="postCancel()"
+            class="btn btn-secondary mr-2"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary ml-2"
+            [disabled]="fileExtensionError || fileError"
+            style="margin-left: 10px"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

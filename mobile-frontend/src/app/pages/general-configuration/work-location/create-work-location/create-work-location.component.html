@@ -1,0 +1,148 @@
+<div class="container-fluid">
+  <app-page-title title="Work Location Form" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="workLocationForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body border-bottom">
+                <div>
+                  <h6 class="card-title">Work Location Details</h6>
+                  <p class="card-title-desc mb-0">
+                    Enter the details for the work location.
+                  </p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+
+                  <div class="col-12 mt-3">
+                    <label for="workLocationName" class="col-form-label">Work Location Name<span
+                        class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Eg. New York Office"
+                        formControlName="workLocationName" minlength="10" maxlength="50">
+                      <div
+                        *ngIf="workLocationForm.get('workLocationName').invalid && (workLocationForm.get('workLocationName').dirty || workLocationForm.get('workLocationName').touched)"
+                        class="text-danger">
+                        <div *ngIf="workLocationForm.get('workLocationName').errors.required">
+                          Work Location Name is required.
+                        </div>
+                        <div *ngIf="workLocationForm.get('workLocationName').errors.minlength">
+                          Work Location Name must be at least 10 characters.
+                        </div>
+                        <div *ngIf="workLocationForm.get('workLocationName').errors.maxlength">
+                          Work Location Name must be less than 50 characters.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 mt-3">
+                    <label for="address1" class="col-form-label">Address Line 1<span class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Eg. 1234 Elm Street Apt 56B Los Angeles" formControlName="address1"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-6 mt-3">
+                    <label for="address2" class="col-form-label">Address Line 2<span class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Eg.  CA 90001 USA" formControlName="address2"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-6 mt-3">
+                    <label for="country" class="col-form-label">Country<span class="asterisk">*</span></label>
+                    <input class="form-control" name="country" type="text" readonly formControlName="country" (change)="onCountryChange()" />
+                    <div>
+                      <div *ngIf="workLocationForm.get('country').invalid && (workLocationForm.get('country').dirty || workLocationForm.get('country').touched)" class="text-danger">
+                        <div *ngIf="workLocationForm.get('country').errors.required">
+                          Country is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- State field is shown only if the selected country is India -->
+                  <div *ngIf="workLocationForm.get('country').value === 'India'" class="col-6 mt-3">
+                    <label for="state" class="col-form-label">State<span class="asterisk">*</span></label>
+                    <ng-select [searchable]="false" [items]="states" bindLabel="name" bindValue="isoCode"
+                      [multiple]="false" placeholder="Select your state" formControlName="state"
+                      [compareWith]="compareState" (change)="onStateChange($event)" [clearable]="false">
+                    </ng-select>
+                    <div *ngIf="workLocationForm.get('state').invalid && (workLocationForm.get('state').dirty || workLocationForm.get('state').touched)" class="text-danger">
+                      <div *ngIf="workLocationForm.get('state').errors.required">
+                        State is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- City field is shown only if a state is selected -->
+                  <div *ngIf="selectedState" class="col-6 mt-3">
+                    <label for="city" class="col-form-label">City<span class="asterisk">*</span></label>
+                    <ng-select [searchable]="false" [items]="cities" bindLabel="name" bindValue="name"
+                      [multiple]="false" placeholder="Select your city" formControlName="city"
+                      [compareWith]="compareCity" (change)="onCityChange($event)" [clearable]="false">
+                    </ng-select>
+                    <div *ngIf="workLocationForm.get('city').invalid && (workLocationForm.get('city').dirty || workLocationForm.get('city').touched)" class="text-danger">
+                      <div *ngIf="workLocationForm.get('city').errors.required">
+                        City is required.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6 mt-3">
+                    <label for="pincode" class="col-form-label">Pincode<span class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Eg. 440018" formControlName="pincode"
+                        pattern="^[1-9][0-9]{5}$" required>
+                      <div
+                        *ngIf="workLocationForm.get('pincode').invalid && (workLocationForm.get('pincode').dirty || workLocationForm.get('pincode').touched)"
+                        class="text-danger">
+                        <div *ngIf="workLocationForm.get('pincode').errors.required">
+                          Pincode is required.
+                        </div>
+                        <div *ngIf="workLocationForm.get('pincode').errors.pattern">
+                          Enter a valid Pincode.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mt-3">
+                    <label for="description" class="col-form-label">Description<span class="asterisk">*</span></label>
+                    <div>
+                      <textarea class="form-control" formControlName="description"
+                        placeholder="Eg. Main office in New York"></textarea>
+                      <div
+                        *ngIf="workLocationForm.get('description').invalid && (workLocationForm.get('description').dirty || workLocationForm.get('description').touched)"
+                        class="text-danger">
+                        <div *ngIf="workLocationForm.get('description').errors.required">
+                          Description is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Submit and Cancel Buttons -->
+                  <div class="col-12 d-flex justify-content-start align-items-center gap-2" style="margin-top: 15px;">
+                    <button type="submit" class="btn btn-primary btn-md" [disabled]="!workLocationForm.valid">
+                      <i class="bx bx-check-double font-size-16 align-middle me-2"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-dark btn-md" (click)="navigateToList()">
+                      <i class="bx bx-x-circle font-size-16 align-middle me-2"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

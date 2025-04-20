@@ -1,0 +1,160 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <form [formGroup]="exitForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body border-bottom">
+                <div>
+                  <h6 class="card-title">Apply Resignation</h6>
+                  <p class="card-title-desc mb-0">
+                    Enter the details for your resignation request.
+                  </p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <!-- Title Field -->
+                  <div class="col-12">
+                    <label for="titleNameInput" class="col-form-label">Title<span class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" id="titleNameInput" placeholder="Eg. Apply Resignation"
+                        formControlName="title" minlength="10" maxlength="51">
+
+                      <div
+                        *ngIf="exitForm.get('title').invalid && (exitForm.get('title').dirty || exitForm.get('title').touched)"
+                        class="text-danger">
+                        <div *ngIf="exitForm.get('title').errors?.required">
+                          Title is required.
+                        </div>
+                        <div *ngIf="exitForm.get('title').errors?.minlength">
+                          Title must be at least 10 characters.
+                        </div>
+                        <div *ngIf="exitForm.get('title').errors?.maxlength">
+                          Title must be less than 50 characters.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Reason Select -->
+
+                  <div class="col-6 mt-3">
+                    <label for="reasonInput" class="col-form-label">Reason<span class="asterisk">*</span></label>
+                    <div>
+                      <ng-select id="reasonInput" [items]="reasonList" bindLabel="label" bindValue="id"
+                        placeholder="Please select a reason" formControlName="reason" [clearable]="true"
+                        [virtualScroll]="true">
+                      </ng-select>
+                      <div
+                        *ngIf="exitForm.get('reason').invalid && (exitForm.get('reason').dirty || exitForm.get('reason').touched)"
+                        class="text-danger">
+                        <div *ngIf="exitForm.get('reason').errors.required">
+                          Reason is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 mt-3">
+                    <label for="dateInput" class="col-form-label">Date<span class="asterisk">*</span></label>
+                    <div>
+                      <h5 class="form-control" style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 6px;">
+                        {{ today | date:'dd-MM-yyyy' }}
+                      </h5>
+                      <div
+                        *ngIf="exitForm.get('date').invalid && (exitForm.get('date').dirty || exitForm.get('date').touched)"
+                        class="text-danger">
+                        <div *ngIf="exitForm.get('date').errors.required">Date is required.</div>
+                        <div *ngIf="exitForm.get('date').errors.invalidDateFormat">Please enter a valid year in
+                          dd-mm-yyyy format.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Description Field -->
+                  <div class="col-12 mt-3">
+                    <label for="descriptionInput" class="col-form-label">Description<span
+                        class="asterisk">*</span></label>
+                    <div>
+                      <textarea formControlName="description" class="form-control" id="descriptionInput"
+                        placeholder="Eg. Please provide details for your resignation process." minlength="10"
+                        maxlength="501"></textarea>
+                      <div
+                        *ngIf="exitForm.get('description').invalid && (exitForm.get('description').dirty || exitForm.get('description').touched)"
+                        class="text-danger">
+                        <div *ngIf="exitForm.get('description').errors.required">
+                          Description is required.
+                        </div>
+                        <div *ngIf="exitForm.get('description').errors?.minlength">Description must be at least 10
+                          characters long</div>
+                        <div *ngIf="exitForm.get('description').errors?.maxlength">Description cannot exceed 500
+                          characters</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Image Upload Section -->
+                  <div class="col-12 mt-3">
+                    <label for="image" class="col-form-label">Upload Document</label>
+                    <div>
+                      <input type="file" class="form-control" (change)="fileChangeEvent($event)" accept="image/*"
+                        id="fileInput" multiple>
+
+                      <!-- Display Error Message if any -->
+                      <div *ngIf="fileError" class="text-danger">
+                        {{ fileError }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Gallery Section -->
+                  <div class="row mt-3">
+                    <div class="col-2" *ngFor="let item of gallery; let i = index">
+                      <div class="document-container">
+                        <div class="image">
+                          <!-- Check if the item is an image, PDF, Word, or other file types -->
+                          <ng-container *ngIf="getDocumentPreview(item).type === 'image'">
+                            <img [src]="getDocumentPreview(item).url" alt="Gallery Image" class="img-fluid"
+                              style="max-width: 60%;" (click)="setMainImage(item)">
+                          </ng-container>
+
+                          <ng-container *ngIf="getDocumentPreview(item).type === 'pdf'">
+                            <i class="fas fa-file-pdf img-fluid" style="max-width: 100%;"></i>
+                          </ng-container>
+
+                          <ng-container *ngIf="getDocumentPreview(item).type === 'word'">
+                            <i class="fas fa-file-word img-fluid" style="max-width: 100%;"></i>
+                          </ng-container>
+
+                          <ng-container *ngIf="getDocumentPreview(item).type === 'text'">
+                            <i class="fas fa-file-alt img-fluid" style="max-width: 100%;"></i>
+                          </ng-container>
+
+                          <ng-container *ngIf="getDocumentPreview(item).type === 'unsupported'">
+                            <div class="badge bg-danger font-size-11">Unsupported File Type</div>
+                          </ng-container>
+                        </div>
+
+                        <!-- Delete Icon -->
+                        <div class="delete-icon" (click)="deleteImage(i)">
+                          <i class="fas fa-trash"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Submit and Cancel Buttons -->
+                  <div class="col-12 d-flex justify-content-start align-items-center gap-2" style="margin-top: 15px;">
+                    <button type="submit" class="btn btn-primary btn-md" [disabled]="!exitForm.valid">
+                      <i class="bx bx-check-double font-size-16 align-middle me-2"></i> Apply
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

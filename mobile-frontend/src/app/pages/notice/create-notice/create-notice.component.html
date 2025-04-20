@@ -1,0 +1,203 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Add Notice"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="noticeForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <div class="card">
+              <div class="card-body border-bottom">
+                <div>
+                  <h6 class="card-title">Notice Details</h6>
+                  <p class="card-title-desc mb-0">
+                    Please fill in the details to add a new notice.
+                  </p>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Title -->
+                <div class="row mb-4">
+                  <div class="col-12 mb-3">
+                    <label class="form-label">
+                      Title<span class="asterisk">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Eg. Enter notice title"
+                      formControlName="noticeTitle"
+                      class="form-control"
+                      minlength="5"
+                      maxlength="250"
+                    />
+                    <div
+                      *ngIf="
+                        noticeForm.get('noticeTitle').hasError('minlength')
+                      "
+                      class="error"
+                    >
+                      Title must be at least 5 characters long.
+                    </div>
+                    <div
+                      *ngIf="
+                        noticeForm.get('noticeTitle').hasError('maxlength')
+                      "
+                      class="error"
+                    >
+                      Title cannot exceed 250 characters.
+                    </div>
+                    <div
+                      *ngIf="
+                        noticeForm.get('noticeTitle').touched &&
+                        noticeForm.get('noticeTitle').hasError('required')
+                      "
+                      class="error"
+                    >
+                      Title is required.
+                    </div>
+                  </div>
+                  <!-- Work Location -->
+                  <!-- <div class="col-12 mb-3">
+                    <label class="form-label">
+                      Work Location<span class="asterisk">*</span>
+                    </label>
+                    <select class="form-control" formControlName="workLocation">
+                      <option [ngValue]="null" disabled>
+                        Select Work Location
+                      </option>
+                      <option
+                        *ngFor="let location of workLocations"
+                        [ngValue]="location"
+                      >
+                        {{ location?.workLocationName }}
+                      </option>
+                    </select>
+                  </div> -->
+
+                  <div class="col-12 mb-3">
+                    <label class="form-label">
+                      Work Location</label>
+                    <ng-select
+                      formControlName="workLocation"
+                      [items]="workLocations"
+                      bindLabel="workLocationName"
+                      bindValue="id"
+                      placeholder="Select Work Location"
+                      [clearable]="true"
+                    >
+                    </ng-select>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">
+                      Department</label>
+                    <ng-select
+                      formControlName="department"
+                      [items]="departments"
+                      bindLabel="departmentName"
+                      bindValue="id"
+                      placeholder="Select Department"
+                      [clearable]="true"
+                    >
+                    </ng-select>
+                  </div>
+
+
+                  <!-- Description -->
+                  <div class="col-12 mb-3">
+                    <label class="form-label">
+                      Description<span class="asterisk">*</span>
+                    </label>
+                    <ckeditor
+                      formControlName="description"
+                      [editor]="Editor"
+                      placeholder="Eg. Enter notice description"
+                      (blur)="validateDescription()"
+                    >
+                    </ckeditor>
+                    <div *ngIf="noticeForm.get('description').touched">
+                      <div *ngIf="noticeForm.get('description').hasError('required')" class="error">
+                        Description is required.
+                      </div>
+                      <div *ngIf="descriptionTooShort" class="error">
+                        Description must be at least 10 characters long.
+                      </div>
+                      <div *ngIf="descriptionTooLong" class="error">
+                        Description cannot exceed 500 characters.
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Date -->
+                  <!-- <div class="col-6 mb-3">
+                    <label class="form-label">
+                      Date<span class="asterisk">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      formControlName="noticeDate"
+                      [min]="today"
+                    />
+                    <div
+                      *ngIf="
+                        noticeForm.get('noticeDate').touched &&
+                        noticeForm.get('noticeDate').hasError('required')
+                      "
+                      class="error"
+                    >
+                      Date is required.
+                    </div>
+                  </div> -->
+                  <!-- Attachment -->
+                  <div class="col-12">
+                    <label for="attachment" class="form-label d-block">
+                      Attachment
+                    </label>
+                    <input
+                      type="file"
+                      id="attachment"
+                      (change)="uploadLogo($event)"
+                      accept=".jpg,.png,.pdf"
+                      class="form-control-file mt-2"
+                    />
+                    <div *ngIf="fileError" class="error mt-2">
+                      {{ fileError }}
+                    </div>
+                    <div *ngIf="image && !fileError" class="mt-2">
+                      <img
+                        [src]="image"
+                        alt="Attachment Preview"
+                        class="notice-image-preview"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                  <button
+                    type="button"
+                    (click)="postCancel()"
+                    class="btn btn-light"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    [disabled]="
+                      noticeForm.invalid || fileExtensionError || fileError
+                    "
+                    class="btn btn-primary ml-2"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

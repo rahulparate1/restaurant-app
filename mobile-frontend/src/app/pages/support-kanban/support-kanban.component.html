@@ -1,0 +1,242 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title
+    title="Kanban Board"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <!-- end page title -->
+
+  <div class="row">
+    <div class="col-lg-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Requested</h4>
+          <div
+            id="requested-task"
+            class="pb-1 task-list"
+            dndDropzone
+            dndEffectAllowed="move"
+            (dndDrop)="onDrop($event, requestedTickets, '1')"
+            dndAllowExternal="true"
+          >
+            <div class="dndPlaceholder" dndPlaceholderRef></div>
+            <ng-container *ngFor="let task of requestedTickets">
+              <div
+                [dndDraggable]="task"
+                dndEffectAllowed="move"
+                (dndMoved)="onDragged(task, requestedTickets)"
+              >
+                <ng-template
+                  [ngTemplateOutlet]="TaskContent"
+                  [ngTemplateOutletContext]="{ task: task }"
+                >
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">In Process</h4>
+          <div
+            id="requested-task"
+            class="pb-1 task-list"
+            dndDropzone
+            dndEffectAllowed="move"
+            (dndDrop)="onDrop($event, inProcessTickets, '2')"
+            dndAllowExternal="true"
+          >
+            <div class="dndPlaceholder" dndPlaceholderRef></div>
+            <ng-container *ngFor="let task of inProcessTickets">
+              <div
+                [dndDraggable]="task"
+                dndEffectAllowed="move"
+                (dndMoved)="onDragged(task, inProcessTickets)"
+              >
+                <ng-template
+                  [ngTemplateOutlet]="TaskContent"
+                  [ngTemplateOutletContext]="{ task: task }"
+                >
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Resolved</h4>
+          <div
+            id="resolved-task"
+            class="pb-1 task-list"
+            dndDropzone
+            dndEffectAllowed="move"
+            (dndDrop)="onDrop($event, resolvedTickets, '3')"
+            dndAllowExternal="true"
+          >
+            <div class="dndPlaceholder" dndPlaceholderRef></div>
+            <ng-container *ngFor="let task of resolvedTickets">
+              <div
+                [dndDraggable]="task"
+                dndEffectAllowed="move"
+                (dndMoved)="onDragged(task, resolvedTickets)"
+              >
+                <ng-template
+                  [ngTemplateOutlet]="TaskContent"
+                  [ngTemplateOutletContext]="{ task: task }"
+                >
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Rejected</h4>
+          <div
+            id="rejected-task"
+            class="pb-1 task-list"
+            dndDropzone
+            dndEffectAllowed="move"
+            (dndDrop)="onDrop($event, rejectedTickets, '5')"
+            dndAllowExternal="true"
+          >
+            <div class="dndPlaceholder" dndPlaceholderRef></div>
+            <ng-container *ngFor="let task of rejectedTickets">
+              <div
+                [dndDraggable]="task"
+                dndEffectAllowed="move"
+                (dndMoved)="onDragged(task, rejectedTickets)"
+              >
+                <ng-template
+                  [ngTemplateOutlet]="TaskContent"
+                  [ngTemplateOutletContext]="{ task: task }"
+                >
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Closed</h4>
+          <div
+            id="requested-task"
+            class="pb-1 task-list"
+            dndDropzone
+            dndEffectAllowed="move"
+            (dndDrop)="onDrop($event, closedTickets, '4')"
+            dndAllowExternal="true"
+          >
+            <div class="dndPlaceholder" dndPlaceholderRef></div>
+            <ng-container *ngFor="let task of closedTickets">
+              <div
+                [dndDraggable]="task"
+                dndEffectAllowed="move"
+                (dndMoved)="onDragged(task, closedTickets)"
+              >
+                <ng-template
+                  [ngTemplateOutlet]="TaskContent"
+                  [ngTemplateOutletContext]="{ task: task }"
+                >
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Task  -->
+<!-- <ng-template #TaskContent let-task="task">
+  <div class="card task-box">
+    <div class="card-body">
+      <div>
+        <h5 class="font-size-15">
+          <a
+            (click)="goToDetails(task?.id)"
+            href="javascript: void(0);"
+            class="text-dark"
+          >
+            {{ task.title }}
+          </a>
+        </h5>
+      </div>
+
+      <div class="d-flex align-items-center mb-1">
+        <strong class="me-2">Assigned To:</strong>
+        <div class="avatar-sm bg-light rounded-circle me-2">
+          <div
+            class="rounded-circle img-fluid d-block chart-letter text-center"
+            *ngIf="!task?.assigneeImage"
+          >
+            {{ task?.assing?.charAt(0) }}
+          </div>
+          <img
+            *ngIf="task?.assigneeImage"
+            [src]="task?.assigneeImage"
+            alt=""
+            class="img-fluid d-block rounded-circle"
+          />
+        </div>
+        <span>{{ task?.assing }}</span>
+      </div>
+
+      <p class="text-muted mb-1"><strong>Type:</strong> {{ task.type }}</p>
+      <p class="text-muted">
+        <strong>Status:</strong>
+        <span [ngClass]="getStatusClass(task.status)">{{ getStatusLabel(task.status) }}</span>
+      </p>
+    </div>
+  </div>
+</ng-template> -->
+
+<!-- Task  -->
+<ng-template #TaskContent let-task='task'>
+  <div class="card task-box">
+    <div class="card-body">
+      <div>
+        <h5 class="font-size-15">
+          <a (click)="goToDetails(task?.id)" href="javascript: void(0);" class="text-dark">
+            {{task?.title}}
+          </a>
+        </h5>
+      </div>
+
+      <div class="d-flex align-items-center mb-1">
+        <strong class="me-2">Assigned To:</strong>
+        <div class="avatar-sm bg-light rounded-circle me-2">
+          <div class="rounded-circle img-fluid d-block chart-letter text-center"
+               *ngIf="!task?.assignee?.image">
+            {{ task?.assignee?.name?.charAt(0) }}
+          </div>
+          <img *ngIf="task?.assignee?.image" [src]="task?.assignee?.image"
+               alt="" class="img-fluid d-block rounded-circle" />
+        </div>
+        <span>{{ task?.assignee?.name }}</span>
+      </div>
+
+      <p class="text-muted mb-1"><strong>Type:</strong> {{task?.type}}</p>
+      <p class="text-muted">
+        <strong>Status:</strong>
+        <span [ngClass]="getStatusClass(task.status)">{{ getStatusLabel(task.status) }}</span>
+      </p>
+    </div>
+  </div>
+</ng-template>

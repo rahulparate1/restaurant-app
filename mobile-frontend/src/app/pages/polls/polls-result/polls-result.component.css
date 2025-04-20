@@ -1,0 +1,27 @@
+
+
+/* Title Styling */
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Progress Bar Container */
+.progress-bar-container {
+  margin-bottom: 20px;
+}
+
+/* Title for each progress bar */
+.progress-title {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+
+.total-votes h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #007bff;
+}

@@ -1,0 +1,243 @@
+.select-container {
+  position: relative;
+}
+
+.select-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+select {
+  padding-right: 30px;
+}
+
+
+.banner-left {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    height: 180px;
+    z-index: 1;
+    background-size: cover;
+  }
+
+  &::before {
+    content: "";
+    content: "";
+    position: absolute;
+    left: 85%;
+    bottom: -60%;
+    width: 40%;
+    height: 250%;
+    background: var(--bs-primary);
+    transform: rotate(45deg);
+    opacity: 1;
+    border-radius: 3rem;
+    opacity: 1;
+  }
+
+  .banner-close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 2;
+    height: 40px;
+    width: 40px;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      transform: rotate(45deg);
+    }
+  }
+
+}
+
+/* Light text color definitions */
+.text-light-accent {
+  color: #6c757d;
+  /* Light grey accent color */
+}
+
+.text-light-error {
+  color: #e74c3c;
+  /* Light red color for errors */
+}
+
+.text-light-warning {
+  color: #f39c12;
+  /* Light yellow color for warnings */
+}
+
+.text-light-info {
+  color: #3498db;
+  /* Light blue color for info */
+}
+
+/* Optional: Add any other necessary styles, such as text size or alignment */
+.f-s-12 {
+  font-size: 12px;
+}
+
+.center {
+  text-align: center;
+}
+
+.titleList {
+  color: #5d87ff;
+  cursor: pointer;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+  /* Green */
+}
+
+.bg-info {
+  background-color: #17a2b8 !important;
+  /* Info Blue */
+}
+
+.bg-danger {
+  background-color: #dc3545 !important;
+  /* Red */
+}
+
+.bg-light-info {
+  background-color: #d1ecf1 !important;
+  /* Light Info */
+}
+
+td .badge {
+  height: auto;
+  /* Adjusts the badge height automatically */
+  display: inline-block;
+  /* Ensures the badge appears inline */
+  line-height: 1.5;
+  /* Adjust line height if necessary */
+  padding: 6px 12px;
+  /* Adjust padding as necessary */
+}
+
+
+.timeline-container {
+  display: flex;
+  justify-content: space-between;
+  /* Distribute timeline items evenly */
+  align-items: flex-start;
+  /* Align items at the top */
+  position: relative;
+  padding: 20px 0;
+  overflow: hidden;
+  /* Prevent horizontal scrolling */
+}
+
+.timeline-item {
+  position: relative;
+  text-align: center;
+  flex: 1;
+  /* Allow items to stretch and evenly distribute */
+  margin-right: 20px;
+  /* Space between each item */
+  z-index: 1;
+  /* Ensure icons are above the line */
+}
+
+.event-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-date h5 {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.event-name h5 {
+  color: #495057;
+  font-size: 16px;
+}
+
+.event-icon {
+  position: relative;
+
+  border-radius: 50%;
+  padding: 10px;
+
+  z-index: 2;
+  /* Ensure the icon is above the dotted line */
+}
+
+.event-details {
+  margin-top: 10px;
+}
+
+/* Horizontal dotted line */
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 38%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-image: radial-gradient(circle closest-side, #c4c9cf 92%, transparent 92%);
+  background-size: 10px 10px;
+  z-index: 0;
+}
+
+
+.timeline-item:not(:last-child) {
+  padding-right: 40px;
+  /* Add space to the right of each event except the last */
+}
+
+.text-muted {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Add spacing and font-size adjustments */
+h5.mb-4 {
+  font-size: 18px;
+}
+
+
+.filter-box {
+  background-color: #f1f1f1;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.filter-box span {
+  margin-right: 10px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #ff0000;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+}
+
+
+.word-wrap {
+  white-space: normal;
+  word-break: break-word;
+}

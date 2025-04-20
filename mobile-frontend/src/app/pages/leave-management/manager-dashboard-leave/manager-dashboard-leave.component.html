@@ -1,0 +1,85 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title
+    title="Employees Leaves Grid"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <!-- end page title -->
+
+  <div class="row">
+    <div class="row justify-content-end">
+      <div class="col-md-2 mb-4 mt-md-0" style="padding-right: 0px">
+        <!-- Month-Year Input -->
+        <label for="monthYear">Select Month and Year:</label>
+        <input
+          id="monthYear"
+          type="month"
+          [(ngModel)]="selectedMonthYear"
+          (change)="onMonthYearChange($event)"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-sm-6" *ngFor="let data of empLeavesList">
+      <div class="card text-center">
+        <div class="card-body" *ngIf="empLeavesList?.length > 0">
+          <div
+            class="avatar-sm mx-auto mb-4"
+            *ngIf="!data?.employee?.basicDetails?.image"
+          >
+            <span class="rounded-circle border chart-letter">
+              {{ data?.employee?.basicDetails?.firstName?.charAt(0) }}
+            </span>
+          </div>
+          <div *ngIf="data?.employee?.basicDetails?.image" class="mb-4">
+            <img
+              class="rounded-circle avatar-sm"
+              [src]="data?.employee?.basicDetails?.image"
+              alt
+            />
+          </div>
+          <h5 class="font-size-15 mb-1">
+            <a href="javascript: void(0);" class="text-dark"
+              >{{ data?.employee?.basicDetails?.firstName }}
+              {{ data?.employee?.basicDetails?.lastName }}</a
+            >
+          </h5>
+          <p class="text-muted">
+            {{ data?.employee?.basicDetails?.designation }}
+          </p>
+          <div>
+            <a
+              href="javascript: void(0);"
+              class="badge bg-primary font-size-11 m-1"
+              >{{ data?.typeLabel }}</a
+            >
+            <a
+              href="javascript: void(0);"
+              class="badge bg-primary font-size-11 m-1"
+              >{{ data?.startDate | date : "dd-MM-yyyy" }}</a
+            >
+            <a
+              href="javascript: void(0);"
+              class="badge bg-primary font-size-11 m-1"
+              >{{ data?.endDate | date : "dd-MM-yyyy" }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+
+  <div class="row">
+    <div class="col-12">
+      <div *ngIf="empLeavesList?.length == 0" class="card mt-4">
+        <div class="card-body text-center">
+          <h5>No Leave Requests Available</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+<!-- container-fluid -->

@@ -1,0 +1,1017 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card mx-n4 mt-n4 bg-info bg-soft">
+      <div class="card-body">
+        <div class="text-center mb-4">
+          <div class="avatar-sm mx-auto mb-4" *ngIf="!employeeDetails?.basicDetails?.image">
+            <span class="avatar-title rounded-circle bg-soft bg-primary font-size-16">
+              {{employeeDetails?.basicDetails?.firstName.charAt(0)}}
+            </span>
+          </div>
+          <img *ngIf="employeeDetails?.basicDetails?.image" [src]="employeeDetails?.basicDetails?.image" alt=""
+            class="avatar-md rounded-circle mx-auto d-block" />
+          <h5 class="mt-3 mb-1">{{employeeDetails?.basicDetails?.firstName}}
+            {{employeeDetails?.basicDetails?.lastName}}</h5>
+          <p class="text-muted mb-3">{{employeeDetails?.basicDetails?.designation.title}}</p>
+          <div class="mx-auto d-flex gap-1 justify-content-center">
+            <span class="badge text-bg-info">Freelance</span>
+            <span class="badge text-bg-success">Active</span>
+            <span class="badge text-bg-warning">Adobe XD</span>
+            <span class="badge text-bg-warning">Figma</span>
+            <span class="badge text-bg-warning">Sketch</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <ul class="list-unstyled hstack gap-3 mb-0 flex-grow-1">
+            <li>
+              <i class="bx bx-map align-middle"></i> California
+            </li>
+            <li>
+              <i class="bx bx-money align-middle"></i> $87 / hrs
+            </li>
+            <li>
+              <i class="bx bx-time align-middle"></i> 5 days working
+            </li>
+          </ul>
+          <div class="hstack gap-2">
+            <button type="button" class="btn btn-primary">Download CV <i
+                class='bx bx-download align-baseline ms-1'></i></button>
+            <button type="button" class="btn btn-light"><i class='bx bx-bookmark align-baseline'></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Employee Details</h4>
+          <p class="card-title-desc">employee details tabs</p>
+          <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                <span class="d-none d-sm-block">Basic Details</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="basicDetails"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                <span class="d-none d-sm-block">Identity Details</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="identityDetails"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                <span class="d-none d-sm-block">Education Details</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="educationDetails"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="4">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                <span class="d-none d-sm-block">Bank Details</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="bankDetails"></ng-template>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="5">
+              <a ngbNavLink>
+                <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
+                <span class="d-none d-sm-block">Work Experience Details</span>
+              </a>
+              <ng-template ngbNavContent>
+                <ng-template [ngTemplateOutlet]="workExperienceDetails"></ng-template>
+              </ng-template>
+            </li>
+          </ul>
+          <div [ngbNavOutlet]="customNav"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #basicDetails>
+    <div class="col-xl-6">
+      <div class="card-body">
+        <div class="card-body border-bottom">
+          <div class="d-flex">
+            <div class="avatar-sm mx-auto" *ngIf="!employeeDetails?.basicDetails?.image">
+              <span class="avatar-title rounded-circle bg-soft bg-primary font-size-16">
+                {{employeeDetails?.basicDetails?.firstName.charAt(0)}}
+              </span>
+            </div>
+            <img *ngIf="employeeDetails?.basicDetails?.image" [src]="employeeDetails?.basicDetails?.image" alt=""
+              height="50" width="50">
+            <div class="flex-grow-1 ms-3">
+              <h5 class="fw-semibold">{{employeeDetails?.basicDetails?.firstName}}
+                {{employeeDetails?.basicDetails?.lastName}}</h5>
+              <ul class="list-unstyled hstack gap-2 mb-0">
+                <li>
+                  <span class="text-muted">{{employeeDetails?.basicDetails?.designation.title}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <ul class="list-unstyled mt-4">
+          <li>
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Employee Name</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.firstName}}
+                {{employeeDetails?.basicDetails?.lastName}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Employee Code</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.employeeCode}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Designation</h6>
+              <p class="text-muted fs-14 text-break mb-0">{{employeeDetails?.basicDetails?.designation.title}}</p>
+            </div>
+
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Department</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.department.departmentName}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Employee Type</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.employeeType}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Email</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.email}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Mobile Number</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.mobileNo}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Date Of Joining</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.dateOfJoining}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Gender</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.gender}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Manager Assign</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.managerAssign.firstName}}
+                {{employeeDetails?.basicDetails?.managerAssign.lastName}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Shift</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.shift?.shiftName}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Work Location</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.basicDetails?.workLocation?.workLocationName}}</p>
+            </div>
+          </li>
+        </ul>
+        <div class="mt-4">
+          <a href="javascript:void(0);" class="btn btn-primary"
+            (click)="basicDetailsModal(basicDataModal)">
+            Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #identityDetails>
+    <div class="col-xl-6">
+      <div class="card-body">
+        <ul class="list-unstyled mt-4">
+          <li>
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Current Address</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.identityDetails?.currentAddress}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Present Address</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.identityDetails?.presentAddress}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Date Of Birth</h6>
+              <p class="text-muted fs-14 text-break mb-0">{{employeeDetails?.identityDetails?.dob}}</p>
+            </div>
+
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Age</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.identityDetails?.age}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Material Status</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.identityDetails?.maritalStatus}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">UAN Number</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.identityDetails?.uan}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">PAN Number</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.identityDetails?.pan}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Aadhar Number</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.identityDetails?.aadhar}}</p>
+            </div>
+          </li>
+        </ul>
+        <div class="mt-4">
+          <a href="javascript:void(0);" class="btn btn-primary"
+            (click)="identityModal(identityDataModal)">
+            Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #educationDetails>
+    <div class="col-xl-6">
+      <div class="card-body">
+        <ul class="list-unstyled mt-4">
+          <li>
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Institute Name</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.educationDetails?.instituteName}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Location</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.educationDetails?.location}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Degree</h6>
+              <p class="text-muted fs-14 text-break mb-0">{{employeeDetails?.educationDetails?.degree}}</p>
+            </div>
+
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Specialization</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.educationDetails?.specialization}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Date Of Completion</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.educationDetails?.dateOfCompletion}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Description</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.educationDetails?.description}}</p>
+            </div>
+          </li>
+        </ul>
+        <div class="mt-4">
+          <a href="javascript:void(0);" class="btn btn-primary"
+            (click)="educationModal(educationDataModal)">
+            Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #bankDetails>
+    <div class="col-xl-6">
+      <div class="card-body">
+        <ul class="list-unstyled mt-4">
+          <li>
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Account Holder Name</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.bankDetails?.accountHolderName}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Bank Name</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.bankDetails?.bankName}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">IFSC Code</h6>
+              <p class="text-muted fs-14 text-break mb-0">{{employeeDetails?.bankDetails?.ifscCode}}</p>
+            </div>
+
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Account Number</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.bankDetails?.accountNumber}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Re-account Number</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.bankDetails?.reAccountNumber}}</p>
+            </div>
+          </li>
+          <li class="mt-3">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Account Type</h6>
+              <p class="text-muted fs-14 mb-0">{{employeeDetails?.bankDetails?.accountType}}</p>
+            </div>
+          </li>
+        </ul>
+        <div class="mt-4">
+          <a href="javascript:void(0);" class="btn btn-primary"
+            (click)="bankModal(bankDataModal)">
+            Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #workExperienceDetails>
+    <div class="col-xl-6">
+      <div class="card-body">
+        <ul class="list-unstyled mt-4" *ngIf="employeeDetails?.workExperienceDetails?.length > 0; else noExperience">
+          <li *ngFor="let exp of employeeDetails?.workExperienceDetails; let i = index">
+            <div class="ms-3">
+              <h6 class="fs-14 mb-2">Experience {{i + 1}}</h6>
+              <p class="text-muted fs-14 mb-0">{{exp?.companyName || 'N/A'}} - {{exp?.jobTitle || 'N/A'}}</p>
+              <p class="text-muted fs-14 mb-0">{{exp?.fromDate || 'N/A'}} to {{exp?.toDate || 'N/A'}}</p>
+              <p class="text-muted fs-14 mb-0">{{exp?.description || 'No Description'}}</p>
+              <p class="text-muted fs-14 mb-0">Experience: {{exp?.experience || 0}} years</p>
+            </div>
+          </li>
+        </ul>
+        <ng-template #noExperience>
+          <p>No work experience found.</p>
+        </ng-template>
+        <div class="mt-4">
+          <button class="btn btn-primary" (click)="addExperience(workExperienceDataModal)">Add Experience</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<ng-template #basicDataModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Basic Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="basicDetailsForm" (ngSubmit)="updateBasicDetails()">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label class="col-form-label">First Name*</label>
+          <input type="text" name="firstName" placeholder="Eg. John" formControlName="firstName" class="form-control"
+            [ngClass]="{
+            'is-invalid':
+              (form.firstName.dirty || form.firstName.touched) &&
+              form.firstName.errors
+          }" />
+          <div *ngIf="(form.firstName.dirty || form.firstName.touched) && form.firstName.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.firstName.errors?.required">First Name is required</span>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <label class="col-form-label">Middle Name*</label>
+          <input type="text" name="middleName" placeholder="Eg. William" formControlName="middleName"
+            class="form-control" [ngClass]="{
+            'is-invalid':
+              (form.middleName.dirty || form.middleName.touched) &&
+              form.middleName.errors
+          }" />
+          <div *ngIf="(form.middleName.dirty || form.middleName.touched) && form.middleName.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.middleName.errors?.required">Middle Name is required</span>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <label class="col-form-label">Last Name*</label>
+          <input type="text" name="lastName" placeholder="Eg. Anderson" formControlName="lastName" class="form-control"
+            [ngClass]="{
+            'is-invalid':
+              (form.lastName.dirty || form.lastName.touched) &&
+              form.lastName.errors
+          }" />
+          <div *ngIf="(form.lastName.dirty || form.lastName.touched) && form.lastName.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.lastName.errors?.required">Last Name is required</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="col-form-label">Employee ID*</label>
+          <input type="text" name="employeeCode" placeholder="Eg. E001" formControlName="employeeCode"
+            class="form-control" [ngClass]="{
+              'is-invalid':
+                (form.employeeCode.dirty || form.employeeCode.touched) &&
+                form.employeeCode.errors
+            }" />
+          <div *ngIf="(form.employeeCode.dirty || form.employeeCode.touched) && form.employeeCode.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.employeeCode.errors?.required">Employee ID is required</span>
+            <span class="error-message" *ngIf="form.employeeCode.errors?.pattern">Employee ID must be exactly 3
+              digits</span>
+          </div>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="col-form-label">Date Of Joining*</label>
+          <input type="date" name="dateOfJoining" placeholder="Eg. 03/10/2024" formControlName="dateOfJoining"
+            class="form-control" [ngClass]="{
+              'is-invalid':
+                (form.dateOfJoining.dirty || form.dateOfJoining.touched) &&
+                form.dateOfJoining.errors
+            }" />
+          <div *ngIf="(form.dateOfJoining.dirty || form.dateOfJoining.touched) && form.dateOfJoining.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.dateOfJoining.errors?.required">Date Of Joining is required</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="col-form-label">Work Email*</label>
+          <input type="email" name="email" placeholder="Eg. john@gmail.com" formControlName="email" class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                (form.email.dirty || form.email.touched) &&
+                form.email.errors
+            }" />
+          <div *ngIf="(form.email.dirty || form.email.touched) && form.email.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.email.errors?.required">Email is required</span>
+            <span class="error-message" *ngIf="form.email.errors?.email">Invalid email format</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="col-form-label">Mobile Number*</label>
+          <input type="text" name="mobileNo" placeholder="Eg. 9049508902" formControlName="mobileNo"
+            class="form-control" [ngClass]="{
+            'is-invalid':
+              (form.mobileNo.dirty || form.mobileNo.touched) &&
+              form.mobileNo.errors
+          }" />
+          <div *ngIf="(form.mobileNo.dirty || form.mobileNo.touched) && form.mobileNo.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.mobileNo.errors?.required">Mobile number is required</span>
+            <span class="error-message" *ngIf="form.mobileNo.errors?.pattern">Invalid mobile number. It must be 10
+              digits</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="isDirector" id="gridCheck">
+              <label class="form-check-label" for="gridCheck">
+                Employee is a Director / Person with substantial interest in the company
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mb-3">
+          <label class="form-label">Gender*</label>
+          <select name="gender" formControlName="gender" ngDefaultControl class="form-control form-select">
+            <option value="" disabled selected>Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+          <div *ngIf="(form.gender.dirty || form.gender.touched) && form.gender.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="form.gender.errors?.required">Gender is required</span>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mb-3">
+          <label class="form-label">Employee Type*</label>
+          <select name="employeeType" formControlName="employeeType" ngDefaultControl class="form-control form-select">
+            <option value="" disabled selected>Select Employee Type</option>
+            <option>On Roll</option>
+            <option>Contractor</option>
+          </select>
+          <div *ngIf="(form.employeeType.dirty || form.employeeType.touched) && form.employeeType.errors"
+            class="invalid-feedback">
+            <span class="error-message" *ngIf="form.employeeType.errors?.required">Employee Type is required</span>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Designation*</label>
+            <select name="designation" formControlName="designation" ngDefaultControl class="form-control form-select">
+              <option value="" disabled selected>Select Designation</option>
+              <option *ngFor="let item of designationList" [ngValue]="getKeyValue(item,'title')">
+                {{ item?.title }}
+              </option>
+            </select>
+            <div *ngIf="(form.designation.dirty || form.designation.touched) && form.designation.errors"
+              class="invalid-feedback">
+              <span class="error-message" *ngIf="form.designation.errors?.required">Designation is required</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Department*</label>
+            <select name="department" formControlName="department" ngDefaultControl class="form-control form-select">
+              <option value="" disabled selected>Select Department</option>
+              <option *ngFor="let item of departmentList" [ngValue]="getKeyValue(item,'departmentName')">
+                {{ item?.departmentName }}
+              </option>
+            </select>
+            <div *ngIf="(form.department.dirty || form.department.touched) && form.department.errors"
+              class="invalid-feedback">
+              <span class="error-message" *ngIf="form.department.errors?.required">Department is required</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Manager*</label>
+            <select name="managerAssign" formControlName="managerAssign" class="form-control form-select">
+              <option value="" disabled selected>Select Manager</option>
+              <option *ngFor="let item of employeeListData" [ngValue]="getKeyValueManager(item)">
+                {{ item?.basicDetails?.firstName }} {{ item?.basicDetails?.lastName }}
+              </option>
+            </select>
+            <div
+              *ngIf="basicDetailsForm.get('managerAssign')?.invalid && (basicDetailsForm.get('managerAssign')?.dirty || basicDetailsForm.get('managerAssign')?.touched)"
+              class="invalid-feedback">
+              <span *ngIf="basicDetailsForm.get('managerAssign')?.errors?.required">Manager is required</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Shift*</label>
+            <select name="shift" formControlName="shift" ngDefaultControl class="form-control form-select">
+              <option value="" disabled selected>Select Shift</option>
+              <option *ngFor="let item of shiftList" [ngValue]="getKeyValueShift(item)">
+                {{ item?.shiftName }} : from {{item?.fromTime}} to {{item?.toTime}}
+              </option>
+            </select>
+            <div *ngIf="(form.shift.dirty || form.shift.touched) && form.shift.errors" class="invalid-feedback">
+              <span class="error-message" *ngIf="form.shift.errors?.required">Shift is required</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Work Location*</label>
+            <select name="workLocation" formControlName="workLocation" ngDefaultControl
+              class="form-control form-select">
+              <option value="" disabled selected>Select Work Location</option>
+              <option *ngFor="let item of workLocationListData" [ngValue]="getKeyValue(item,'workLocationName')">
+                {{ item?.workLocationName }}
+              </option>
+            </select>
+            <div *ngIf="(form.workLocation.dirty || form.workLocation.touched) && form.workLocation.errors"
+              class="invalid-feedback">
+              <span class="error-message" *ngIf="form.workLocation.errors?.required">Work Location is required</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-16 bg-light-primary rounded m-y-20">
+          <h5 class="mat-subtitle-2 text-primary d-flex align-items-center f-w-600">
+            Upload Image
+          </h5>
+        </div>
+
+        <div class="row m-t-20">
+          <div class="col-lg-12">
+            <label class="mat-subtitle-2 f-w-600 m-b-8 d-block">Cover Image</label>
+            <div class="upload-image-container">
+              <input type="file" (change)="uploadLogo($event)" accept="image/*" style="display: none" id="fileInput">
+              <label for="fileInput" class="custom-file-upload">
+                Choose File
+              </label>
+              <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+              <img style="width: 200px ;height: 200px;" *ngIf="image" [src]="image" alt="Uploaded Image"
+                class="uploaded-image">
+              <img *ngIf="!image" src="https://via.placeholder.com/150" alt="Placeholder Image"
+                class="placeholder-image">
+              <div *ngIf="fileError" class="error-message">{{ fileError }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            (click)="modal.close('Close click')">Close</button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #identityDataModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Identity Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="identityForm" (ngSubmit)="updateIdentityInfo()">
+      <div class="row">
+        <div class="col-6 mt-3">
+          <label for="dob" class="form-label">Date Of Birth</label>
+          <input type="date" class="form-control" placeholder="Eg. dd/mm/yyyy" id="dob" formControlName="dob" required>
+          <div *ngIf="identityForm.get('dob')?.invalid && identityForm.get('dob')?.touched" class="text-danger">
+            Date of birth is required.
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" placeholder="Eg. 25" id="age" formControlName="age" required>
+          <div *ngIf="identityForm.get('age')?.invalid && identityForm.get('age')?.touched" class="text-danger">
+            Age is required.
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="maritalStatus" class="form-label">Marital Status</label>
+          <input type="text" class="form-control" id="maritalStatus" placeholder="Eg. Single" formControlName="maritalStatus" required>
+          <div *ngIf="identityForm.get('maritalStatus')?.invalid && identityForm.get('maritalStatus')?.touched"
+            class="text-danger">
+            Marital status is required.
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="uan" class="form-label">UAN</label>
+          <input type="text" class="form-control" id="uan" placeholder="Eg. 888888888888" formControlName="uan" required>
+          <div *ngIf="identityForm.get('uan')?.invalid && identityForm.get('uan')?.touched" class="text-danger">
+            <div *ngIf="identityForm.get('uan')?.hasError('required')">UAN is required.</div>
+            <div *ngIf="identityForm.get('uan')?.hasError('pattern')">UAN must be a 12-digit number.</div>
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="pan" class="form-label">PAN</label>
+          <input type="text" class="form-control" id="pan" placeholder="Eg. ABCDE1234F" formControlName="pan" required>
+          <div *ngIf="identityForm.get('pan')?.invalid && identityForm.get('pan')?.touched" class="text-danger">
+            <div *ngIf="identityForm.get('pan')?.hasError('required')">PAN is required.</div>
+            <div *ngIf="identityForm.get('pan')?.hasError('pattern')">PAN must be in the format ABCDE1234F.</div>
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="aadhar" class="form-label">Aadhar</label>
+          <input type="text" class="form-control" id="aadhar" placeholder="Eg. 888888888888" formControlName="aadhar" required>
+          <div *ngIf="identityForm.get('aadhar')?.invalid && identityForm.get('aadhar')?.touched" class="text-danger">
+            <div *ngIf="identityForm.get('aadhar')?.hasError('required')">Aadhar is required.</div>
+            <div *ngIf="identityForm.get('aadhar')?.hasError('pattern')">Aadhar must be a 12-digit number.</div>
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="presentAddress" class="form-label">Present Address</label>
+          <input type="text" class="form-control" id="presentAddress" placeholder="Eg. Manish Nagar, Nagpur" formControlName="presentAddress" required>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="currentAddress" class="form-label">Current Address</label>
+          <input type="text" class="form-control" id="currentAddress" placeholder="Eg. Manish Nagar, Nagpur" formControlName="currentAddress" required>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="identityForm.invalid">Update</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #educationDataModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Education Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="educationDetailsForm" (ngSubmit)="updateEducationDetails()">
+      <div class="row">
+
+        <!-- Institute Name -->
+        <div class="col-6 mt-3">
+          <label for="instituteName" class="form-label">Institute Name</label>
+          <input type="text" class="form-control" id="instituteName" placeholder="Eg. GINIT" formControlName="instituteName" required>
+          <div
+            *ngIf="educationDetailsForm.get('instituteName')?.invalid && educationDetailsForm.get('instituteName')?.touched"
+            class="text-danger">
+            Institute Name is required.
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="col-6 mt-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" class="form-control" id="location" placeholder="Eg. Nagpur" formControlName="location" required>
+          <div *ngIf="educationDetailsForm.get('location')?.invalid && educationDetailsForm.get('location')?.touched"
+            class="text-danger">
+            Location is required.
+          </div>
+        </div>
+
+        <!-- Degree / Diploma -->
+        <div class="col-6 mt-3">
+          <label for="degree" class="form-label">Degree / Diploma</label>
+          <input type="text" class="form-control" id="degree" placeholder="Eg. BE" formControlName="degree" required>
+          <div *ngIf="educationDetailsForm.get('degree')?.invalid && educationDetailsForm.get('degree')?.touched"
+            class="text-danger">
+            Degree / Diploma is required.
+          </div>
+        </div>
+
+        <!-- Specialization -->
+        <div class="col-6 mt-3">
+          <label for="specialization" class="form-label">Specialization</label>
+          <input type="text" class="form-control" id="specialization" placeholder="Eg. Software Engginer" formControlName="specialization" required>
+          <div
+            *ngIf="educationDetailsForm.get('specialization')?.invalid && educationDetailsForm.get('specialization')?.touched"
+            class="text-danger">
+            Specialization is required.
+          </div>
+        </div>
+
+        <!-- Date of Completion -->
+        <div class="col-6 mt-3">
+          <label for="dateOfCompletion" class="form-label">Date of Completion</label>
+          <input type="date" class="form-control" id="dateOfCompletion" placeholder="Eg. dd/mm/yyyy" formControlName="dateOfCompletion" required>
+          <div
+            *ngIf="educationDetailsForm.get('dateOfCompletion')?.invalid && educationDetailsForm.get('dateOfCompletion')?.touched"
+            class="text-danger">
+            Date of Completion is required.
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="col-6 mt-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" placeholder="Eg. Description" formControlName="description" rows="3" required></textarea>
+          <div
+            *ngIf="educationDetailsForm.get('description')?.invalid && educationDetailsForm.get('description')?.touched"
+            class="text-danger">
+            Description is required.
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="editEducationDetailsForm.invalid">Update</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #bankDataModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Bank Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="bankDetailsForm" (ngSubmit)="updateBankDetails()">
+      <div class="row">
+        <div class="col-6 mt-3">
+          <label class="col-form-label">Account Holder Name*</label>
+          <input type="text" name="accountHolderName" placeholder="Eg. John William Anderson"
+            formControlName="accountHolderName" class="form-control" [ngClass]="{
+              'is-invalid': (bankForm.accountHolderName.dirty || bankForm.accountHolderName.touched) && bankForm.accountHolderName.errors
+            }" />
+          <div
+            *ngIf="(bankForm.accountHolderName.dirty || bankForm.accountHolderName.touched) && bankForm.accountHolderName.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="bankForm.accountHolderName.errors?.required">Account Holder Name is
+              required</span>
+            <span class="error-message" *ngIf="bankForm.accountHolderName.errors?.minlength">Account Holder Name must be
+              at
+              least 3 characters long</span>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Bank Name*</label>
+            <ng-select
+              name="bankName"
+              formControlName="bankName"
+              [items]="bankName"
+              bindLabel="name"
+              placeholder="Select Bank"
+              >
+            </ng-select>
+            <!-- <div *ngIf="(form.bankName.dirty || form.bankName.touched) && form.bankName.errors" class="invalid-feedback">
+              <span class="error-message" *ngIf="form.bankName.errors?.required">Bank Name is required</span>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label class="col-form-label">IFSC Code*</label>
+          <input type="text" name="ifscCode" placeholder="Eg. BOI044FG" formControlName="ifscCode" class="form-control"
+            [ngClass]="{
+                'is-invalid': (bankForm.ifscCode.dirty || bankForm.ifscCode.touched) && bankForm.ifscCode.errors
+              }" />
+          <div *ngIf="(bankForm.ifscCode.dirty || bankForm.ifscCode.touched) && bankForm.ifscCode.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="bankForm.ifscCode.errors?.required">IFSC Code is required</span>
+            <span class="error-message" *ngIf="bankForm.ifscCode.errors?.pattern">Invalid IFSC Code format</span>
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label class="col-form-label">Account Number*</label>
+          <input type="text" name="accountNumber" placeholder="Eg. 88562200078500" formControlName="accountNumber"
+            class="form-control" [ngClass]="{
+                'is-invalid': (bankForm.accountNumber.dirty || bankForm.accountNumber.touched) && bankForm.accountNumber.errors
+              }" />
+          <div
+            *ngIf="(bankForm.accountNumber.dirty || bankForm.accountNumber.touched) && bankForm.accountNumber.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="bankForm.accountNumber.errors?.required">Account Number is
+              required</span>
+            <span class="error-message" *ngIf="bankForm.accountNumber.errors?.pattern">Invalid Account Number
+              format</span>
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label class="col-form-label">Re-enter Account Number*</label>
+          <input type="text" name="reAccountNumber" placeholder="Eg. 88562200078500" formControlName="reAccountNumber"
+            class="form-control" [ngClass]="{
+                'is-invalid': (bankForm.reAccountNumber.dirty || bankForm.reAccountNumber.touched) && bankForm.reAccountNumber.errors
+              }" />
+          <div
+            *ngIf="(bankForm.reAccountNumber.dirty || bankForm.reAccountNumber.touched) && bankForm.reAccountNumber.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="bankForm.reAccountNumber.errors?.required">Re-enter Account Number is
+              required</span>
+            <span class="error-message" *ngIf="bankDetailsForm.errors?.accountMismatch">Account numbers do not
+              match</span>
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label class="d-block mb-3">Account Type*</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="accountType" id="inlineRadio1"
+              formControlName="accountType" value="Current">
+            <label class="form-check-label" for="inlineRadio1">Current</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="accountType" id="inlineRadio2"
+              formControlName="accountType" value="Saving">
+            <label class="form-check-label" for="inlineRadio2">Saving</label>
+          </div>
+          <div *ngIf="(bankForm.accountType.dirty || bankForm.accountType.touched) && bankForm.accountType.errors" class="invalid-feedback">
+            <span class="error-message" *ngIf="bankForm.accountType.errors?.required">Please select an account
+              type</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="bankDetailsForm.invalid">Update</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+ <ng-template #workExperienceDataModal role="document" let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add/Edit Work Experience</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="workExperienceForm" (ngSubmit)="saveWorkExperience()">
+      <div class="row">
+
+        <div class="col-6 mt-3">
+          <label for="companyName" class="form-label">Company Name</label>
+          <input type="text" class="form-control" id="companyName" placeholder="Eg. Infosys Private Limited" formControlName="companyName" required>
+          <div *ngIf="workExperienceForm.get('companyName')?.invalid && workExperienceForm.get('companyName')?.touched"
+            class="text-danger">
+            Company Name is required.
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="jobTitle" class="form-label">Job Title</label>
+          <input type="text" class="form-control" id="jobTitle" placeholder="Eg. Software Engineer" formControlName="jobTitle" required>
+          <div *ngIf="workExperienceForm.get('jobTitle')?.invalid && workExperienceForm.get('jobTitle')?.touched"
+            class="text-danger">
+            Job Title is required.
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="fromDate" class="form-label">From Date</label>
+          <input type="date" class="form-control" id="fromDate" placeholder="Eg. dd/mm/yyyy" formControlName="fromDate" required>
+          <div *ngIf="workExperienceForm.get('fromDate')?.invalid && workExperienceForm.get('fromDate')?.touched"
+            class="text-danger">
+            From Date is required.
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="toDate" class="form-label">To Date</label>
+          <input type="date" class="form-control" id="toDate" placeholder="Eg. dd/mm/yyyy" formControlName="toDate" required>
+          <div *ngIf="workExperienceForm.get('toDate')?.invalid && workExperienceForm.get('toDate')?.touched"
+            class="text-danger">
+            To Date is required.
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" placeholder="Eg. Description" formControlName="description" rows="3" required></textarea>
+          <div *ngIf="workExperienceForm.get('description')?.invalid && workExperienceForm.get('description')?.touched"
+            class="text-danger">
+            Description is required.
+          </div>
+        </div>
+
+        <div class="col-6 mt-3">
+          <label for="experience" class="form-label">Experience (in years)</label>
+          <input type="number" class="form-control" id="experience" placeholder="Eg. 2" formControlName="experience" min="0" required>
+          <div *ngIf="workExperienceForm.get('experience')?.invalid && workExperienceForm.get('experience')?.touched"
+            class="text-danger">
+            Experience is required and must be at least 0.
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="workExperienceForm.invalid">Save Experience</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

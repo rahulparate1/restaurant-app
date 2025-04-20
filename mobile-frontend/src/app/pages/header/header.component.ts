@@ -1,0 +1,21 @@
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+
+@Component({
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
+})
+export class HeaderComponent {
+  constructor(public router: Router) {}
+
+  ngOnInit(): void {}
+
+  addItems() {
+    this.router.navigate(["/veg-nonveg-card"]);
+  }
+
+  goToProfile() {
+    this.router.navigate(["/dashboard/profile/profile-info"]);
+  }
+}

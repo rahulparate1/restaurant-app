@@ -1,0 +1,73 @@
+<div class="container-fluid">
+  <app-page-title title="Industry Form" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-6">
+      <form [formGroup]="industryForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body border-bottom">
+                <div>
+                  <h6 class="card-title">Industry Details</h6>
+                  <p class="card-title-desc mb-0">
+                    Enter the details for the industry.
+                  </p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 mt-3">
+                    <label for="industryNameInput" class="col-form-label">Industry Name<span
+                        class="asterisk">*</span></label>
+                    <div>
+                      <input type="text" class="form-control" placeholder="Eg. Software Industry"
+                        formControlName="title" minlength="5" maxlength="50">
+                      <div
+                        *ngIf="industryForm.get('title').invalid && (industryForm.get('title').dirty || industryForm.get('title').touched)"
+                        class="text-danger">
+                        <div *ngIf="industryForm.get('title').errors.required">
+                          Industry Name is required.
+                        </div>
+                        <div *ngIf="industryForm.get('title').errors.minlength">
+                          Industry Name must be at least 5 characters.
+                        </div>
+                        <div *ngIf="industryForm.get('title').errors.maxlength">
+                          Industry Name must be less than 50 characters.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mt-3">
+                    <label for="toTimeInput" class="col-form-label">Description<span class="asterisk">*</span></label>
+                    <div>
+                      <textarea type="time" class="form-control" formControlName="description"
+                        placeholder="Eg. Software Industry"></textarea>
+                      <div
+                        *ngIf="industryForm.get('description').invalid && (industryForm.get('description').dirty || industryForm.get('description').touched)"
+                        class="text-danger">
+                        <div *ngIf="industryForm.get('description').errors.required">
+                          Description is required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Submit and Cancel Buttons -->
+                  <div class="col-12 d-flex justify-content-start align-items-center gap-2" style="margin-top: 15px;">
+                    <button type="submit" class="btn btn-primary btn-md" [disabled]="!industryForm.valid">
+                      <i class="bx bx-check-double font-size-16 align-middle me-2"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-dark btn-md" (click)="navigateToList()">
+                      <i class="bx bx-x-circle font-size-16 align-middle me-2"></i> Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

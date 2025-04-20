@@ -1,0 +1,575 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Timesheet List"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card banner-left">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Horizontal Timeline</h4>
+          <button class="btn btn-light btn-rounded btn-sm banner-close">
+            <i class="bx bx-plus font-size-16"></i>
+          </button>
+          <div class="hori-timeline">
+            <ngx-slick-carousel
+              dir="ltr"
+              [config]="slideConfig"
+              class="events navs-carousel mb-3"
+            >
+              <div ngxSlickItem>
+                <div class="item event-list">
+                  <div>
+                    <div class="event-date">
+                      <h5 class="mb-2">Fill Timesheet</h5>
+                    </div>
+                    <div class="mt-3 px-3">
+                      <p class="text-muted mb-0">
+                        The direction is great. Octavia Spencer had a show on
+                        Apple TV+, but Apple canceled it in the spring.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div ngxSlickItem>
+                <div class="item event-list">
+                  <div>
+                    <div class="event-date">
+                      <h5 class="mb-2">Fill Timesheet</h5>
+                    </div>
+                    <div class="mt-3 px-3">
+                      <p class="text-muted mb-0">
+                        The direction is great. Octavia Spencer had a show on
+                        Apple TV+, but Apple canceled it in the spring.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ngx-slick-carousel>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div
+      class="card-body border-bottom d-flex justify-content-between align-items-center"
+    >
+      <div>
+        <h5 class="mb-2 card-title flex-grow-1">Employee Timesheet List</h5>
+        <p class="mb-0 font-size-12 text-muted">
+          The direction is great. Octavia Spencer had a show on Apple TV+, but
+          Apple canceled it in the spring.
+        </p>
+      </div>
+    </div>
+    <div class="card-body pb-0">
+      <div class="row justify-content-end">
+        <div class="col-12 col-lg-10">
+          <div class="row justify-content-between">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search description"
+                [(ngModel)]="searchByDescription"
+                (ngModelChange)="getAllTimesheets()"
+              />
+            </div>
+            <div class="col">
+              <select
+                class="form-select"
+                placeholder="Select Employee"
+                [(ngModel)]="filterByName"
+                (change)="getAllTimesheets()"
+              >
+                <option value="" selected>Select Employee</option>
+                <option *ngFor="let emp of empList || []" [value]="emp.id">
+                  {{ emp?.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col">
+              <select
+                class="form-select"
+                [(ngModel)]="filterByStatus"
+                (change)="getAllTimesheets()"
+              >
+                <option value="" selected>Select Status</option>
+                <option *ngFor="let item of TimesheetStatus" [value]="item.id">
+                  {{ item.label }}
+                </option>
+              </select>
+            </div>
+            <div class="col">
+              <input
+                type="date"
+                [(ngModel)]="selectedDate"
+                (change)="onDateChange($event)"
+                [min]="minDate"
+                class="form-control"
+              />
+            </div>
+
+            <div class="col-auto">
+              <div class="d-flex justify-content-end">
+                <!-- <button class="btn btn-primary" (click)="filter()">Search</button> -->
+                <button class="btn btn-light ms-3" (click)="reset()">
+                  <i class="bx bx-reset"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body pb-0">
+      <div class="row">
+        <div class="col">
+          <div class="d-flex flex-wrap">
+            <div *ngIf="searchByDescription" class="filter-box">
+              <span
+                ><strong>{{ searchByDescription }}</strong></span
+              >
+              <button
+                type="button"
+                class="close-btn"
+                (click)="resetFilter('taskDescription')"
+              >
+                &times;
+              </button>
+            </div>
+            <div *ngIf="filterByName" class="filter-box">
+              <span
+                ><strong>{{ getEmployeeName(filterByName) }}</strong></span
+              >
+              <button
+                type="button"
+                (click)="resetFilter('name')"
+                class="close-btn"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div *ngIf="filterByStatus" class="filter-box">
+              <span
+                ><strong>{{ getStatusLabel(filterByStatus) }}</strong></span
+              >
+              <button
+                type="button"
+                (click)="resetFilter('status')"
+                class="close-btn"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div *ngIf="selectedDate" class="filter-box">
+              <span
+                ><strong>{{ selectedDate }}</strong></span
+              >
+              <button
+                type="button"
+                (click)="resetFilter('monthYear')"
+                class="close-btn"
+              >
+                &times;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body border-bottom pb-0" *ngIf="timesheetData?.length > 0">
+      <div class="table-responsive">
+        <table class="table align-middle nowrap">
+          <thead class="table-light">
+            <tr>
+              <th>Employee</th>
+              <!-- <th>Designation</th> -->
+              <th>Date</th>
+              <th>Task Description</th>
+              <th>SCRUM</th>
+              <th>Knowledge Transfer / Demo</th>
+              <th>Documentations</th>
+              <th>Meetings / Discussions</th>
+              <th>Development / Designing</th>
+              <th>Deployment</th>
+              <th>Idle</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of timesheetData; index as i">
+              <td>
+                <div
+                  class="d-flex align-items-center mb-4"
+                  href="javascript:void(0);"
+                  (click)="timesheetDetailsModal(timesheetDetailsModal, item)"
+                >
+                  <div class="profile-container me-3">
+                    <div
+                      class="rounded-circle border chart-letter"
+                      *ngIf="!item?.employee?.image"
+                    >
+                      {{ item?.employee?.name?.charAt(0) }}
+                    </div>
+                    <img
+                      *ngIf="item?.employee?.image"
+                      [src]="item?.employee?.image"
+                      alt="employee"
+                      width="40"
+                      class="rounded-circle border chart-letter"
+                    />
+                  </div>
+                  <div class="m-l-16 p-3">
+                    <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                      {{ item?.employee?.name || "--" }}
+                    </h6>
+                    <span class="mat-body-1 f-s-12">
+                      {{ item?.employee?.email || "--" }}
+                    </span>
+                  </div>
+                </div>
+              </td>
+              <!-- <td>{{ item.title }}</td> -->
+              <!-- <td>{{ item?.user?.designation || "--" }}</td> -->
+              <td>{{ item?.date | date : "dd MMM yyyy" }}</td>
+              <td>{{ item?.taskDescription }}</td>
+              <td>{{ item?.scrum }}</td>
+              <td>{{ item?.knowledgetransfer }}</td>
+              <td>{{ item?.documentations }}</td>
+              <td>{{ item?.['meetings/discussions'] }}</td>
+              <td>{{ item?.['development/designing'] }}</td>
+              <td>{{ item?.deployment }}</td>
+              <td>{{ item?.idle }}</td>
+              <td>
+                <span *ngFor="let status of TimesheetStatus">
+                  <span
+                    *ngIf="item?.status === status?.id"
+                    [class]="status?.className"
+                  >
+                    {{ status?.label }}
+                  </span>
+                </span>
+              </td>
+              <td>
+                <ul class="list-unstyled hstack gap-1 mb-0">
+                  <li
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Approve timesheet"
+                  >
+                    <a
+                      href="javascript:void(0);"
+                      [class.disabled]="item?.status !== 3"
+                      (click)="openApprovalModal(approvalModal, item)"
+                      class="btn btn-sm btn-primary d-flex align-items-center p-2"
+                      ><i class="bx bx-check-circle"></i
+                    ></a>
+                  </li>
+                  <li
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    color="warn"
+                    title="Reject timesheet"
+                  >
+                    <a
+                      href="javascript:void(0);"
+                      [class.disabled]="!(item?.status === 3 || item?.status === 1)"
+                      (click)="openRejectModal(rejectModal, item)"
+                      class="btn btn-sm btn-danger d-flex align-items-center p-2"
+                      ><i class="bx bx-x-circle"></i
+                    ></a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="row justify-content-between align-items-center mt-3"
+        *ngIf="timesheetData?.length > 0"
+      >
+        <div class="col-12 col-md-4">
+          <div>
+            <span
+              >Showing
+              <strong>
+                {{ offset + 1 }} -
+                {{
+                  offset + limit < totalRecord ? offset + limit : totalRecord
+                }}
+              </strong>
+              of <strong>{{ totalRecord }}</strong> records</span
+            >
+          </div>
+        </div>
+        <div class="col-12 col-md-8">
+          <div class="d-flex justify-content-md-end">
+            <nav aria-label="Page navigation" class="d-flex align-items-center">
+              <ul class="pagination">
+                <li class="page-item" [class.disabled]="offset === 0">
+                  <a
+                    class="page-link"
+                    (click)="previousPage()"
+                    aria-label="Previous"
+                  >
+                    <span aria-hidden="true">Previous</span>
+                  </a>
+                </li>
+                <li
+                  class="page-item"
+                  *ngFor="let pageNumber of getPageNumbers()"
+                  [class.active]="pageNumber === currentPage"
+                >
+                  <a class="page-link ms-2" (click)="goToPage(pageNumber)">{{
+                    pageNumber
+                  }}</a>
+                </li>
+                <li
+                  class="page-item"
+                  [class.disabled]="offset + limit >= totalRecord"
+                >
+                  <a
+                    class="page-link ms-2"
+                    (click)="nextPage()"
+                    aria-label="Next"
+                  >
+                    <span aria-hidden="true">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="timesheetData?.length == 0" class="card mt-4 mt-5 py-5">
+      <div class="card-body text-center">
+        <i class="bx bx-box text-primary h2 mb-4"></i>
+        <p class="text-muted">There are no timesheets available.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #timesheetDetailsModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Timesheet Details</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      id="close-modal"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="d-flex">
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="row">Employee Name</th>
+              <td>{{ timesheetDetails?.employee?.name || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Employee Email</th>
+              <td>{{ timesheetDetails?.employee?.email || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Date</th>
+              <td>{{ timesheetDetails?.date || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Day</th>
+              <td>{{ timesheetDetails?.day || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Month</th>
+              <td>{{ timesheetDetails?.month || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Year</th>
+              <td>{{ timesheetDetails?.year || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Total Hours</th>
+              <td>{{ timesheetDetails?.totalHours || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Scrum</th>
+              <td>{{ timesheetDetails?.scrum || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Meetings/Discussion</th>
+              <td>{{ timesheetDetails?.['meetings/discussions'] || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Development</th>
+              <td>{{ timesheetDetails?.['development/designing'] || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Deployment</th>
+              <td>{{ timesheetDetails?.deployment || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Documentation</th>
+              <td>{{ timesheetDetails?.documentations || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Knowledge Transfer</th>
+              <td>{{ timesheetDetails?.knowledgetransfer || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Idle</th>
+              <td>{{ timesheetDetails?.idle || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Description</th>
+              <td>{{ timesheetDetails?.taskDescription || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Status</th>
+              <td> <span *ngFor="let status of TimesheetStatus">
+                <span
+                  *ngIf="timesheetDetails?.status === status?.id"
+                >
+                  {{ status?.label }}
+                </span>
+              </span></td>
+            </tr>
+            <tr>
+              <th scope="row">Effective Hours</th>
+              <td>{{ timesheetDetails?.effectiveHours || "--" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #approvalModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Timesheet Approval Modal</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      id="close-modal"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Timesheet Details</h5>
+          <p><strong>Employee Name:</strong> {{ timesheetData?.employee?.name }}</p>
+          <!-- <p><strong>Leave Type:</strong> {{ leaveDetails.typeLabel }}</p> -->
+          <p><strong>Date:</strong> {{ timesheetData?.date | date }}</p>
+          <!-- <p><strong>End Date:</strong> {{ leaveDetails.endDate | date }}</p> -->
+          <p><strong>Total Hours Invested:</strong> {{timesheetData?.totalHours}} </p>
+          <p><strong>Effective Hours:</strong> {{ timesheetData?.effectiveHours || '--' }}</p>
+          <p><strong>Status:</strong> <span *ngFor="let status of TimesheetStatus">
+            <span
+              *ngIf="timesheetData?.status === status?.id">
+              {{ status?.label }}
+            </span>
+          </span></p>
+        </div>
+      </div>
+
+      <form [formGroup]="approvedForm" (ngSubmit)="updateStatusToApprove(timesheetData?.id)" class="mt-4">
+        <div class="mb-3">
+          <label for="effectiveHours" class="form-label">Effective Hours<span
+            class="asterisk">*</span></label>
+          <input
+            type="number"
+            id="effectiveHours"
+            class="form-control"
+            formControlName="effectiveHours"
+            placeholder="Enter effective hours"
+            min="0"
+          />
+          <div *ngIf="approvedForm.get('effectiveHours').invalid && approvedForm.get('effectiveHours').touched" class="text-danger">
+            Effective hours are required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="comment" class="form-label">Comment</label>
+          <textarea
+            id="comment"
+            class="form-control"
+            rows="3"
+            formControlName="comment"
+            placeholder="Add a comment..."
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="approvedForm.invalid">Approve Leave</button>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #rejectModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Timesheet Rejection Modal</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      id="close-modal"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-2">Timesheet Details</h5>
+          <p><strong>Employee Name:</strong> {{ timesheetData?.employee?.name || '--' }}</p>
+          <!-- <p><strong>Leave Type:</strong> {{ leaveDetails.typeLabel }}</p> -->
+          <p><strong>Date:</strong> {{ timesheetData?.date | date }}</p>
+          <p><strong>Total Hours Invested:</strong> {{timesheetData?.totalHours || '--'}} </p>
+          <p><strong>Effective Hours:</strong> {{ timesheetData?.effectiveHours || '--' }}</p>
+          <p><strong>Status:</strong> <span *ngFor="let status of TimesheetStatus">
+            <span
+              *ngIf="timesheetData?.status === status?.id">
+              {{ status?.label }}
+            </span>
+          </span></p>
+        </div>
+
+
+      <form [formGroup]="rejectForm" (ngSubmit)="updateStatusToReject(timesheetData?.id)" class="mt-4">
+        <div class="mb-3">
+          <label for="comment" class="form-label">Comment</label>
+          <textarea
+            id="comment"
+            class="form-control"
+            rows="3"
+            formControlName="comment"
+            placeholder="Add a comment..."
+          ></textarea>
+          <div *ngIf="rejectForm.get('comment').invalid && rejectForm.get('comment').touched" class="text-danger">
+            Comment is required.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="rejectForm.invalid">Reject Leave</button>
+      </form>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,61 @@
+<div class="container">
+  <h2 class="text-center mb-4">Reject Leave</h2>
+
+  <div *ngIf="leaveDetails">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Leave Details</h5>
+        <p>
+          <strong>Employee Name:</strong> {{ leaveDetails.user?.firstName }}
+          {{ leaveDetails.user?.lastName }}
+        </p>
+        <p><strong>Leave Type:</strong> {{ leaveDetails.typeLabel }}</p>
+        <p><strong>Start Date:</strong> {{ leaveDetails.startDate | date }}</p>
+        <p><strong>End Date:</strong> {{ leaveDetails.endDate | date }}</p>
+        <p><strong>Duration:</strong> {{ leaveDetails.duration }} days</p>
+      </div>
+    </div>
+
+    <form [formGroup]="rejectForm" (ngSubmit)="updateStatus(id)" class="mt-4">
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <textarea
+          id="comment"
+          class="form-control"
+          rows="3"
+          formControlName="comment"
+          placeholder="Add a comment..."
+        ></textarea>
+        <div
+          *ngIf="
+            rejectForm.get('comment').invalid &&
+            rejectForm.get('comment').touched
+          "
+          class="text-danger"
+        >
+          Comment is required.
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="rejectForm.invalid"
+      >
+        Reject Leave
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger ms-2"
+        (click)="router.navigate(['/leave-management/leaves-list-admin'])"
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+
+  <!-- Loader or error message if leave details are not available -->
+  <div *ngIf="!leaveDetails" class="alert alert-warning mt-4">
+    <strong>Warning!</strong> Leave details not found.
+  </div>
+</div>

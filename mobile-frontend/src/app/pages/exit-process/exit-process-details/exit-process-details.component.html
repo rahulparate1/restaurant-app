@@ -1,0 +1,649 @@
+<div class="container-fluid">
+  <!-- <app-page-title title="Company Details" [breadcrumbItems]="breadCrumbItems"></app-page-title> -->
+  <div class="row">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body border-bottom">
+              <div>
+                <h6 class="card-title">Exit Process Details</h6>
+                <p class="card-title-desc mb-0">
+                  The details for your resignation.
+                </p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="table-responsive">
+                  <table class="table table-nowrap mb-0">
+                    <tbody>
+                      <tr>
+                        <th class="td-border" scope="row">Title :</th>
+                        <td class="td-border">{{exitProcessDetails?.title || 'N/A'}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Date :</th>
+                        <td>{{exitProcessDetails?.date | date:'dd-MM-yyyy' || 'N/A'}}</td>
+
+                      </tr>
+                      <tr>
+                        <th scope="row">Reason :</th>
+                        <td>{{getReasonList(exitProcessDetails?.reason) || 'N/A'}}</td>
+                      </tr>
+
+                      <tr *ngIf="employeeDetails?.basicDetails">
+                        <th scope="row">Joining Date :</th>
+                        <td>{{employeeDetails?.basicDetails?.dateOfJoining | date:'dd-MM-yyyy' || 'N/A'}}</td>
+                      </tr>
+                      <tr *ngIf="employeeDetails?.basicDetails">
+                        <th scope="row">Work Location :</th>
+                        <td>{{employeeDetails?.basicDetails?.workLocation?.workLocationName || 'N/A'}}</td>
+                      </tr>
+
+                      <tr>
+                        <th scope="row">Description :</th>
+                        <td class="word-wrap">{{exitProcessDetails?.description || 'N/A'}}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Status :</th>
+                        <td [ngClass]="getStatusClass(exitProcessDetails?.status)">
+                          {{ getStatusLabel(exitProcessDetails?.status) || 'N/A' }}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th scope="row">Last Working Day :</th>
+                        <td>
+                          <!-- Editable Input -->
+                          <input *ngIf="isEditing" type="date" [(ngModel)]="exitProcessDetails.lastWorkingDate"
+                            class="form-control" [min]="tomorrow" (input)="onDateInputChange($event)" />
+                          
+                          <!-- Displaying date if not in edit mode -->
+                          <span *ngIf="!isEditing">{{ exitProcessDetails?.lastWorkingDate ? 
+                            (exitProcessDetails.lastWorkingDate | date: 'dd-MM-yyyy') : '--' }}</span>
+                      
+                          <!-- Edit Button -->
+                          <a *ngIf="!isEditing && exitProcessDetails?.lastWorkingDate && designation == designationRole[1].value" 
+                            (click)="toggleEditMode()" 
+                            class="m-r-10 cursor-pointer"
+                            style="margin-left:5px; font-size: 20px; color: grey; cursor: pointer; transition: color 0.3s ease;">
+                            <i class="bx bx-edit" style="color: grey;"></i>
+                          </a>
+                       <!-- Error Message if Validation fails -->
+                       <div *ngIf="isEditing && !isValidYear(exitProcessDetails.lastWorkingDate)" class="text-danger mt-2 mb-0">
+                        The year must be exactly 4 digits.
+                      </div>
+                          <!-- Save Button in Edit Mode -->
+                          <button *ngIf="isEditing" class="btn btn-primary btn-md"  [disabled]="!isValidYear(exitProcessDetails.lastWorkingDate)" (click)="saveLastWorkingDate()">Save</button>
+                        </td>
+                      </tr>
+                      
+                      
+                      <!-- <tr>
+                        <th scope="row">Last Working Day :</th>
+                        <td>
+                          <input *ngIf="isEditing" type="date" [(ngModel)]="exitProcessDetails.lastWorkingDate"
+                            class="form-control" [min]="tomorrow" />
+                          <span *ngIf="!isEditing">{{ exitProcessDetails?.lastWorkingDate ? 
+                            (exitProcessDetails.lastWorkingDate | date: 'dd-MM-yyyy') : '--' }}</span>
+                          <a *ngIf="!isEditing && exitProcessDetails?.lastWorkingDate && designation == designationRole[1].value" 
+                            (click)="toggleEditMode()" 
+                            class="m-r-10 cursor-pointer"
+                            style="margin-left:5px; font-size: 20px; color: grey; cursor: pointer; transition: color 0.3s ease;">
+                            <i class="bx bx-edit" style="color: grey;"></i>
+                          </a>
+                          <button *ngIf="isEditing" class="btn btn-sm btn-success" (click)="saveLastWorkingDate()">Save</button>
+                        </td>
+                      </tr> -->
+                      
+                    </tbody>
+                  </table>
+                </div>
+               
+                <div class="col-12 mt-3">
+                  <h6 class="mb-5" *ngIf="exitProcessDetails?.gallery?.length > 0"><strong>Documents</strong></h6>
+                  <div class="row">
+                    <!-- Loop through the gallery and display the documents in 2 columns -->
+                    <div class="col-md-4 col-6 mb-3 mt-2"
+                      *ngFor="let file of exitProcessDetails?.gallery; let i = index">
+                      <div class="document-container">
+                        <!-- Display Image Preview -->
+                        <ng-container *ngIf="isImage(file)">
+                          <img [src]="file" alt="Image" class="img-fluid doc-image">
+                        </ng-container>
+
+                        <!-- Check if the file is a PDF -->
+                        <ng-container *ngIf="isPdf(file)">
+                          <i class="fa fa-file-pdf doc-icon pdf-icon"></i>
+                        </ng-container>
+
+                        <!-- For other document types, show text file icon -->
+                        <ng-container *ngIf="isTextFile(file)">
+                          <i class="fa fa-file-text doc-icon text-icon"></i>
+                        </ng-container>
+
+                        <!-- Download link directly below the image/icon -->
+                        <div class="mt-2">
+                          <a [href]="file" download="{{ 'document_' + i }}" class="btn btn-primary btn-sm">Download</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                  <div class="row">
+                    <!-- Display a message or badge if the action exists -->
+                    <div *ngIf="isExitProcessMarked" class="badge badge-danger p-2">
+                      This employee has been marked exited.
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="p-24 p-t-0" style="display: flex; justify-content: center;">
+
+                      <div>
+                        <button *ngIf="exitProcessDetails?.status == '3' && designation == designationRole[3].value"
+                          class="btn btn-info btn-md" (click)="centerModalForWithdraw(withdrawDataModal)"
+                          style="margin-right: 10px;">
+                          Withdraw
+                        </button>
+                      </div>
+                      <button *ngIf="exitProcessDetails?.status == '3' && designation == designationRole[1].value"
+                        class="btn btn-danger" (click)="centerModalForReject(rejectDataModal)"
+                        style="margin-right: 10px;">
+                        Reject
+                      </button>
+                      <button *ngIf="exitProcessDetails?.status == '3' && designation == designationRole[1].value"
+                        class="btn btn-primary btn-md" (click)="centerModalForApprove(approveDataModal)"
+                        style="margin-right: 10px;">
+                        Approve
+                      </button>
+                    </div>
+
+                    <div
+                      *ngIf="exitProcessDetails?.status == '1' && designation == designationRole[1].value && !hasMarkedExitProcess()"
+                      style="display: flex; justify-content: center; margin-top: 5px;">
+                      <button class="btn btn-primary btn-md" [disabled]="employeeDetails?.exitStatus"
+                        (click)="centerModalForMarkExit(exitDataModal)">
+                        Mark Exit
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Activity</h4>
+              <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom ">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                    <span class="d-none d-sm-block">Comments</span>
+                  </a>
+                  <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabContent">
+                    </ng-template>
+                    <div class="card-body">
+                      <div class="comment-form mt-4">
+                        <h6>{{ isEditingComment ? 'Edit Comment' : 'Post a Comment' }}</h6>
+                        <form [formGroup]="commentForm">
+                          <div class="mb-3">
+                            <textarea id="comment" rows="3" class="form-control" formControlName="commentText"
+                              placeholder="Add a comment" minlength="10" maxlength="201"></textarea>
+                            <div
+                              *ngIf="commentForm.get('commentText').invalid && (commentForm.get('commentText').dirty || commentForm.get('commentText').touched)"
+                              class="text-danger">
+                              <div *ngIf="commentForm.get('commentText').errors.required">
+                                Comment is required.
+                              </div>
+                              <div *ngIf="commentForm.get('commentText').errors?.minlength">Comment must be at least 10
+                                characters long</div>
+                              <div *ngIf="commentForm.get('commentText').errors?.maxlength">Comment cannot exceed 200
+                                characters</div>
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-end gap-2">
+                            <button class="btn btn-light ms-3" (click)="cancelEdit()">
+                              <i class="bx bx-reset"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" (click)="postComment()"
+                              [disabled]="!commentForm.valid">
+                              {{ isEditingComment ? 'Save' : 'Post Comment' }}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+
+                      <!-- Comments Section -->
+                      <div class="comments-section mt-4">
+                        <h6 *ngIf="exitProcessDetails?.comments?.length > 0">Comments</h6>
+                        <div *ngFor="let comment of exitProcessDetails?.comments; let i = index"
+                          class="comment-item py-3">
+                          <div class="d-flex align-items-start">
+                            <div class="me-3">
+                              <div class="avatar-xs">
+                                <div class="avatar-title rounded-circle bg-light text-primary">
+                                  <i class="bx bxs-user"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flex-grow-1">
+                              <div class="d-flex justify-content-between">
+                                <h6 class="font-size-14 mb-1">{{ comment.commentedBy }}</h6>
+                                <small class="text-muted">{{ comment.commentDate | date:'short' }}</small>
+                              </div>
+                              <p class="text-muted mb-1 word-wrap">{{ comment.commentText }}</p>
+                              <p class="font-size-12 text-muted">{{ comment.designation }}</p>
+                              <div>
+                                <div *ngIf="user?.user?.id === comment.userId"
+                                  style="display: flex; align-items: center;">
+                                  <!-- Edit Button -->
+                                  <a (click)="editComment(i)" class="m-r-10 cursor-pointer"
+                                    style="font-size: 20px; color: grey; cursor: pointer; transition: color 0.3s ease;">
+                                    <i class="bx bx-edit" style="color: grey;"></i>
+                                  </a>
+                                  <!-- Delete Button -->
+                                  <a (click)="deleteComment(i)" class="m-r-10 cursor-pointer"
+                                    style="font-size: 20px; color: red; cursor: pointer; margin-left: 10px; transition: color 0.3s ease;">
+                                    <i class="bx bx-trash" style="color: red;"></i>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </li>
+                <li [ngbNavItem]="4">
+                  <a ngbNavLink>
+                    <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                    <span class="d-none d-sm-block">History</span>
+                  </a>
+                  <ng-template ngbNavContent>
+                    <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+                    <div class="card-body">
+                      <!-- Activity Section -->
+                      <div class="activity-section mt-4">
+                        <h6>Activity</h6>
+                        <!-- Loop through activityLogs -->
+                        <div *ngFor="let activity of exitProcessDetails?.activityLogs?.slice().reverse(); let i = index"
+                          class="activity-item py-3">
+                          <div class="d-flex align-items-start">
+                            <div class="me-3">
+                              <div class="avatar-xs">
+                                <div class="avatar-title rounded-circle bg-light text-primary">
+                                  <i class="bx bxs-user"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flex-grow-1">
+                              <!-- Resignation creation -->
+                              <div *ngIf="activity.activityType === 'initiated'">
+                                <p class="text-muted mb-1">
+                                  <strong>{{ activity.performedByName }}</strong> created the resignation
+                                  {{ activity.timestamp | date: 'MMMM d, yyyy' }} at {{ activity.timestamp | date: 'h:mm
+                                  a' }}
+                                </p>
+                              </div>
+
+                              <!-- Comment Activity -->
+                              <div *ngIf="activity.commentText">
+                                <p class="text-muted mb-1">
+                                  <strong>{{ activity.commentedBy }}</strong> commented: "{{ activity.commentText }}"
+                                  on {{ activity.commentDate | date: 'MMMM d, yyyy' }} at {{ activity.commentDate |
+                                  date: 'h:mm a' }}
+                                </p>
+                              </div>
+
+                              <!-- Comment Mark Exit -->
+                              <div *ngIf="activity.action === 'Marked Exit Process'">
+                                <p class="text-muted mb-1">
+                                  <strong>{{ activity.markBy }}</strong> changed your exit status to
+                                  <strong>Exit</strong> on
+                                  {{ activity.timestamp | date: 'MMMM d, yyyy' }} at {{ activity.timestamp | date: 'h:mm
+                                  a' }}<br>
+                                  for the <strong>reason:</strong> {{ activity.reason }}.
+                                </p>
+                              </div>
+
+                              <!-- Status Update Activity (Approve/Reject/Withdraw) -->
+                              <div
+                                *ngIf="activity.action === 'Approved Exit Process' || activity.action === 'Rejected Exit Process' || activity.action === 'Withdrawn Exit Process'">
+                                <p class="text-muted mb-1">
+                                  <strong>{{
+                                    activity.status === '1' ? activity.approvedBy :
+                                    activity.status === '2' ? activity.rejectedBy :
+                                    activity.status === '4' ? activity.withdrawBy : ''
+                                    }}</strong> updated the status to
+                                  <span *ngIf="activity.status === '1'">Approve</span>
+                                  <span *ngIf="activity.status === '2'">Reject</span>
+                                  <span *ngIf="activity.status === '4'">Withdraw</span>
+                                  on {{ activity.timestamp | date: 'MMMM d, yyyy' }} at {{ activity.timestamp | date:
+                                  'h:mm a' }}
+                                </p>
+                              </div>
+
+                              <!-- Last Working Date Activity -->
+                              <div *ngIf="activity.action === 'Edited Last Working Date'">
+                                <p class="text-muted mb-1">
+                                  <strong>{{ activity.updatedBy }}</strong> changed your last working date to
+                                  <strong>{{ activity.lastWorkingDate | date: 'MMMM d, yyyy' }}</strong> on
+                                  {{ activity.timestamp | date: 'MMMM d, yyyy' }} at {{ activity.timestamp | date: 'h:mm
+                                  a' }}.
+                                </p>
+                              </div>
+                              <!-- Last Working Date -->
+                              <div *ngIf="activity.lastWorkingDate">
+                                <p class="text-muted mb-1">
+                                  <strong>Your Last Working Day:</strong> {{ activity.lastWorkingDate | date: 'MMMM d,
+                                  yyyy' }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                </li>
+              </ul>
+              <div [ngbNavOutlet]="customNav"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="card" *ngIf="exitProcessDetails?.status == '1' && designation == designationRole[1].value">
+            <div class="card-body">
+              <div>
+                <div class="card-body border-bottom">
+                  <div>
+                    <h6 class="card-title">Exit Process Documents</h6>
+                    <p class="card-title-desc mb-0">The details for your resignation.</p>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <!-- Dropdown for document type -->
+                  <div class="col-md-4">
+                    <label for="documentType" class="col-form-label">Select Document Type</label>
+                    <ng-select [(ngModel)]="selectedDocumentType" [items]="documentTypes" bindLabel="nameDoc"
+                      bindValue="nameDoc" placeholder="Please select a document type" [clearable]="true">
+                    </ng-select>
+                  </div>
+
+                  <!-- File input for uploading documents -->
+                  <div class="col-md-4">
+                    <label for="fileInput" class="col-form-label">Upload Document</label>
+                    <input type="file" class="form-control" accept="image/*,application/pdf,text/*" id="fileInput"
+                      (change)="handleFileInput($event)" #fileInput>
+                    <div *ngIf="fileError" class="text-danger mt-2">
+                      <p> {{ fileError }}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <button class="btn btn-primary mt-4"
+                      [disabled]="!isFileValid || !selectedDocumentType || !files?.length"
+                      (click)="uploadDocument()">Upload</button>
+                    <p class="font-size-12 text-info" *ngIf="isUploadStarted">
+                      The image upload has started, this will take some time to reflect. Please switch tabs to see the
+                      changes.
+                    </p>
+                  </div>
+                </div>
+                <hr>
+                <div class="col-12 mt-3">
+                  <h6><strong>Exit Documents</strong></h6>
+                  <div class="row">
+                    <div class="col-md-3 col-6 mb-3 mt-2"
+                      *ngFor="let document of exitProcessDetails?.exitDocuments?.documents; let i = index">
+                      <div class="document-container">
+                        <div class="delete-icon" (click)="deleteImage(i)">
+                          <i class="fas fa-trash"></i>
+                        </div>
+                        <!-- Image Preview -->
+                        <ng-container *ngIf="getDocumentPreview(document.url).type === 'image'">
+                          <img [src]="getDocumentPreview(document.url).url" alt="Document Image" class="document-icon">
+                        </ng-container>
+                        <!-- PDF Icon -->
+                        <ng-container *ngIf="getDocumentPreview(document.url).type === 'pdf'">
+                          <i class="fas fa-file-pdf document-icon"></i>
+                        </ng-container>
+                        <!-- Word Icon -->
+                        <ng-container *ngIf="getDocumentPreview(document.url).type === 'word'">
+                          <i class="fas fa-file-word document-icon"></i>
+                        </ng-container>
+                        <!-- Text Icon -->
+                        <ng-container *ngIf="getDocumentPreview(document.url).type === 'text'">
+                          <i class="fas fa-file-alt document-icon"></i>
+                        </ng-container>
+                        <!-- Unsupported File Type -->
+                        <ng-container *ngIf="getDocumentPreview(document.url).type === 'unsupported'">
+                        </ng-container>
+                        <!-- Display the document name -->
+                        <div class="text-center">
+                          <span class="doc-name">{{ document.nameDoc || 'No name available' }}</span>
+                        </div>
+                        <div class="mt-2">
+                          <a (click)="downloadImage(document.url, document.nameDoc || 'document_' + i)"
+                            class="btn btn-primary btn-sm">Download</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Fallback if no documents are found -->
+                  <div *ngIf="exitProcessDetails?.exitDocuments?.documents?.length === 0">
+                    <p>No exit documents available.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #withdrawDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Withdraw</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <p class="mat-subtitle-2 lh-16 custom-content">Do you really want to withdraw this resignation?</p>
+    <form [formGroup]="withdrawForm">
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment For Withdraw</label>
+        <textarea id="comment" rows="4" class="form-control" formControlName="comment" placeholder="Enter your comment"
+          minlength="10" maxlength="201"></textarea>
+        <div
+          *ngIf="withdrawForm.get('comment').invalid && (withdrawForm.get('comment').dirty || withdrawForm.get('comment').touched)"
+          class="text-danger">
+          <div *ngIf="withdrawForm.get('comment').errors.required">
+            Comment is required.
+          </div>
+          <div *ngIf="withdrawForm.get('comment').errors?.minlength">Comment must be at least 10
+            characters long</div>
+          <div *ngIf="withdrawForm.get('comment').errors?.maxlength">Comment cannot exceed 200
+            characters</div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="updateStatusForWithdraw(id)" [disabled]="withdrawForm.invalid"
+      data-bs-dismiss="modal">
+      Withdraw
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+      No
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #approveDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Approve</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <p class="mat-subtitle-2 lh-16 custom-content">Do you really want to approve this resignation?</p>
+
+    <form [formGroup]="approvedForm">
+      <div class="mb-3">
+        <label for="lastWorkingDate" class="form-label">Last Working Date</label>
+        <input type="date" class="form-control" id="lastWorkingDate" formControlName="lastWorkingDate" 
+               [min]="tomorrow" (input)="onDateInputChange($event)">
+        
+        <!-- Error messages -->
+        <div *ngIf="approvedForm.get('lastWorkingDate').invalid && 
+                     (approvedForm.get('lastWorkingDate').dirty || approvedForm.get('lastWorkingDate').touched)" 
+             class="text-danger">
+          <div *ngIf="approvedForm.get('lastWorkingDate').errors?.required" class="text-danger">
+            Last Working Date is required
+          </div>
+          <div *ngIf="approvedForm.get('lastWorkingDate').errors?.invalidYear" class="text-danger">
+            The year must be 4 digits.
+          </div>
+        </div>
+      </div>
+      
+      
+      <!-- <div class="mb-3">
+        <label for="lastWorkingDate" class="form-label">Last Working Date</label>
+        <input type="date" class="form-control" id="lastWorkingDate" formControlName="lastWorkingDate" [min]="tomorrow">
+        <div
+          *ngIf="approvedForm.get('lastWorkingDate').invalid && (approvedForm.get('lastWorkingDate').dirty || approvedForm.get('lastWorkingDate').touched)"
+          class="text-danger">
+          <div *ngIf="approvedForm.get('lastWorkingDate').errors.required" class="text-danger">
+            Last Working Date is required
+          </div>
+        </div>
+      </div> -->
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment For Approved</label>
+        <textarea id="comment" rows="4" class="form-control" formControlName="comment" placeholder="Enter your comment"
+          minlength="10" maxlength="201"></textarea>
+        <div
+          *ngIf="approvedForm.get('comment').invalid && (approvedForm.get('comment').dirty || approvedForm.get('comment').touched)"
+          class="text-danger">
+          <div *ngIf="approvedForm.get('comment').errors.required">
+            Comment is required.
+          </div>
+          <div *ngIf="approvedForm.get('comment').errors?.minlength">Comment must be at least 10
+            characters long</div>
+          <div *ngIf="approvedForm.get('comment').errors?.maxlength">Comment cannot exceed 200
+            characters</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="updateStatusForApprove(id)" data-bs-dismiss="modal"
+          [disabled]="!approvedForm.valid">
+          Approve
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #rejectDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Reject</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <p class="mat-subtitle-2 lh-16 custom-content">Do you really want to reject this resignation?</p>
+    <form [formGroup]="rejectForm">
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment For Rejected</label>
+        <textarea id="comment" rows="4" class="form-control" formControlName="comment" placeholder="Enter your comment"
+          minlength="10" maxlength="201"></textarea>
+        <div
+          *ngIf="rejectForm.get('comment').invalid && (rejectForm.get('comment').dirty || rejectForm.get('comment').touched)"
+          class="text-danger">
+          <div *ngIf="rejectForm.get('comment').errors.required">
+            Comment is required.
+          </div>
+          <div *ngIf="rejectForm.get('comment').errors?.minlength">Comment must be at least 10
+            characters long</div>
+          <div *ngIf="rejectForm.get('comment').errors?.maxlength">Comment cannot exceed 200
+            characters</div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="updateStatusForReject(id)" [disabled]="rejectForm.invalid"
+      data-bs-dismiss="modal">
+      Reject
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')" data-bs-dismiss="modal">
+      No
+    </button>
+  </div>
+</ng-template>
+<ng-template #exitDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Mark Exit</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <p class="mat-subtitle-2 lh-16 custom-content">Do you really want to mark exit?</p>
+    <form [formGroup]="exitMarkForm">
+      <div class="mb-3">
+        <label for="Reason" class="form-label">Reason For Mark Exit</label>
+        <textarea id="Reason" rows="4" class="form-control" formControlName="reason" placeholder="Enter your Reason"
+          minlength="10" maxlength="201"></textarea>
+
+        <div
+          *ngIf="exitMarkForm.get('reason').invalid && (exitMarkForm.get('reason').dirty || exitMarkForm.get('reason').touched)"
+          class="text-danger">
+          <div *ngIf="exitMarkForm.get('reason').errors.required">
+            Reason is required.
+          </div>
+          <div *ngIf="exitMarkForm.get('reason').errors?.minlength">Reason must be at least 10
+            characters long</div>
+          <div *ngIf="exitMarkForm.get('reason').errors?.maxlength">Reason cannot exceed 200
+            characters</div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="markExit()" [disabled]="exitMarkForm.invalid"
+      data-bs-dismiss="modal">
+      Exit
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')" data-bs-dismiss="modal">
+      No
+    </button>
+  </div>
+</ng-template>
