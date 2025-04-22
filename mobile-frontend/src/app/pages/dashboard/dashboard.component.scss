@@ -1,0 +1,13 @@
+.mobile-bottom-nav .nav-item i {
+  transition: transform 0.2s ease;
+}
+.mobile-bottom-nav .nav-item:hover i {
+  transform: scale(1.2);
+}
+input::placeholder {
+  color: #999;
+}
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #ce1212;
+}

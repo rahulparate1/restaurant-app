@@ -1,0 +1,18 @@
+.icon{
+  font-size: 25px;
+}
+.full-loader1 {
+  top: 0;
+  right: 0;
+  z-index: 1060;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin-top: 13px;
+}
+.loader{
+  margin-top: -177px;
+}

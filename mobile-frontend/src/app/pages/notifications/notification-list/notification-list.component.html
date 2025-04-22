@@ -1,0 +1,178 @@
+<div class="m-header-v2 py-4 px-3 d-flex justify-content-between align-items-center w-100 border-bottom">
+  <div class="d-flex align-items-center gap-3">
+    <div class="action-item cursor-pointer">
+      <i class="bx bx-arrow-back fs-4"></i>
+    </div>
+    <h5 class="mb-0 fw-semibold">Notifications</h5>
+  </div>
+</div>
+
+<div class="screen-container px-3 pb-4">
+
+  <!-- Loader -->
+  <div class="d-flex justify-content-center py-4" *ngIf="isLoading">
+    <div class="spinner-border text-accent" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Notification List -->
+  <div class="row notification-list g-3 mt-2" *ngIf="currentNotifications && currentNotifications.length > 0">
+    <div class="col-xl-3 col-md-4 col-sm-6 col-12" *ngFor="let item of currentNotifications">
+      <div class="card notification-item p-3 h-100">
+        <div class="d-flex align-items-start gap-3">
+          <!-- Icon -->
+          <div class="icon fs-3 text-primary">
+            <i
+              [ngClass]="{
+                'bx bx-bullhorn text-info': item.module === 'notice',
+                'bx bx-rupee text-success': item.module === 'reimbursement',
+                'bx bx-news text-primary': item.module === 'newsfeed',
+                'bx bx-bar-chart-alt text-warning': item.module === 'polls',
+                'bx bx-time-five text-danger': item.module === 'timesheet',
+                'bx bx-bell': !['notice','reimbursement','newsfeed','polls','timesheet'].includes(item.module)
+              }">
+            </i>
+          </div>
+
+          <!-- Details -->
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-start">
+              <h6 class="mb-1 flex-grow-1">
+                <!-- <a [routerLink]="item?.path" class="text-decoration-none text-dark">
+                  {{ item?.title | titlecase }}
+                </a> -->
+                <!-- Timesheet: open modal -->
+              <a *ngIf="item.module === 'timesheet'; else otherModules"
+              class="text-decoration-none text-dark cursor-pointer"
+              (click)="openModalForTimesheet(item?.data?.timesheetId || item?.data?.id)">
+             {{ item?.title | titlecase }}
+           </a>
+           <!-- Other modules: route normally -->
+           <ng-template #otherModules>
+            <a [routerLink]="getNotificationRoute(item)" class="text-decoration-none text-dark">
+              {{ item?.title | titlecase }}
+            </a>
+          </ng-template>
+
+              </h6>
+              <a (click)="deleteNotification(item?.id)" class="text-danger cursor-pointer" title="Delete">
+                <i class="bx bx-trash fs-5"></i>
+              </a>
+            </div>
+            <p class="text-muted mb-0">{{ item?.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Notifications -->
+  <div class="text-center py-5 text-muted" *ngIf="!isLoading && (!currentNotifications || currentNotifications.length === 0)">
+    <i class="bx bx-box fs-1 mb-2 d-block"></i>
+    <p>No Notifications Available.</p>
+  </div>
+
+  <!-- No More Data -->
+  <div class="text-center mt-4 text-muted" *ngIf="!isLoading && !hasMoreRequests && currentNotifications?.length > 0">
+    <p>No more data to load...</p>
+  </div>
+</div>
+
+<ng-template #timesheetDetailsModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Timesheet Details</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      id="close-modal"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="d-flex">
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="row">Employee Name</th>
+              <td>{{ timesheetDetails?.employee?.name || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Employee Email</th>
+              <td>{{ timesheetDetails?.employee?.email || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Date</th>
+              <td>{{ timesheetDetails?.date || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Day</th>
+              <td>{{ timesheetDetails?.day || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Month</th>
+              <td>{{ timesheetDetails?.month || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Year</th>
+              <td>{{ timesheetDetails?.year || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Total Hours</th>
+              <td>{{ timesheetDetails?.totalHours || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Scrum</th>
+              <td>{{ timesheetDetails?.scrum || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Meetings/Discussion</th>
+              <td>{{ timesheetDetails?.['meetings/discussions'] || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Development</th>
+              <td>{{ timesheetDetails?.['development/designing'] || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Deployment</th>
+              <td>{{ timesheetDetails?.deployment || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Documentation</th>
+              <td>{{ timesheetDetails?.documentations || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Knowledge Transfer</th>
+              <td>{{ timesheetDetails?.knowledgetransfer || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Idle</th>
+              <td>{{ timesheetDetails?.idle || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Description</th>
+              <td>{{ timesheetDetails?.taskDescription || "--" }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Status</th>
+              <td> <span *ngFor="let status of TimesheetStatus">
+                <span
+                  *ngIf="timesheetDetails?.status === status?.id"
+                >
+                  {{ status?.label }}
+                </span>
+              </span></td>
+            </tr>
+            <tr>
+              <th scope="row">Effective Hours</th>
+              <td>{{ timesheetDetails?.effectiveHours || "--" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -2,3 +2,7 @@ export * from './veg.model';
 export * from './non-veg.model';
 export * from './veg-category.model';
 export * from './non-veg-category.model';
+export * from './restaurant.model';
+export * from './user.model';
+export * from './user-credentials.model';
+export * from './user-with-password.model';

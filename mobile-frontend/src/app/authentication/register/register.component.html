@@ -1,0 +1,148 @@
+<!-- RESTAURANT REGISTRATION SECTION -->
+<section id="restaurant-registration" class="book-a-table section" *ngIf="formSection">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Restaurant Registration</h2>
+    <p>
+      <span>Serve </span>
+      <span class="description-title"> Food, Serve Happiness</span>
+    </p>
+  </div>
+
+  <div class="container">
+    <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-lg-8 d-flex align-items-center" style="background-color: #fffaf0; border-radius: 5px;" data-aos="fade-up" data-aos-delay="200">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="php-email-form w-100">
+          <div class="row gy-4">
+
+            <!-- Restaurant Name -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Restaurant Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="restaurantName"
+                placeholder="Enter your restaurant name" />
+              <div *ngIf="f.restaurantName.touched && f.restaurantName.invalid" class="text-danger mt-1">
+                Restaurant Name is required.
+              </div>
+            </div>
+
+            <!-- Full Name -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Full Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="fullName" placeholder="Enter your full name" />
+              <div *ngIf="f.fullName.touched && f.fullName.invalid" class="text-danger mt-1">
+                Full Name is required.
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Email <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" formControlName="email" placeholder="Enter your email" />
+              <div *ngIf="f.email.touched && f.email.invalid" class="text-danger mt-1">
+                Please enter a valid email.
+              </div>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="mobileNo"
+                placeholder="Enter your 10-digit mobile number" />
+              <div *ngIf="f.mobileNo.touched && f.mobileNo.invalid" class="text-danger mt-1">
+                Please enter a valid 10-digit number.
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="col-lg-12">
+              <label class="form-label">Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password"
+                  placeholder="Create a password" />
+                <span class="input-group-text" style="cursor: pointer;" (click)="togglePasswordVisibility()">
+                  <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </span>
+              </div>
+              <div *ngIf="f.password.touched && f.password.invalid" class="text-danger mt-1">
+                Password must be 8+ chars with uppercase, lowercase, number & symbol.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center align-items-center mt-4">
+            <button class="btn btn-primary w-100 text-center d-flex justify-content-center align-items-center"
+              type="submit" [disabled]="signupForm.invalid || isLoading">
+              {{ isLoading ? 'Registering...' : 'Register' }}
+            </button>
+          </div>
+
+          <!-- 👇👇 Added this part 👇👇 -->
+          <div class="text-center mt-3">
+            <p class="mb-0">
+              Already registered?
+              <a routerLink="/auth/login" class="fw-medium" style="color: #ce1212;">Login here</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="verify-otp" class="book-a-table section mt-4" *ngIf="otpSection">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>OTP Verification</h2>
+    <p>
+      <span>Check Your Email</span>
+      <span class="description-title">Secure Your Access</span>
+    </p>
+  </div>
+
+  <div class="container section-title" data-aos="fade-up">
+    <p>
+      <span>OTP</span>
+    </p>
+  </div>
+
+  <div class="container mt-4">
+    <div class="col-lg-8 d-flex align-items-center"  style="background-color: #fffaf0; border-radius: 5px;" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-lg-6 col-md-8 p-4">
+        <!-- <div class="card p-4 shadow rounded"> -->
+        <h4 class="text-center mb-3">Verify OTP</h4>
+        <p class="text-center mb-4">
+          We've sent a 6-digit OTP to <strong>{{ signupForm.value.email }}</strong>.
+        </p>
+
+
+
+        <div *ngIf="otpError" class="text-danger text-center mb-2">{{ otpErrorMsg }}</div>
+
+
+
+        <div class="row justify-content-center mb-3">
+          <div *ngFor="let digit of otpDigits; let i = index" class="col-2">
+            <input type="text" maxlength="1" class="form-control text-center otp-input" [value]="digit"
+              (input)="onOtpChange($event, i)" (keydown)="handleOtpKeyDown($event, i)" [disabled]="isLoading"
+              autofocus />
+          </div>
+        </div>
+
+        <!-- Verify OTP Button -->
+        <button class="btn btn-danger w-100 mb-2" type="button" [disabled]="otpValue.length !== otpLength || isLoading"
+          (click)="verifyOtp()">
+          {{ isLoading ? 'Verifying...' : 'Verify OTP' }}
+        </button>
+
+        <!-- Resend OTP -->
+        <div class="text-center text-muted">
+          Didn't receive code?
+          <button class="btn btn-link p-0 text-danger fw-bold" type="button" [disabled]="disableResendButton"
+            (click)="resendOtp()">
+            Resend OTP
+          </button>
+          <span *ngIf="otpTime > 0">({{ otpTime }}s)</span>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</section>
