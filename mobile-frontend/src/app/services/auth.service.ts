@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { User } from '../store/Authentication/auth.models';
 
 //import { getFirebaseBackend } from '../../authUtils';
 
-import { User } from '../../app/core/models/auth.models';
+
 
 @Injectable({ providedIn: 'root' })
 

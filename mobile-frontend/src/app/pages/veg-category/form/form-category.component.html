@@ -9,7 +9,7 @@
 
   <div class="container">
     <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
-      <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-lg-8 d-flex align-items-center"  style="background-color: #fffaf0; border-radius: 5px;" data-aos="fade-up" data-aos-delay="200">
         <form [formGroup]="vegForm" (ngSubmit)="onSubmit()" class="php-email-form w-100">
           <div class="row gy-4">
             <!-- Title -->
@@ -63,9 +63,14 @@
             </div>
           </div>
 
-          <div class="text-center mt-4">
-            <button type="submit" class="btn btn-primary" [disabled]="vegForm.invalid">
-              {{ id ? 'Update Category' : 'Add Category' }}
+           <!-- Login Button -->
+           <div class="d-flex justify-content-center align-items-center mt-4">
+            <button
+            class="btn btn-primary w-100 text-center d-flex justify-content-center align-items-center"
+              type="submit"
+              [disabled]="vegForm.invalid"
+            >
+            {{ id ? 'Update Category' : 'Add Category' }}
             </button>
           </div>
         </form>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { VegMasterService } from '../veg-master.service';
 
 @Component({
   selector: 'app-veg-list',
@@ -39,30 +40,55 @@ export class VegListComponent {
     },
     // Add more items here...
   ];
+  vegList: any;
 
     constructor(
-      public router: Router
+      public router: Router,
+      private vegService: VegMasterService
     ) {
     }
 
     ngOnInit(): void {
 
+      this.fetchCategoryList();
+
+    }
+
+    async fetchCategoryList() {
+      let url = 'http://127.0.0.1:3000/vegs'; // API endpoint to fetch categories
+     (await this.vegService.getAllItems(url)).subscribe(
+        (res: any) => {
+          if (res) {
+            this.vegList = res; // Assigning the response to categoryList
+          } else {
+            console.error('Error fetching veg data:', res);
+          }
+        },
+        (error) => {
+          console.error('Error fetching veg:', error);
+        }
+      );
     }
 
     increaseQuantity(item: any) {
-      item.quantity++;
+      item.quantity = (item.quantity || 0) + 1;
     }
 
     decreaseQuantity(item: any) {
-      if (item.quantity > 1) item.quantity--;
+      if (item.quantity && item.quantity > 0) {
+        item.quantity -= 1;
+      }
     }
 
     addNewMenu() {
-      // Logic to show a modal or route to add menu
+      this.router.navigate(['/dashboard/veg-master/form']);
     }
 
     goToProfile(){
       this.router.navigate([('/dashboard/profile/profile-info')])
     }
 
+    editItem(id: string) {
+      this.router.navigate(['/dashboard/veg-master/form/' + id]);
+    }
 }
