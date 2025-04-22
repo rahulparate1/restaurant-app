@@ -19,7 +19,6 @@ import firebase from 'firebase/compat/app';
 import { ApiService } from "src/app/services/api.service";
 import { ToastrService } from "ngx-toastr";
 import { NotificationsService } from "src/app/pages/notifications/notifications.service";
-import { AttendanceService } from "../../pages/attendance/attendance.service";
 
 @Component({
   selector: "app-topbar",
@@ -67,7 +66,6 @@ timesheetDetails: any;
     private apiService: ApiService,
     private notificationService: NotificationsService,
     private toastr: ToastrService,
-    private attendanceService: AttendanceService,
     private modalService: NgbModal,
   ) {}
 
@@ -502,7 +500,7 @@ timesheetDetails: any;
             if (leaveId) this.router.navigate(['/leave-management/leave-details', leaveId]);
             break;
             case 'timesheet':
-  if (timesheetId) this.openModalForTimesheet(timesheetId);
+  // if (timesheetId) this.openModalForTimesheet(timesheetId);
   break;
           // case 'timesheet':
           //   if (timesheetId) this.router.navigate(['/timesheet/view', timesheetId]);
@@ -530,16 +528,16 @@ timesheetDetails: any;
     );
   }
 
- async openModalForTimesheet(timesheetId: string) {
-    (await this.attendanceService.getTimesheetbyId(timesheetId)).subscribe({
-      next: (res) => {
-        this.timesheetDetails = res;
-        this.modalService.open(this.timesheetDetailsModal, { centered: true });
-      },
-      error: (err) => {
-        console.error('Error fetching timesheet details:', err);
-        this.toastr.error('Failed to load timesheet details.');
-      }
-    });
-  }
+//  async openModalForTimesheet(timesheetId: string) {
+//     (await this.attendanceService.getTimesheetbyId(timesheetId)).subscribe({
+//       next: (res) => {
+//         this.timesheetDetails = res;
+//         this.modalService.open(this.timesheetDetailsModal, { centered: true });
+//       },
+//       error: (err) => {
+//         console.error('Error fetching timesheet details:', err);
+//         this.toastr.error('Failed to load timesheet details.');
+//       }
+//     });
+//   }
 }

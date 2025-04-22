@@ -4,7 +4,6 @@ import { LayoutComponent } from './layouts/layout.component';
 import { CyptolandingComponent } from './cyptolanding/cyptolanding.component';
 import { Page404Component } from './extrapages/page404/page404.component';
 import { AuthGuard } from './core/guards/auth.guard';
-import { GeneralFeedComponent } from './pages/general-feed/general-feed.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
@@ -12,8 +11,6 @@ const routes: Routes = [
   // { path: '', component: LayoutComponent, loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard] },  // Use the function-based guard here
   // { path: 'pages', loadChildren: () => import('./extrapages/extrapages.module').then(m => m.ExtrapagesModule), canActivate: [AuthGuard] },  // Use the function-based guard here
   { path: 'crypto-ico-landing', component: CyptolandingComponent },
-  { path: 'exit',loadChildren: () => import('./exit-documents/exit-documents.module').then(  (m) => m.ExitDocumentsModule ) },
-  { path: 'general-feed', component: GeneralFeedComponent },
   { path: 'dashboard', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) , canActivate: [AuthGuard]},
 
   // { path: '**', component: Page404Component },

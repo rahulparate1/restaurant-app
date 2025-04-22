@@ -3,7 +3,6 @@ import { NotificationsService } from "../notifications.service";
 import { ApiService } from "src/app/services/api.service";
 import { Router } from "@angular/router";
 import Swal from "sweetalert2";
-import { AttendanceService } from "../../attendance/attendance.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 const swalWithBootstrapButtons = Swal.mixin({
@@ -40,7 +39,6 @@ export class NotificationListComponent implements OnInit {
     public router: Router,
     private service: NotificationsService,
     private apiService: ApiService,
-    private attendanceService: AttendanceService,
     private modalService: NgbModal
   ) {
     this.user = JSON.parse(localStorage.getItem("user"));
@@ -218,17 +216,17 @@ export class NotificationListComponent implements OnInit {
   //   });
   // }
 
-  async openModalForTimesheet(timesheetId: string) {
-    if (!timesheetId) return;
+  // async openModalForTimesheet(timesheetId: string) {
+  //   if (!timesheetId) return;
 
-    (await this.attendanceService.getTimesheetbyId(timesheetId)).subscribe({
-      next: (res) => {
-        this.timesheetDetails = res;
-        this.modalService.open(this.timesheetDetailsModal, { centered: true });
-      },
-      error: (err) => {
-        console.error('Error fetching timesheet details:', err);
-      }
-    });
-  }
+  //   (await this.attendanceService.getTimesheetbyId(timesheetId)).subscribe({
+  //     next: (res) => {
+  //       this.timesheetDetails = res;
+  //       this.modalService.open(this.timesheetDetailsModal, { centered: true });
+  //     },
+  //     error: (err) => {
+  //       console.error('Error fetching timesheet details:', err);
+  //     }
+  //   });
+  // }
 }

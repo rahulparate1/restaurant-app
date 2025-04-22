@@ -35,22 +35,15 @@ import {
   NgbCollapseModule,
   NgbNavModule,
 } from "@ng-bootstrap/ng-bootstrap";
-import { GeneralFeedComponent } from "./general-feed/general-feed.component";
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
-import { PollsModule } from "./polls/polls.module";
-import { SupportKanbanComponent } from "./support-kanban/support-kanban.component";
 import { DndModule } from "ngx-drag-drop";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { SupportTicketDetailsComponent } from "./support-ticket-details/support-ticket-details.component";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { VegNonvegCardsComponent } from "./veg-nonveg-cards/veg-nonveg-cards.component";
 
 @NgModule({
   declarations: [
-    GeneralFeedComponent,
-    SupportKanbanComponent,
-    SupportTicketDetailsComponent,
     DashboardComponent,
     VegNonvegCardsComponent,
   ],
@@ -75,7 +68,6 @@ import { VegNonvegCardsComponent } from "./veg-nonveg-cards/veg-nonveg-cards.com
     CdkStepper,
     PickerModule,
     InfiniteScrollModule,
-    PollsModule,
     DndModule,
     DragDropModule,
     NgbNavModule,
