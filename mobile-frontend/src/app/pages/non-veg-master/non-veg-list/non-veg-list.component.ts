@@ -154,4 +154,8 @@ export class NonVegListComponent {
   editItem(id: string) {
     this.router.navigate(["/dashboard/non-veg-master/form/" + id]);
   }
+
+  addItems(){
+    this.router.navigate(["/dashboard/non-veg-master/form"]);
+  }
 }

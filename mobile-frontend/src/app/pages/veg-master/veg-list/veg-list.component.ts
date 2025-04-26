@@ -163,4 +163,8 @@ export class VegListComponent {
   editItem(id: string) {
     this.router.navigate(["/dashboard/veg-master/form/" + id]);
   }
+
+  addItems(){
+    this.router.navigate(["/dashboard/veg-master/form"]);
+  }
 }
