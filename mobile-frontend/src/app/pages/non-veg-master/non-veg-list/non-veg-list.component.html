@@ -1,1 +1,83 @@
-<p>non-veg-list works!</p>
+<section id="menu" class="menu section">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Our Non-Veg Menu</h2>
+    <p><span>Check Our</span> <span class="description-title">Delicious Non-Veg Menu</span></p>
+  </div>
+
+  <div class="container">
+    <div *ngIf="nonVegList.length === 0" class="alert" style="background-color: #fffaf0;">No food Available.</div>
+    <div class="row g-4" *ngIf="nonVegList.length != 0">
+      <div class="col-12 col-md-6" *ngFor="let item of nonVegList">
+        <div class="card custom-card shadow-lg border-0 p-3 h-100 position-relative" style="border-radius: 16px;">
+
+          <!-- Discount badge -->
+          <div *ngIf="item.discount" class="badge bg-success position-absolute top-0 end-0 m-2 fs-6">
+            {{ item.discount }}% OFF
+          </div>
+
+          <!-- Image -->
+          <div class="text-center p-2">
+            <img [src]="item.image" class="img-fluid rounded-3 menu-image" alt="{{ item.name }}"
+              style="max-height: 200px; object-fit: cover;" />
+          </div>
+
+          <!-- Body -->
+          <div class="card-body p-2">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h5 class="card-title fw-semibold mb-1">{{ item.name }}</h5>
+                <p class="card-text text-muted small mb-2">{{ item.description }}</p>
+
+                <!-- Rating -->
+                <div class="mb-2">
+                  <ng-container *ngIf="item.rating">
+                    <ng-container *ngFor="let star of [].constructor(5); let i = index">
+                      <i class="bi" [ngClass]="{
+                        'bi-star-fill text-warning': i < item.rating,
+                        'bi-star text-muted': i >= item.rating
+                      }"></i>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+              <!-- <div class="text-end mt-3">
+                <button class="btn btn-square quantity-btn" style="background-color: #ce1212;"
+                  (click)="editItem(item._id)">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+              </div> -->
+            </div>
+
+            <!-- Price & Quantity -->
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold" style="color: #ce1212;">₹{{ item.price }}</span>
+
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-square quantity-btn" (click)="decreaseQuantity(item)">-</button>
+                <span class="fw-semibold px-2">{{ item.quantity || 0 }}</span>
+                <button class="btn btn-square quantity-btn" (click)="increaseQuantity(item)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="nonVegList.length != 0" class="d-flex justify-content-center align-items-center mt-4 mb-4">
+      <button class="btn w-100 text-center d-flex justify-content-center align-items-center" type="submit"
+        style="background-color: #ce1212; color: #fff;" (click)="addSelectedToCart()">
+        Add to Cart
+      </button>
+    </div>
+
+    <div *ngIf="nonVegList.length === 0" class="d-flex justify-content-center align-items-center mt-4 mb-4">
+      <button class="btn w-100 text-center d-flex justify-content-center align-items-center" type="submit"
+        style="background-color: #ce1212; color: #fff;" (click)="addSelectedToCart()">
+        Add Items
+      </button>
+    </div>
+  </div>
+</section>
+
+<button *ngIf="nonVegList.length != 0" class="fab-add-menu-btn" (click)="addNewMenu()" aria-label="Add Menu">
+  <i class="bi bi-plus-lg"></i>
+</button>

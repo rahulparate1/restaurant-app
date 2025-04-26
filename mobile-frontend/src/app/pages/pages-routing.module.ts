@@ -4,6 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 // import { DefaultComponent } from "./dashboards/default/default.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { VegNonvegCardsComponent } from "./veg-nonveg-cards/veg-nonveg-cards.component";
+import { TabsComponent } from "./tabs/tabs.component";
 
 const routes: Routes = [
   ,
@@ -39,6 +40,15 @@ const routes: Routes = [
   },
   {
     path: "profile", loadChildren: () => import("./profile/profile.module").then((m) => m.ProfileModule),
+  },
+  {
+    path: 'tab', component: TabsComponent
+  },
+  {
+    path: "cart", loadChildren: () => import("./cart/cart.module").then((m) => m.CartModule),
+  },
+  {
+    path: "feedback", loadChildren: () => import("./feedback/feedback.module").then((m) => m.FeedbackModule),
   },
 ];
 

@@ -1,18 +1,4 @@
 {
-  "name": "skote-angular-vertical",
-  "version": "1.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build-prod": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --prod",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
-  },
-  "private": true,
   "dependencies": {
     "@amcharts/amcharts5": "^5.6.1",
     "@amcharts/amcharts5-geodata": "^5.1.1",
@@ -105,7 +91,7 @@
     "zone.js": "^0.14.7"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.0.4",
+    "@angular-devkit/build-angular": "^18.2.18",
     "@angular/cli": "^18.0.4",
     "@angular/compiler-cli": "^18.0.3",
     "@angular/language-service": "^18.0.3",

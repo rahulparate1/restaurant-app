@@ -1,56 +1,117 @@
- <!-- Book A Table Section -->
- <section id="book-a-table" class="book-a-table section">
-
-  <!-- Section Title -->
+<section id="nonveg-item" class="book-a-table section">
   <div class="container section-title" data-aos="fade-up">
-    <h2>Add Non-Vegitarian Menu</h2>
-    <p><span>Your Item</span> <span class="description-title">Stay With Us<br></span></p>
-  </div><!-- End Section Title -->
-
-  <div class="container">
-
-    <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
-
-      <!-- <div class="col-lg-4 reservation-img" style="background-image: url(assets/img/reservation.jpg);"></div> -->
-
-      <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
-        <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form">
-          <div class="row gy-4">
-            <div class="col-lg-4 col-md-6">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required="">
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" required="">
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <input type="date" name="date" class="form-control" id="date" placeholder="Date" required="">
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <input type="time" class="form-control" name="time" id="time" placeholder="Time" required="">
-            </div>
-            <div class="col-lg-4 col-md-6">
-              <input type="number" class="form-control" name="people" id="people" placeholder="# of people" required="">
-            </div>
-          </div>
-
-          <div class="form-group mt-3">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-          </div>
-
-          <div class="text-center mt-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-            <button type="submit">Book a Table</button>
-          </div>
-        </form>
-      </div><!-- End Reservation Form -->
-
-    </div>
-
+    <h2>{{ id ? 'Edit' : 'Add' }} Non-Vegetarian Item</h2>
+    <p>
+      <span>Your Non-Veg Dish</span>
+      <span class="description-title">Delicious & Protein-Rich</span>
+    </p>
   </div>
 
-</section><!-- /Book A Table Section -->
+  <div class="container">
+    <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-lg-10 d-flex align-items-center" style="background-color: #fffaf0; border-radius: 10px;"
+        data-aos="fade-up" data-aos-delay="200">
+        <form [formGroup]="nonVegItemForm" (ngSubmit)="onSubmit()" class="php-email-form w-100 p-4">
+          <div class="row gy-4">
+
+            <!-- Item Name -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Item Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="name" placeholder="e.g. Chicken Tikka" />
+              <div *ngIf="form['name'].invalid && (form['name'].dirty || form['name'].touched)"
+                class="text-danger mt-1">
+                <small *ngIf="form['name'].errors?.['required']">Item Name is required.</small>
+              </div>
+            </div>
+
+            <!-- Item Category -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Item Category <span class="text-danger">*</span></label>
+              <select
+                formControlName="categoryId"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': form['categoryId'].invalid && (form['categoryId'].dirty || form['categoryId'].touched) }"
+                (change)="onCategoryChange($event)"
+              >
+                <option value="" disabled selected>Select a Category</option>
+                <option *ngFor="let category of categoryList" [value]="category.id">{{ category.title }}</option>
+              </select>
+              <div *ngIf="form['categoryId'].invalid && (form['categoryId'].dirty || form['categoryId'].touched)" class="text-danger mt-1">
+                <small>Category is required.</small>
+              </div>
+            </div>
+
+            <!-- Price -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Price (₹) <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" formControlName="price" placeholder="e.g. 250" />
+              <div *ngIf="form['price'].invalid && (form['price'].dirty || form['price'].touched)"
+                class="text-danger mt-1">
+                <small>Price is required and must be positive.</small>
+              </div>
+            </div>
+
+            <!-- Image URL -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Image URL <span class="text-danger">*</span></label>
+              <input type="url" class="form-control" formControlName="image" placeholder="e.g. https://image.url" />
+              <div *ngIf="form['image'].invalid && (form['image'].dirty || form['image'].touched)"
+                class="text-danger mt-1">
+                <small>Valid image URL is required.</small>
+              </div>
+            </div>
+
+            <!-- Status -->
+            <div class="col-lg-6 col-md-6">
+              <label class="form-label">Status <span class="text-danger">*</span></label>
+              <select
+                formControlName="status"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': form['status'].invalid && (form['status'].dirty || form['status'].touched) }"
+              >
+                <option value="" disabled selected>Select Status</option>
+                <option value="available">Available</option>
+                <option value="notAvailable">Not Available</option>
+              </select>
+              <div *ngIf="form['status'].invalid && (form['status'].dirty || form['status'].touched)" class="text-danger mt-1">
+                <small>Status is required.</small>
+              </div>
+            </div>
+
+            <!-- Ratings -->
+            <div class="col-lg-3 col-md-6">
+              <label class="form-label">Rating</label>
+              <input type="number" class="form-control" formControlName="rating" min="0" max="5"
+                placeholder="e.g. 4.5" />
+            </div>
+
+            <!-- Discount -->
+            <div class="col-lg-3 col-md-6">
+              <label class="form-label">Discount (%)</label>
+              <input type="number" class="form-control" formControlName="discount" placeholder="e.g. 10" />
+            </div>
+
+            <!-- Description -->
+            <div class="col-lg-12">
+              <label class="form-label">Description <span class="text-danger">*</span></label>
+              <textarea class="form-control" rows="3" formControlName="description"
+                placeholder="Juicy and spicy..."></textarea>
+              <div *ngIf="form['description'].invalid && (form['description'].dirty || form['description'].touched)"
+                class="text-danger mt-1">
+                <small>Description is required.</small>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-center align-items-center mt-4">
+              <button class="btn btn-primary w-100 text-center d-flex justify-content-center align-items-center" type="submit" [disabled]="nonVegItemForm.invalid">
+                {{ id ? 'Update Item' : 'Add Item' }}
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

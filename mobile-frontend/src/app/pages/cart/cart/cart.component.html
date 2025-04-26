@@ -1,0 +1,62 @@
+<div class="container my-2">
+  <div class="container section-title" data-aos="fade-up">
+    <h2> Your Cart</h2>
+    <p><span>🛒</span> <span class="description-title">Cart</span></p>
+  </div>
+
+  <div *ngIf="cartItems.length === 0" class="alert" style="background-color: #fffaf0;">No items in cart.</div>
+  <div class="row" *ngIf="cartItems.length != 0">
+    <div class="col-md-4 mb-4">
+      <div class="p-4 position-relative rounded-4 shadow-sm" style="background-color: #fffaf0;">
+
+        <div *ngFor="let item of cartItems; let i = index" class=" mb-3 position-relative">
+          <div class="d-flex align-items-center gap-3">
+            <img [src]="item.image" alt="{{ item.name }}"
+              style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />
+
+            <div class="flex-grow-1">
+              <h6 class="mb-1 fw-semibold">{{ item.name }}</h6>
+              <p class="mb-1 text-muted">₹{{ item.price }}</p>
+
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-square quantity-btn" (click)="decreaseQuantity(i)">-</button>
+                <span class="fw-semibold px-2">{{ item.quantity || 0 }}</span>
+                <button class="btn btn-square quantity-btn" (click)="increaseQuantity(i)">+</button>
+              </div>
+            </div>
+
+            <button class="btn btn-square" style="color: #ce1212;" (click)="removeItem(i)"><i
+                class="bi bi-trash"></i></button>
+          </div>
+          <hr style="border-color: #ce1212;" />
+        </div>
+
+        <!-- Optional Note -->
+        <div class="form-group mt-4">
+          <label for="note" class="fw-semibold">Additional Instructions (optional):</label>
+          <textarea class="form-control" id="note" rows="3" [(ngModel)]="note"></textarea>
+        </div>
+        <h6 style="font-family:Arial, Helvetica, sans-serif; font-weight: bold;">Total: ₹{{ getTotal() }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total & Order Button -->
+  <div class="d-flex justify-content-center align-items-center mt-4" *ngIf="cartItems.length != 0">
+    <button (click)="placeOrder()"
+    class="btn w-100 text-center d-flex justify-content-center align-items-center"
+      type="submit" style="background-color: #ce1212; color: #fff;"
+    >
+    Order Now
+    </button>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center mt-4" *ngIf="cartItems.length === 0">
+    <button
+    class="btn w-100 text-center d-flex justify-content-center align-items-center"
+      type="submit" style="background-color: #ce1212; color: #fff;"
+    (click)="goToMenu()">
+    You want to order something? Go to Menu
+    </button>
+  </div>
+</div>

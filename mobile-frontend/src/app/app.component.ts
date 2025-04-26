@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
+
   constructor(private pushService: PushNotificationService, public router: Router) {}
 
   ngOnInit() {

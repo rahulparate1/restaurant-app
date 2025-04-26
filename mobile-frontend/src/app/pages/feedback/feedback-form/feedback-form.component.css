@@ -1,0 +1,25 @@
+.rating-circles {
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.rating-circle {
+  width: 45px;
+  height: 45px;
+  background-color: #f8d7da; /* light bg before selection */
+  color: #ce1212; /* red text before selection */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.rating-circle.selected {
+  background-color: #ce1212; /* same as submit button */
+  color: #ffffff;
+  font-size: 1.5rem;
+}

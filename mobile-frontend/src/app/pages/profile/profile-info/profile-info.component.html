@@ -1,28 +1,9 @@
-<header class="mobile-header d-md-none bg-white px-3 py-3 d-flex align-items-center justify-content-between shadow-sm"
-        style="position: sticky; top: 0; z-index: 1050; height: 72px;">
-
-  <!-- Center: Search Bar -->
-  <div class="flex-grow-1 me-3">
-    <input type="text" class="form-control rounded-pill border-0 shadow-sm px-3"
-           placeholder="Search delicious food..."
-           style="background-color: #f1f1f1; font-size: 0.95rem;">
-  </div>
-
-  <!-- Right: Profile Icon -->
-  <div style="color: #ce1212;">
-    <a (click)="goToProfile()"><i class="bi bi-person-circle" style="font-size: 2rem;"></i></a>
-  </div>
-
-</header>
-
 <section id="restaurant-profile" class="section" style="margin-top: 15px; padding: 0;">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Profile</h2>
+    <p><span>Profile is </span> <span class="description-title">Here.</span></p>
+  </div>
   <div class="container">
-
-    <!-- 🔙 Back Button -->
-    <div class="d-flex align-items-center" style="cursor: pointer;">
-      <i class="bi bi-arrow-left-circle-fill me-2 fs-5" style="color: #ce1212;"></i>
-      <span class="fs-5 fw-bold">Back</span>
-    </div>
 
     <div class="row">
       <!-- Left Sidebar -->
@@ -84,7 +65,7 @@
       </div>
 
       <!-- Right Main Content -->
-      <div class="col-md-8">
+      <div class="col-md-8 mb-4">
         <div class="bg-white shadow-sm rounded-4 p-4" style="background-color: #fffaf0;">
           <h5 class="mb-4 text-danger fw-bold">Quick Links</h5>
           <ul class="list-unstyled" style="font-size: 0.95rem;">
@@ -111,42 +92,4 @@
     </div>
   </div>
 </section>
-
-<nav class="mobile-bottom-nav d-md-none bg-white fixed-bottom shadow-lg border-top" style="height: 60px; border-top: 3px solid #ce1212;">
-  <div class="d-flex justify-content-between text-center px-2 pt-2" style="height: 100%;">
-    <a href="#home" class="nav-item flex-fill text-decoration-none" style="color: #ce1212;">
-      <div>
-        <i class="bi bi-house-door-fill" style="font-size: 1.9rem;"></i>
-        <!-- <div class="fw-bold small">Home</div> -->
-      </div>
-    </a>
-    <a href="#menu" class="nav-item flex-fill text-decoration-none" style="color: #ce1212;">
-      <div>
-        <i class="bi bi-egg-fried" style="font-size: 1.9rem;"></i>
-        <!-- <div class="fw-bold small">Menu</div> -->
-      </div>
-    </a>
-    <a href="#offers" class="nav-item flex-fill text-decoration-none" style="color: #ce1212;">
-      <div>
-        <i class="bi bi-stars" style="font-size: 1.9rem;"></i>
-        <!-- <div class="fw-bold small">Offers</div> -->
-      </div>
-    </a>
-    <a href="#cart" class="nav-item flex-fill text-decoration-none position-relative" style="color: #ce1212;">
-      <div>
-        <i class="bi bi-cart-fill" style="font-size: 1.9rem;"></i>
-        <!-- <div class="fw-bold small">Cart</div> -->
-      </div>
-      <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger">
-        3
-      </span>
-    </a>
-    <a href="#profile" class="nav-item flex-fill text-decoration-none" style="color: #ce1212;">
-      <div>
-        <i class="bi bi-person-circle" style="font-size: 1.9rem;"></i>
-        <!-- <div class="fw-bold small">Profile</div> -->
-      </div>
-    </a>
-  </div>
-</nav>
 

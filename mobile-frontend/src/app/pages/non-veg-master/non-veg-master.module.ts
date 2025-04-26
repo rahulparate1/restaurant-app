@@ -1,37 +1,37 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NonVegListComponent } from './non-veg-list/non-veg-list.component';
-import { CreateItemComponent } from './create-item/create-item.component';
-import { NonVegCardComponent } from './non-veg-card/non-veg-card.component';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { NonVegListComponent } from "./non-veg-list/non-veg-list.component";
+import { CreateItemComponent } from "./create-item/create-item.component";
+import { NonVegCardComponent } from "./non-veg-card/non-veg-card.component";
+import { RouterModule, Routes } from "@angular/router";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 const routes: Routes = [
   {
-    path: 'list',
+    path: "list",
     component: NonVegListComponent,
   },
   {
-    path: 'form',
+    path: "form",
     component: CreateItemComponent,
   },
   {
-    path: 'form/:id',
+    path: "form/:id",
     component: CreateItemComponent,
   },
-
 ];
 
 export const nonvegMasterRouting = RouterModule.forChild(routes);
 
 @NgModule({
-  declarations: [
-    NonVegListComponent,
-    CreateItemComponent,
-    NonVegCardComponent
-  ],
+  declarations: [NonVegListComponent, CreateItemComponent, NonVegCardComponent],
   imports: [
     CommonModule,
-    nonvegMasterRouting
-  ]
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    nonvegMasterRouting,
+  ],
 })
-export class NonVegMasterModule { }
+export class NonVegMasterModule {}

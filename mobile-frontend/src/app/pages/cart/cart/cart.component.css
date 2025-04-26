@@ -1,0 +1,14 @@
+.quantity-btn {
+  background-color: #ce1212;
+  color: white;
+  border-radius: 0.3rem;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background-color: #a50e0e;
+}

@@ -1,0 +1,75 @@
+.custom-card {
+  background-color: #fffaf0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+}
+
+.custom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quantity-btn {
+  background-color: #ce1212;
+  color: white;
+  border-radius: 0.3rem;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background-color: #a50e0e;
+}
+
+.add-menu-btn {
+  background-color: #ce1212;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-menu-btn:hover {
+  background-color: #a50e0e;
+  transform: scale(1.05);
+}
+
+.menu-image {
+  max-height: 160px;
+  width: 100%;
+  object-fit: contain;
+  padding: 8px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer; /* important for clear hover feedback */
+}
+
+.menu-image:hover {
+  transform: scale(1.05);
+}
+
+.fab-add-menu-btn {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  z-index: 1000;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ce1212;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.fab-add-menu-btn:hover {
+  background-color: #a50e0e;
+  transform: scale(1.1);
+  cursor: pointer;
+}

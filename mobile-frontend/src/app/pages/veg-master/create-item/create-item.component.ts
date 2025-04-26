@@ -144,4 +144,9 @@ export class CreateItemComponent {
         });
     }
   }
+
+  goToProfile() {
+    this.router.navigate(["/dashboard/profile/profile-info"]);
+  }
+
 }

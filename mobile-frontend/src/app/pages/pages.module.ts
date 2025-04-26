@@ -41,11 +41,13 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { VegNonvegCardsComponent } from "./veg-nonveg-cards/veg-nonveg-cards.component";
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     VegNonvegCardsComponent,
+    TabsComponent,
   ],
   imports: [
     CommonModule,

@@ -10,8 +10,8 @@ const routes: Routes = [
    { path: 'auth', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
   // { path: '', component: LayoutComponent, loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard] },  // Use the function-based guard here
   // { path: 'pages', loadChildren: () => import('./extrapages/extrapages.module').then(m => m.ExtrapagesModule), canActivate: [AuthGuard] },  // Use the function-based guard here
-  { path: 'crypto-ico-landing', component: CyptolandingComponent },
-  { path: 'dashboard', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) , canActivate: [AuthGuard]},
+  // { path: 'crypto-ico-landing', component: CyptolandingComponent },
+  { path: 'dashboard', component: LayoutComponent, loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule) , canActivate: [AuthGuard]},
 
   // { path: '**', component: Page404Component },
 ];
